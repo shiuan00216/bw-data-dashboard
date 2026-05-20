@@ -139,6 +139,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     <div class="kpi orange"><div class="kpi-v">15 秒</div><div class="kpi-l">平均參與時間</div></div>
   </div>
 
+  <!-- 裝置 & 流量來源 -->
+  <div class="sec-title">流量結構分析 <span class="hint">點擊查看詳細數據</span></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;">
+
+    <div class="hotspot" data-hotspot="device" onclick="selectHotspot('device')" style="cursor:pointer;">
+      <div class="hotspot-head"><span class="hotspot-icon">📱</span><span class="hotspot-title">裝置比例</span></div>
+      <div class="hotspot-sub">手機為主力，佔整體 65%</div>
+      <div class="stat-row">
+        <span class="stat blue">手機 65.6%</span>
+        <span class="stat gray">電腦 32.3%</span>
+        <span class="stat gray">平板 1.4%</span>
+      </div>
+      <div class="hotspot-link">→ 點擊查看完整數據</div>
+    </div>
+
+    <div class="hotspot" data-hotspot="source" onclick="selectHotspot('source')" style="cursor:pointer;">
+      <div class="hotspot-head"><span class="hotspot-icon">🔍</span><span class="hotspot-title">流量來源</span></div>
+      <div class="hotspot-sub">Google 自然搜尋佔最大宗</div>
+      <div class="stat-row">
+        <span class="stat green">Google 自然 28% 跳出</span>
+        <span class="stat red">直接流量 55% 跳出</span>
+      </div>
+      <div class="hotspot-link">→ 點擊查看完整數據</div>
+    </div>
+
+  </div>
+
   <!-- 流失熱點 -->
   <div class="sec-title">流失熱點診斷 <span class="hint">點擊查看對應解法</span></div>
   <div class="hotspot-grid">
@@ -343,6 +370,65 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </table>
   </div>
 
+  <!-- ── 詳細：裝置比例 ── -->
+  <div id="detail-device" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">📱 流量結構 → 裝置比例</div>
+      <h2>裝置比例分析</h2>
+      <p>手機為主力裝置，改版設計應以行動版優先</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi blue"><div class="pv">65.6%</div><div class="pl">手機用戶佔比</div></div>
+      <div class="panel-kpi blue"><div class="pv">32.3%</div><div class="pl">電腦用戶佔比</div></div>
+      <div class="panel-kpi green"><div class="pv">92 秒</div><div class="pl">手機平均參與時間</div></div>
+      <div class="panel-kpi green"><div class="pv">68.8%</div><div class="pl">手機參與度</div></div>
+    </div>
+    <div class="panel-chart-wrap"><canvas id="chart-device"></canvas></div>
+    <table class="compare-table">
+      <tr><th>裝置</th><th>活躍使用者</th><th>佔比</th><th>參與度</th><th>平均參與時間</th></tr>
+      <tr><td>📱 手機</td><td>574萬</td><td class="good">65.6%</td><td class="good">68.8%</td><td>92秒</td></tr>
+      <tr><td>💻 電腦</td><td>283萬</td><td class="mid">32.3%</td><td class="bad">52.1%</td><td>90秒</td></tr>
+      <tr><td>📟 平板</td><td>12.3萬</td><td class="gray">1.4%</td><td class="good">76.3%</td><td>114秒</td></tr>
+    </table>
+    <div class="insight">
+      <strong>對改版的影響：</strong>404 頁面與文章引導改版應以<strong>手機版為優先設計</strong>，65% 的用戶在手機上瀏覽，且手機參與度（68.8%）高於電腦（52.1%），代表手機用戶黏著意願更強，設計好就能有效留住。
+    </div>
+    <div class="insight">
+      <strong>電腦版參與度偏低（52.1%）值得關注：</strong>電腦用戶佔 32%，但參與度明顯低於手機，可能是電腦版 UI 或內容版型有改善空間。
+    </div>
+  </div>
+
+  <!-- ── 詳細：流量來源 ── -->
+  <div id="detail-source" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">🔍 流量結構 → 流量來源</div>
+      <h2>流量來源分析</h2>
+      <p>Google 自然搜尋為最大且最健康的流量來源</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi green"><div class="pv">28%</div><div class="pl">Google 自然搜尋跳出率（最低）</div></div>
+      <div class="panel-kpi red"><div class="pv">55%</div><div class="pl">直接流量跳出率（第二大來源）</div></div>
+      <div class="panel-kpi green"><div class="pv">110 秒</div><div class="pl">電子報參與時間（最高）</div></div>
+      <div class="panel-kpi orange"><div class="pv">82%</div><div class="pl">App Banner 跳出率</div></div>
+    </div>
+    <div class="panel-chart-wrap"><canvas id="chart-source"></canvas></div>
+    <table class="compare-table">
+      <tr><th>來源</th><th>瀏覽量</th><th>跳出率</th><th>參與時間</th></tr>
+      <tr><td>🔍 Google 自然搜尋</td><td class="good">990萬</td><td class="good">28.2%</td><td class="good">62秒</td></tr>
+      <tr><td>🔗 直接輸入</td><td class="mid">393萬</td><td class="bad">55.2%</td><td class="mid">41秒</td></tr>
+      <tr><td>💬 Line</td><td>44.8萬</td><td class="good">30.0%</td><td class="mid">34秒</td></tr>
+      <tr><td>🔍 Yahoo 搜尋</td><td>40.5萬</td><td class="good">29.5%</td><td class="good">79秒</td></tr>
+      <tr><td>📧 電子報</td><td>16.2萬</td><td class="mid">32.8%</td><td class="good">110秒</td></tr>
+      <tr><td>📱 App Banner</td><td>11.4萬</td><td class="bad">82.0%</td><td class="bad">7秒</td></tr>
+    </table>
+    <div class="insight">
+      <strong>直接流量跳出率 55% 值得關注：</strong>直接輸入網址的用戶是第二大來源（393萬瀏覽），但跳出率高達 55%，其中包含輸入錯誤網址後進入 404 頁面的用戶，是 404 優化的主要目標族群。
+    </div>
+    <div class="insight">
+      <strong>電子報是黏著度最高的來源：</strong>參與時間 110 秒，遠高於其他來源，但流量只有 16 萬。若擴大電子報訂閱，對整體黏著度有直接正向效益。
+    </div>
+  </div>
+
 </div><!-- end right-col -->
 </div><!-- end main -->
 
@@ -351,7 +437,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 let activeHotspot = null;
 let activeProject = null;
 
-const hotspotToProject = { b: ['b','a'], c: ['c'], highlight: [] };
+const hotspotToProject = { b: ['b','a'], c: ['c'], highlight: [], device: [], source: [] };
 const projectToHotspot = { b: 'b', a: 'b', c: 'c' };
 
 function showDetail(id) {
@@ -511,14 +597,42 @@ function renderCharts() {
     charts['highlight'] = new Chart(document.getElementById('chart-highlight'), {
       type: 'bar',
       data: {
-        labels: ['首頁','全站平均','搜尋頁','404頁','每日來商周'],
+        labels: ['首頁','全站平均','搜尋頁','404頁'],
         datasets: [
-          { label: '參與時間（秒）', data:[48,15,6,5,6],
-            backgroundColor:['#68d391','#f6ad55','#fc8181','#fc8181','#fc8181'], borderRadius:6 }
+          { label: '參與時間（秒）', data:[48,15,6,5],
+            backgroundColor:['#68d391','#f6ad55','#fc8181','#fc8181'], borderRadius:6 }
         ]
       },
       options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
         scales:{ y:{beginAtZero:true, title:{display:true,text:'秒'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}} } }
+    });
+  }
+
+  if (id === 'device') {
+    destroyChart('device');
+    charts['device'] = new Chart(document.getElementById('chart-device'), {
+      type: 'doughnut',
+      data: {
+        labels: ['手機 65.6%', '電腦 32.3%', '平板 1.4%', '其他 0.7%'],
+        datasets: [{ data: [65.6, 32.3, 1.4, 0.7],
+          backgroundColor: ['#4299e1','#68d391','#f6ad55','#e2e8f0'], borderWidth: 0 }]
+      },
+      options: { responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'bottom', labels:{boxWidth:12,font:{size:11}} } } }
+    });
+  }
+
+  if (id === 'source') {
+    destroyChart('source');
+    charts['source'] = new Chart(document.getElementById('chart-source'), {
+      type: 'bar',
+      data: {
+        labels: ['Google 自然','直接輸入','Line','Yahoo 搜尋','電子報','App Banner'],
+        datasets: [{ label: '跳出率（%）', data: [28.2, 55.2, 30.0, 29.5, 32.8, 82.0],
+          backgroundColor: ['#68d391','#fc8181','#68d391','#68d391','#f6ad55','#fc8181'], borderRadius:5 }]
+      },
+      options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+        scales:{ y:{beginAtZero:true, max:100, title:{display:true,text:'跳出率 %'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}, ticks:{font:{size:10}}} } }
     });
   }
 }
