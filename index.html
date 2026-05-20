@@ -186,37 +186,64 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   <div class="sec-title">流失熱點診斷 <span class="hint">點擊查看對應解法</span></div>
   <div class="hotspot-grid">
 
-    <div class="hotspot" data-hotspot="b" onclick="selectHotspot('b')">
+    <div class="hotspot" data-hotspot="h404" onclick="selectHotspot('h404')">
       <div class="hotspot-head"><span class="hotspot-icon">🔴</span><span class="hotspot-title">技術問題頁</span></div>
-      <div class="hotspot-sub">進來就撞牆，直接離開</div>
+      <div class="hotspot-sub">數據明確・進來就撞牆</div>
       <div class="stat-row">
-        <span class="stat red">404頁 9.2萬 sessions</span>
-        <span class="stat red">平均停留 5秒</span>
-        <span class="gap-badge">⚠ 搜尋頁：追蹤缺口</span>
+        <span class="stat red">404頁 9.2萬 sessions / 5秒</span>
+        <span class="gap-badge">⚠ 搜尋頁追蹤缺口</span>
       </div>
       <div class="hotspot-link">→ 對應子項目 #1 #2</div>
     </div>
 
-    <div class="hotspot" data-hotspot="c" onclick="selectHotspot('c')">
-      <div class="hotspot-head"><span class="hotspot-icon">🟡</span><span class="hotspot-title">文章看完不繼續</span></div>
-      <div class="hotspot-sub">缺乏有效延伸閱讀引導</div>
+    <div class="hotspot" data-hotspot="hnv" onclick="selectHotspot('hnv')">
+      <div class="hotspot-head"><span class="hotspot-icon">🟠</span><span class="hotspot-title">新訪客大量單次即走</span></div>
+      <div class="hotspot-sub">數據明確・用戶來了不回頭</div>
       <div class="stat-row">
-        <span class="stat blue">受影響 600萬瀏覽/季</span>
-        <span class="stat orange">頁深僅 1.06頁</span>
-        <span class="stat gray">全站影響最大</span>
+        <span class="stat orange">新訪客 64.4%</span>
+        <span class="stat red">30天留存 0.35%</span>
+      </div>
+      <div class="hotspot-link">→ 對應子項目 #4</div>
+    </div>
+
+    <div class="hotspot" data-hotspot="harticle" onclick="selectHotspot('harticle')">
+      <div class="hotspot-head"><span class="hotspot-icon">🟡</span><span class="hotspot-title">文章看完不繼續</span></div>
+      <div class="hotspot-sub">數據明確・影響規模最大</div>
+      <div class="stat-row">
+        <span class="stat blue">600萬瀏覽/季</span>
+        <span class="stat orange">頁深 1.06頁</span>
       </div>
       <div class="hotspot-link">→ 對應子項目 #3</div>
     </div>
 
+    <div class="hotspot" data-hotspot="hdirect" onclick="selectHotspot('hdirect')">
+      <div class="hotspot-head"><span class="hotspot-icon">⚠️</span><span class="hotspot-title">直接流量跳出率偏高</span></div>
+      <div class="hotspot-sub">原因待查・需交叉分析</div>
+      <div class="stat-row">
+        <span class="stat red">393萬瀏覽・55% 跳出</span>
+        <span class="stat gray">Google 自然僅 28%</span>
+      </div>
+      <div class="hotspot-link">→ 對應子項目 #5</div>
+    </div>
+
+    <div class="hotspot" data-hotspot="hdesktop" onclick="selectHotspot('hdesktop')">
+      <div class="hotspot-head"><span class="hotspot-icon">💻</span><span class="hotspot-title">電腦版參與度偏低</span></div>
+      <div class="hotspot-sub">數據明確・根因待確認</div>
+      <div class="stat-row">
+        <span class="stat orange">電腦版參與度 52.1%</span>
+        <span class="stat green">手機版 68.8%</span>
+      </div>
+      <div class="hotspot-link">→ 對應子項目 #6</div>
+    </div>
+
     <div class="hotspot" data-hotspot="highlight" onclick="selectHotspot('highlight')">
       <div class="hotspot-head"><span class="hotspot-icon">✅</span><span class="hotspot-title">首頁表現正常</span></div>
-      <div class="hotspot-sub">首頁不是問題來源</div>
+      <div class="hotspot-sub">可作為改善目標的參考基準</div>
       <div class="stat-row">
         <span class="stat green">跳出率 24.7%</span>
-        <span class="stat green">參與 48秒</span>
-        <span class="stat green">2.5頁/session</span>
+        <span class="stat green">參與 48秒・2.5頁</span>
       </div>
-      <div class="hotspot-link">→ 點擊查看首頁 vs 問題頁對比</div>
+      <div class="hotspot-link">→ 點擊查看對比數據</div>
     </div>
 
   </div>
@@ -229,29 +256,55 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <div class="rank-num">1</div>
       <div>
         <div class="rank-name">404 頁面引導優化</div>
-        <div class="rank-reason">難度最低・最快交付・立即回收 9.2萬 sessions</div>
+        <div class="rank-reason">數據明確・難度低・最快交付・9.2萬 sessions 可回收</div>
       </div>
       <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">92分</div></div>
     </div>
 
-    <div class="rank-item" data-id="a" onclick="selectProject('a')">
+    <div class="rank-item" data-id="st" onclick="selectProject('st')">
       <div class="rank-num">2</div>
       <div>
-        <div class="rank-name">搜尋頁體驗優化 <span class="gap-badge">⚠ 資料缺口</span></div>
-        <div class="rank-reason">搜尋事件未追蹤・現有數據不足以佐證・需先補設定</div>
+        <div class="rank-name">搜尋事件追蹤補設定</div>
+        <div class="rank-reason">IT 設定工時低・是搜尋頁優化的前置需求・11萬 sessions 待釐清</div>
       </div>
-      <div class="rank-badges"><span class="diff mid">難度 中</span><div class="score-mini">待補數據</div></div>
+      <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">85分</div></div>
     </div>
 
     <div class="rank-item" data-id="c" onclick="selectProject('c')">
       <div class="rank-num">3</div>
       <div>
         <div class="rank-name">文章頁閱讀後引導優化</div>
-        <div class="rank-reason">影響規模最大・需演算法支援・長期效益</div>
+        <div class="rank-reason">影響規模最大（600萬/季）・需演算法支援・長期效益</div>
       </div>
-      <div class="rank-badges"><span class="diff high">難度 高</span><div class="score-mini">65分</div></div>
+      <div class="rank-badges"><span class="diff high">難度 高</span><div class="score-mini">72分</div></div>
     </div>
 
+    <div class="rank-item" data-id="nv" onclick="selectProject('nv')">
+      <div class="rank-num">4</div>
+      <div>
+        <div class="rank-name">新訪客首訪留存引導</div>
+        <div class="rank-reason">64% 為新訪客・留存率僅 0.35%・策略方向需定義</div>
+      </div>
+      <div class="rank-badges"><span class="diff mid">難度 中</span><div class="score-mini">60分</div></div>
+    </div>
+
+    <div class="rank-item" data-id="dir" onclick="selectProject('dir')">
+      <div class="rank-num">5</div>
+      <div>
+        <div class="rank-name">直接流量根因調查</div>
+        <div class="rank-reason">393萬瀏覽・55% 跳出・需交叉分析確認原因後再決定改版方向</div>
+      </div>
+      <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">45分</div></div>
+    </div>
+
+    <div class="rank-item" data-id="a" onclick="selectProject('a')">
+      <div class="rank-num">6</div>
+      <div>
+        <div class="rank-name">搜尋頁體驗優化 <span class="gap-badge">⚠ 須先完成 #2</span></div>
+        <div class="rank-reason">需等搜尋追蹤上線 4 週後，才有數據支撐改版決策</div>
+      </div>
+      <div class="rank-badges"><span class="diff mid">難度 中</span><div class="score-mini">待補數據</div></div>
+    </div>
 
   </div>
 
@@ -416,6 +469,135 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </table>
   </div>
 
+  <!-- ── 詳細：搜尋追蹤設定 ── -->
+  <div id="detail-st" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">🔴 熱點：技術問題頁 → 子項目 #2</div>
+      <h2>搜尋事件追蹤補設定</h2>
+      <p>優先排序第 2｜難度低（IT 設定）｜搜尋頁優化的前置需求</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi orange"><div class="pv">109,849</div><div class="pl">搜尋頁落地 sessions（90天）</div></div>
+      <div class="panel-kpi red"><div class="pv">❌ 無</div><div class="pl">搜尋關鍵字資料</div></div>
+      <div class="panel-kpi red"><div class="pv">❌ 無</div><div class="pl">搜尋後點擊率</div></div>
+      <div class="panel-kpi red"><div class="pv">❌ 無</div><div class="pl">零結果搜尋比例</div></div>
+    </div>
+    <table class="compare-table">
+      <tr><th>需補追蹤項目</th><th>GA4 設定方式</th><th>可回答的問題</th></tr>
+      <tr><td>搜尋關鍵字</td><td>設定 search_term 參數</td><td>用戶在找什麼</td></tr>
+      <tr><td>搜尋後點擊率</td><td>追蹤 search 後的 page_view</td><td>搜尋有沒有幫助用戶</td></tr>
+      <tr><td>零結果搜尋</td><td>後端回傳空結果事件</td><td>哪些需求網站無法滿足</td></tr>
+    </table>
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>GA4 事件列表確認不存在 search 或 view_search_results 事件</li>
+      <li>搜尋頁 90 天有 109,849 sessions 落地，整段參與時間平均 6 秒</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>搜尋體驗是否有問題，目前完全無法判斷</li>
+      <li>追蹤設定上線後需至少 4 週才能累積足夠數據支撐後續改版決策</li>
+    </div>
+  </div>
+
+  <!-- ── 詳細：新訪客留存 ── -->
+  <div id="detail-nv" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">🟠 熱點：新訪客大量單次即走 → 子項目 #4</div>
+      <h2>新訪客首訪留存引導</h2>
+      <p>優先排序第 4｜難度中｜64% 用戶首訪後幾乎不回頭</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi orange"><div class="pv">64.4%</div><div class="pl">新訪客佔比</div></div>
+      <div class="panel-kpi red"><div class="pv">2.32%</div><div class="pl">隔天回訪率</div></div>
+      <div class="panel-kpi red"><div class="pv">0.35%</div><div class="pl">30天留存率</div></div>
+      <div class="panel-kpi blue"><div class="pv">7,435,243</div><div class="pl">90天新訪客總數</div></div>
+    </div>
+    <table class="compare-table">
+      <tr><th>可能的改善方向</th><th>說明</th><th>難度</th></tr>
+      <tr><td>文章底部訂閱電子報引導</td><td>電子報用戶參與時間達 110 秒，為最高黏著來源</td><td class="mid">中</td></tr>
+      <tr><td>首訪推薦個人化</td><td>根據進站文章類型推薦相關內容</td><td class="bad">高</td></tr>
+      <tr><td>Push 通知訂閱提示</td><td>首訪時邀請訂閱，建立回訪管道</td><td class="mid">中</td></tr>
+    </table>
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>新訪客 7,435,243（64.4%），回訪客 4,112,730（35.6%）</li>
+      <li>隔天回訪率 2.32%、7天 0.75%、30天 0.35%</li>
+      <li>電子報用戶參與時間 110 秒，為各來源最高</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>留存率低是否為媒體網站的結構性問題，目前無法確認</li>
+      <li>加入訂閱引導後能否提升回訪率，需上線後追蹤</li>
+      <li>改善文章引導（#3）是否能連帶提升留存，為合理推測但未實測</li>
+    </div>
+  </div>
+
+  <!-- ── 詳細：直接流量調查 ── -->
+  <div id="detail-dir" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">⚠️ 熱點：直接流量跳出偏高 → 子項目 #5</div>
+      <h2>直接流量根因調查</h2>
+      <p>優先排序第 5｜難度低（數據分析）｜393萬瀏覽・跳出 55%，原因不明</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi red"><div class="pv">393萬</div><div class="pl">直接流量瀏覽量（90天）</div></div>
+      <div class="panel-kpi red"><div class="pv">55.2%</div><div class="pl">跳出率</div></div>
+      <div class="panel-kpi orange"><div class="pv">41 秒</div><div class="pl">平均參與時間</div></div>
+      <div class="panel-kpi blue"><div class="pv">28.2%</div><div class="pl">Google 自然搜尋跳出率（參考）</div></div>
+    </div>
+    <table class="compare-table">
+      <tr><th>需要調查的問題</th><th>調查方式</th></tr>
+      <tr><td>直接流量落地在哪些頁面？</td><td>GA4 探索：來源=direct × 到達頁面</td></tr>
+      <tr><td>其中有多少是進入 404？</td><td>GA4 探索：來源=direct × 頁面=/WebSite/Error404</td></tr>
+      <tr><td>跳出的用戶是新訪客還是回訪客？</td><td>GA4 探索：來源=direct × 新/回訪</td></tr>
+    </table>
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>直接流量為第二大來源，90天 393萬瀏覽，跳出率 55.2%</li>
+      <li>明顯高於 Google 自然搜尋（28.2%）及 Line（30.0%）</li>
+      <li>參與時間 41 秒，低於 Google 自然（62 秒）</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>跳出率高可能來自：書籤流量、輸入網址錯誤、App 內嵌瀏覽器等，需交叉分析才能判斷</li>
+      <li>在確認根因前，不建議直接進入改版，避免方向錯誤</li>
+    </div>
+  </div>
+
+  <!-- ── 詳細：電腦版優化 ── -->
+  <div id="detail-dsk" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">💻 熱點：電腦版參與度偏低 → 子項目 #6</div>
+      <h2>電腦版體驗優化</h2>
+      <p>優先排序第 6｜難度中｜需先確認根因再決定改版範圍</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi red"><div class="pv">52.1%</div><div class="pl">電腦版參與度</div></div>
+      <div class="panel-kpi green"><div class="pv">68.8%</div><div class="pl">手機版參與度（參考）</div></div>
+      <div class="panel-kpi orange"><div class="pv">32.3%</div><div class="pl">電腦用戶佔比</div></div>
+      <div class="panel-kpi blue"><div class="pv">283萬</div><div class="pl">電腦活躍使用者（90天）</div></div>
+    </div>
+    <table class="compare-table">
+      <tr><th>裝置</th><th>參與度</th><th>參與時間</th><th>活躍使用者</th></tr>
+      <tr><td>📱 手機</td><td class="good">68.8%</td><td>92秒</td><td>574萬</td></tr>
+      <tr><td>💻 電腦</td><td class="bad">52.1%</td><td>90秒</td><td>283萬</td></tr>
+      <tr><td>📟 平板</td><td class="good">76.3%</td><td>114秒</td><td>12.3萬</td></tr>
+    </table>
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>電腦版參與度 52.1%，低於手機 68.8%，差距 16.7 個百分點</li>
+      <li>電腦版參與時間 90 秒，與手機（92 秒）差異不大</li>
+      <li>電腦用戶佔整體 32.3%，283 萬用戶規模不小</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>電腦版參與度低的原因目前不明，可能是版面設計、內容呈現或使用情境差異</li>
+      <li>參與時間差異不大，表示問題可能在「是否開始參與」而非「參與深度」</li>
+      <li>建議先做電腦版用戶行為分析，再決定改版優先範圍</li>
+    </div>
+  </div>
+
   <!-- ── 詳細：裝置比例 ── -->
   <div id="detail-device" class="detail-section">
     <div class="panel-header">
@@ -531,8 +713,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 let activeHotspot = null;
 let activeProject = null;
 
-const hotspotToProject = { b: ['b','a'], c: ['c'], highlight: [], device: [], source: [], retention: [] };
-const projectToHotspot = { b: 'b', a: 'b', c: 'c' };
+const hotspotToProject = { h404:['b','st'], hnv:['nv'], harticle:['c'], hdirect:['dir'], hdesktop:['dsk'], highlight:[], device:[], source:[], retention:[] };
+const projectToHotspot = { b:'h404', st:'h404', c:'harticle', nv:'hnv', dir:'hdirect', dsk:'hdesktop', a:'h404' };
 
 function showDetail(id) {
   document.getElementById('placeholder').style.display = 'none';
