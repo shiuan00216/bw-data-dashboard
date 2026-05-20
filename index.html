@@ -170,6 +170,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <div class="hotspot-link">→ 點擊查看完整數據</div>
     </div>
 
+    <div class="hotspot" data-hotspot="retention" onclick="selectHotspot('retention')" style="cursor:pointer;">
+      <div class="hotspot-head"><span class="hotspot-icon">🔄</span><span class="hotspot-title">新訪客 vs 回訪客</span></div>
+      <div class="hotspot-sub">留存率極低，用戶來了不回頭</div>
+      <div class="stat-row">
+        <span class="stat blue">新訪客 64.4%</span>
+        <span class="stat orange">30天留存僅 0.35%</span>
+      </div>
+      <div class="hotspot-link">→ 點擊查看完整數據</div>
+    </div>
+
   </div>
 
   <!-- 流失熱點 -->
@@ -478,6 +488,41 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </div>
   </div>
 
+  <!-- ── 詳細：回訪留存 ── -->
+  <div id="detail-retention" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">🔄 流量結構 → 新訪客 vs 回訪客</div>
+      <h2>回訪留存分析</h2>
+      <p>64% 為新訪客，留存率極低，用戶幾乎不回頭</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi blue"><div class="pv">64.4%</div><div class="pl">新訪客佔比</div></div>
+      <div class="panel-kpi orange"><div class="pv">2.32%</div><div class="pl">隔天回訪率</div></div>
+      <div class="panel-kpi red"><div class="pv">0.75%</div><div class="pl">第 7 天留存率</div></div>
+      <div class="panel-kpi red"><div class="pv">0.35%</div><div class="pl">第 30 天留存率</div></div>
+    </div>
+    <div class="panel-chart-wrap"><canvas id="chart-retention"></canvas></div>
+    <table class="compare-table">
+      <tr><th>時間點</th><th>留存率</th><th>說明</th></tr>
+      <tr><td>第 1 天</td><td class="bad">2.32%</td><td>100人造訪，隔天只有 2 人回來</td></tr>
+      <tr><td>第 7 天</td><td class="bad">0.75%</td><td>一週後剩不到 1 人</td></tr>
+      <tr><td>第 30 天</td><td class="bad">0.35%</td><td>一個月後幾乎全部流失</td></tr>
+      <tr><td>第 1 週後穩定值</td><td class="mid">~0.5%</td><td>極少數固定回訪用戶</td></tr>
+    </table>
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>新訪客 7,435,243（64.4%），回訪客 4,112,730（35.6%）</li>
+      <li>第 1 天平均留存率 2.32%、第 7 天 0.75%、第 30 天 0.35%</li>
+      <li>第一週後每週活躍留存穩定在約 0.5%</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>留存率低可能是媒體網站的正常現象（用戶有需求才來），但也可能代表內容黏著度不足</li>
+      <li>若文章引導改善後能讓用戶多看一頁，是否會提升回訪意願，需改版後追蹤才能確認</li>
+      <li>404 頁面對新訪客（64%）影響特別大，第一次來就撞牆可能導致永不回頭，但無法從現有數據直接驗證</li>
+    </div>
+  </div>
+
 </div><!-- end right-col -->
 </div><!-- end main -->
 
@@ -486,7 +531,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 let activeHotspot = null;
 let activeProject = null;
 
-const hotspotToProject = { b: ['b','a'], c: ['c'], highlight: [], device: [], source: [] };
+const hotspotToProject = { b: ['b','a'], c: ['c'], highlight: [], device: [], source: [], retention: [] };
 const projectToHotspot = { b: 'b', a: 'b', c: 'c' };
 
 function showDetail(id) {
@@ -682,6 +727,25 @@ function renderCharts() {
       },
       options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
         scales:{ y:{beginAtZero:true, max:100, title:{display:true,text:'跳出率 %'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}, ticks:{font:{size:10}}} } }
+    });
+  }
+
+  if (id === 'retention') {
+    destroyChart('retention');
+    charts['retention'] = new Chart(document.getElementById('chart-retention'), {
+      type: 'line',
+      data: {
+        labels: ['造訪當天','第1天','第7天','第30天'],
+        datasets: [
+          { label: '留存率（%）', data: [100, 2.32, 0.75, 0.35],
+            borderColor: '#3182ce', backgroundColor: 'rgba(49,130,206,0.1)',
+            pointBackgroundColor: '#3182ce', borderWidth: 2, fill: true, tension: 0.3 }
+        ]
+      },
+      options: { responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ display:false } },
+        scales:{ y:{ beginAtZero:true, title:{display:true,text:'留存率 %'}, grid:{color:'#f7fafc'},
+          ticks:{ callback: v => v + '%' } }, x:{grid:{display:false}} } }
     });
   }
 }
