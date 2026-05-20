@@ -106,6 +106,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .gap{background:#fffff0;border-left:3px solid #d69e2e;border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:#744210;line-height:1.7;margin-bottom:12px;}
 .gap strong{font-weight:700;}
 .gap-badge{font-size:11px;font-weight:700;background:#fefcbf;color:#744210;border:1px solid #f6e05e;padding:2px 8px;border-radius:20px;display:inline-block;}
+.fact-box{background:#f0fff4;border-left:3px solid #38a169;border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:#22543d;line-height:1.8;margin-bottom:8px;}
+.fact-box .box-title{font-weight:700;font-size:11px;letter-spacing:.5px;margin-bottom:6px;display:block;}
+.infer-box{background:#fffff0;border-left:3px solid #d69e2e;border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:#744210;line-height:1.8;margin-bottom:12px;}
+.infer-box .box-title{font-weight:700;font-size:11px;letter-spacing:.5px;margin-bottom:6px;display:block;}
+.fact-box li,.infer-box li{margin-left:14px;margin-bottom:2px;}
+.fact-box strong,.infer-box strong{font-weight:700;}
 
 .article-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f7fafc;font-size:12px;}
 .article-row:last-child{border-bottom:none;}
@@ -265,16 +271,24 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </div>
     <div class="panel-chart-wrap"><canvas id="chart-b"></canvas></div>
     <table class="compare-table">
-      <tr><th>指標</th><th>404頁（現況）</th><th>首頁（目標參考）</th></tr>
+      <tr><th>指標</th><th>404頁（現況）</th><th>首頁（參考）</th></tr>
       <tr><td>平均參與時間</td><td class="bad">5 秒</td><td class="good">48 秒</td></tr>
       <tr><td>每session瀏覽頁數</td><td class="bad">~1頁</td><td class="good">2.5 頁</td></tr>
-      <tr><td>有無內容引導</td><td class="bad">❌ 無</td><td class="good">✅ 完整導覽</td></tr>
+      <tr><td>頁面有推薦內容</td><td class="mid">✅ 有 4 篇靜態熱門文章</td><td class="good">✅ 完整動態導覽</td></tr>
+      <tr><td>頁面有搜尋入口</td><td class="mid">⚠ 僅 header 放大鏡圖示</td><td class="good">✅ 明顯搜尋框</td></tr>
     </table>
-    <div class="insight">
-      <strong>機會試算：</strong>若引導 20% 的流失用戶繼續瀏覽，每月可回收約 <strong>6,000 sessions</strong>，以首頁 2.5 頁/session 換算，潛在增加 <strong>1.5 萬次頁面瀏覽／月</strong>。
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>90天共 91,839 sessions 進入 404 頁面，平均停留 5 秒</li>
+      <li>月均約 30,613 sessions 流失</li>
+      <li>頁面目前有 4 篇靜態熱門文章推薦與完整導覽列（頁面直接觀察）</li>
+      <li>搜尋入口僅在 header 右上角放大鏡圖示，非頁面主視覺區</li>
     </div>
-    <div class="insight">
-      <strong>排第一的理由：</strong>開發只需在 404 頁加入熱門推薦、搜尋框、分類導覽，不涉及後端邏輯，上線後次月即可在 GA 驗證成效。
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>5 秒離開的原因：推測是頁面缺乏有效引導，但也可能是用戶本來就打算離開</li>
+      <li>機會試算：若引導 20% 用戶繼續瀏覽，可增加約 1.5 萬次頁面瀏覽／月（假設值，非實測）</li>
+      <li>加入搜尋框與推薦內容後能否提升留存，需上線後以 GA4 A/B 測試驗證</li>
     </div>
   </div>
 
@@ -315,8 +329,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <tr><td>搜尋頁落地 sessions</td><td class="mid">✅ 有（109,849）</td><td>已有，但不足以單獨判斷問題</td></tr>
     </table>
 
-    <div class="insight">
-      <strong>建議行動：</strong>將「補設搜尋事件追蹤」列為 #2 子項目的<strong>前置需求</strong>，由 IT 評估設定工時。追蹤上線後 4 週，即可用真實數據決定搜尋頁是否需要改版、以及改版重點。
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>90天共 109,849 sessions 從外部直接落地 /Search 頁面</li>
+      <li>這批 sessions 的整段旅程平均參與時間為 6 秒</li>
+      <li>GA4 事件列表中確認不存在 search 或 view_search_results 事件</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>6 秒是否代表「搜尋後無結果就離開」，目前無法確認——也可能是搜尋成功後點進文章，6 秒只是搜尋頁本身的停留時間</li>
+      <li>搜尋體驗是否有問題，需補設追蹤後才能判斷</li>
+      <li>站內使用搜尋的總行為量目前完全不可見</li>
     </div>
   </div>
 
@@ -335,11 +358,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </div>
     <div class="panel-chart-wrap"><canvas id="chart-c"></canvas></div>
     <div id="article-list-panel"></div>
-    <div class="insight" style="margin-top:12px;">
-      <strong>機會試算：</strong>若 10% 讀者在閱畢後點擊一篇推薦文章，每月可多增加 <strong>20 萬次</strong>頁面瀏覽，長期對訂閱轉換有正向效益。
+    <div class="fact-box" style="margin-top:12px;">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>高流量文章（單篇瀏覽 ≥ 3 萬）平均頁深為 1.06 頁/session，90天受影響瀏覽量共 600 萬</li>
+      <li>首頁頁深 2.5 頁/session，兩者差距達 1.44 頁</li>
+      <li>受影響文章以工具型內容為主（演唱會攻略、勞保薪資表、WBC 賽程等）</li>
     </div>
-    <div class="warn">
-      <strong>排第三的原因：</strong>需要推薦演算法或智慧標籤系統，IT 開發成本最高，且效果須數月才穩定。建議先以 #1、#2 建立改善信心後推進。
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>頁深低的原因：推測是文章底部缺乏有效引導，但也可能是用戶找到答案後本來就打算離開（工具型內容的自然行為）</li>
+      <li>機會試算：若 10% 讀者點擊推薦文章，每月可增加約 20 萬次瀏覽（假設值，非實測）</li>
+      <li>加入推薦內容後的實際點擊率，需上線後才能驗證</li>
+      <li>工具型文章的用戶是否有繼續閱讀的意願，目前未知</li>
     </div>
   </div>
 
@@ -358,8 +388,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <div class="panel-kpi blue"><div class="pv">559,880</div><div class="pl">90天瀏覽量</div></div>
     </div>
     <div class="panel-chart-wrap"><canvas id="chart-highlight"></canvas></div>
-    <div class="insight">
-      <strong>這組數字可作為改善目標：</strong>404頁、搜尋頁、功能頁若能達到首頁水準（跳出率25%、參與48秒），每月可回收大量流失 sessions。
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>首頁跳出率 24.7%、參與時間 48 秒、頁深 2.5 頁，為全站表現最佳的頁面之一</li>
+      <li>404 頁停留 5 秒、搜尋頁停留 6 秒，與首頁差距顯著</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>以首頁數據作為改版目標是參考值，問題頁面改版後能否達到首頁水準，需實測後才能確認</li>
     </div>
     <table class="compare-table">
       <tr><th>頁面</th><th>跳出率</th><th>參與時間</th><th>頁深/session</th></tr>
@@ -390,11 +426,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <tr><td>💻 電腦</td><td>283萬</td><td class="mid">32.3%</td><td class="bad">52.1%</td><td>90秒</td></tr>
       <tr><td>📟 平板</td><td>12.3萬</td><td class="gray">1.4%</td><td class="good">76.3%</td><td>114秒</td></tr>
     </table>
-    <div class="insight">
-      <strong>對改版的影響：</strong>404 頁面與文章引導改版應以<strong>手機版為優先設計</strong>，65% 的用戶在手機上瀏覽，且手機參與度（68.8%）高於電腦（52.1%），代表手機用戶黏著意願更強，設計好就能有效留住。
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>手機用戶佔 65.6%、電腦 32.3%、平板 1.4%</li>
+      <li>手機參與度 68.8%，高於電腦 52.1%</li>
+      <li>三種裝置參與時間相近（手機 92 秒、電腦 90 秒、平板 114 秒）</li>
     </div>
-    <div class="insight">
-      <strong>電腦版參與度偏低（52.1%）值得關注：</strong>電腦用戶佔 32%，但參與度明顯低於手機，可能是電腦版 UI 或內容版型有改善空間。
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>手機參與度較高，推測手機用戶黏著意願較強，但也可能是內容類型或來源不同所致，需進一步分析</li>
+      <li>電腦版參與度偏低（52.1%），可能是 UI 或版型問題，目前無法確認根因</li>
+      <li>建議改版以手機版優先，但仍需同步確保電腦版品質</li>
     </div>
   </div>
 
@@ -421,11 +463,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <tr><td>📧 電子報</td><td>16.2萬</td><td class="mid">32.8%</td><td class="good">110秒</td></tr>
       <tr><td>📱 App Banner</td><td>11.4萬</td><td class="bad">82.0%</td><td class="bad">7秒</td></tr>
     </table>
-    <div class="insight">
-      <strong>直接流量跳出率 55% 值得關注：</strong>直接輸入網址是第二大來源（393萬瀏覽），跳出率 55% 明顯高於 Google 自然搜尋（28%）。目前尚未確認流失原因，需進一步交叉分析才能判斷。
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>Google 自然搜尋為最大來源（990萬瀏覽），跳出率 28.2%，參與時間 62 秒</li>
+      <li>直接輸入為第二大來源（393萬瀏覽），跳出率 55.2%，參與時間 41 秒</li>
+      <li>電子報流量最小（16.2萬），但參與時間最長（110 秒）</li>
+      <li>App Banner 跳出率最高（82%），參與時間 7 秒</li>
     </div>
-    <div class="insight">
-      <strong>電子報是黏著度最高的來源：</strong>參與時間 110 秒，遠高於其他來源，但流量只有 16 萬。若擴大電子報訂閱，對整體黏著度有直接正向效益。
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>直接流量跳出率偏高的原因目前不明，需交叉分析到達頁面才能判斷</li>
+      <li>電子報參與時間高，推測訂閱用戶黏著度較高，但擴大電子報規模後是否維持相同品質，尚不確定</li>
+      <li>App Banner 高跳出屬 App 流程導流，非網站本身問題（已確認排除在本次分析範圍）</li>
     </div>
   </div>
 
