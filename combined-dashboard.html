@@ -134,7 +134,8 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
   <h1>APP 數據總覽｜商業周刊</h1>
   <p>資料期間：2026/02/01 – 2026/04/30（89 天）｜來源：GA4 / Firebase + 數據同事 Excel</p>
   <div class="tabs">
-    <button class="tab active" onclick="switchTab('overview')">總覽</button>
+    <button class="tab active" onclick="switchTab('report')">主管報告</button>
+    <button class="tab" onclick="switchTab('overview')">總覽</button>
     <button class="tab" onclick="switchTab('waterfall')">瀑布流分析</button>
     <button class="tab" onclick="switchTab('firebase')">用戶行為</button>
     <button class="tab" onclick="switchTab('deep')">深度分析</button>
@@ -145,6 +146,127 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
 </header>
 
 <div class="container">
+
+  <!-- ====== 主管報告 ====== -->
+  <div id="panel-report" class="panel active">
+    <div style="max-width:780px;margin:0 auto">
+
+      <!-- 標題區 -->
+      <div style="background:white;border-radius:12px;padding:32px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:16px">
+        <div style="font-size:11px;color:#8892b0;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">研究報告</div>
+        <div style="font-size:24px;font-weight:700;color:#1a1a2e;margin-bottom:8px">App 廣編文自然流量提升研究</div>
+        <div style="font-size:13px;color:#8892b0">分析期間：2026/02/01 – 2026/04/30　｜　資料來源：GA4 / Firebase、瀑布流 Excel、Power BI PB-R005　｜　2026-05-21</div>
+      </div>
+
+      <!-- 研究背景 -->
+      <div style="background:white;border-radius:12px;padding:24px 28px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:#0f3460;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid #f0f2f5">一、研究背景與目標</div>
+        <div style="font-size:13px;color:#444;line-height:1.9">
+          廣編文是主要的業務收入來源之一，但目前 App 端的廣編文自然流量極低。本研究透過分析 App 用戶行為數據、瀑布流流量數據與 Web 廣編文基準，找出 App 廣編文自然流量不足的原因，並提出可執行的優化方向。
+        </div>
+      </div>
+
+      <!-- 現況數字 -->
+      <div style="background:white;border-radius:12px;padding:24px 28px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:#0f3460;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #f0f2f5">二、現況關鍵數字</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+          <div style="background:#f8f9ff;border-radius:10px;padding:16px;text-align:center">
+            <div style="font-size:28px;font-weight:700;color:#0f3460">2.4%</div>
+            <div style="font-size:12px;color:#555;margin-top:4px">廣編文流量來自 App<br>（Web 佔 97.6%）</div>
+          </div>
+          <div style="background:#fff5f5;border-radius:10px;padding:16px;text-align:center">
+            <div style="font-size:28px;font-weight:700;color:#e17055">10.9%</div>
+            <div style="font-size:12px;color:#555;margin-top:4px">近三週廣編文達標率<br>（目標：3,000 PV）</div>
+          </div>
+          <div style="background:#f0fff8;border-radius:10px;padding:16px;text-align:center">
+            <div style="font-size:28px;font-weight:700;color:#00b894">49.5%</div>
+            <div style="font-size:12px;color:#555;margin-top:4px">App 瀑布流佔整體 PV<br>（最大自然流量入口）</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:12px 16px;background:#fff8e6;border-radius:8px;font-size:12px;color:#7d5a00;line-height:1.7">
+          App 廣編文估算日均只有約 <strong>88 PV</strong>，相比 Web 端的 <strong>3,591 PV</strong>，差距達 40 倍。App 端廣編文曝光機制是目前最需要改善的環節。
+        </div>
+      </div>
+
+      <!-- 三個核心發現 -->
+      <div style="background:white;border-radius:12px;padding:24px 28px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:#0f3460;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #f0f2f5">三、核心發現</div>
+
+        <div style="margin-bottom:16px">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="background:#0f3460;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;flex-shrink:0;margin-top:1px">發現 1</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;margin-bottom:4px">廣編文在 App 沒有固定曝光位，完全靠排序自然出現</div>
+              <div style="font-size:12px;color:#555;line-height:1.7">廣編文目前混在一般文章流中，位置不可控。首頁個人化推薦模組只推雜誌文章，廣編文未被納入。用戶在首頁停留只有 3.6 分鐘，若廣編文排位靠後，幾乎沒有曝光機會。</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:16px">
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="background:#6c63ff;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;flex-shrink:0;margin-top:1px">發現 2</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;margin-bottom:4px">瀑布流是廣編文最有效的自然觸及管道，但 App 端比例持續下滑</div>
+              <div style="font-size:12px;color:#555;line-height:1.7">Web 端瀑布流貢獻廣編文內部流量的 62%，是最大單一來源。但 App 瀑布流 UU 佔比從 2 月的 36.2% 降至 4 月的 32.8%，代表走瀑布流的用戶比例正在減少，廣編文的自然曝光機會也隨之縮小。</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="display:flex;align-items:flex-start;gap:12px">
+            <div style="background:#00b894;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;flex-shrink:0;margin-top:1px">發現 3</div>
+            <div>
+              <div style="font-size:13px;font-weight:700;margin-bottom:4px">高表現廣編文有 30% 流量來自 Google 搜尋，但 App 搜尋幾乎無人使用</div>
+              <div style="font-size:12px;color:#555;line-height:1.7">Web 端表現最好的廣編文（如泰利福、New Balance）有 30% 以上的流量來自 Google 自然搜尋。但 App 內建搜尋 89 天只有 98 次使用，代表 App 用戶不會主動搜尋廣編文，必須靠被動曝光（瀑布流、首頁推薦）才能觸及。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 已確認行動 -->
+      <div style="background:white;border-radius:12px;padding:24px 28px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:#0f3460;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #f0f2f5">四、已確認執行</div>
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px 16px;background:#eafff5;border-radius:10px">
+          <div style="font-size:18px;flex-shrink:0">✅</div>
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:4px">免費文章瀑布流第 2 篇固定放廣編文（開發中）</div>
+            <div style="font-size:12px;color:#555;line-height:1.7">確保每次用戶滑瀑布流，必定觸及廣編文一次。預計可大幅提升 App 廣編文日均 PV，從目前估算的 88 次往 Web 端的 3,591 次基準靠近。<br><strong>上線後追蹤：</strong>App 廣編文日均 PV、廣編文達標率變化。</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 建議行動 -->
+      <div style="background:white;border-radius:12px;padding:24px 28px;box-shadow:0 1px 4px rgba(0,0,0,0.07);margin-bottom:12px">
+        <div style="font-size:13px;font-weight:700;color:#0f3460;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #f0f2f5">五、建議下一步行動</div>
+
+        <div style="margin-bottom:10px;display:flex;align-items:flex-start;gap:10px">
+          <span style="background:#e17055;color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;flex-shrink:0;margin-top:1px">立即可做</span>
+          <div style="font-size:13px;color:#444;line-height:1.7">廣編文排入各分類前 3 篇，並優先在<strong>週六</strong>上稿（數據顯示週六瀑布流佔比最高，達 37.8%）</div>
+        </div>
+
+        <div style="margin-bottom:10px;display:flex;align-items:flex-start;gap:10px">
+          <span style="background:#fdcb6e;color:#7d5a00;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;flex-shrink:0;margin-top:1px">中期</span>
+          <div style="font-size:13px;color:#444;line-height:1.7">首頁個人化推薦模組納入廣編文邏輯（需 IT 配合），讓廣編文能被推薦給相關偏好的用戶</div>
+        </div>
+
+        <div style="margin-bottom:10px;display:flex;align-items:flex-start;gap:10px">
+          <span style="background:#fdcb6e;color:#7d5a00;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;flex-shrink:0;margin-top:1px">中期</span>
+          <div style="font-size:13px;color:#444;line-height:1.7">文章閱讀完後加入廣編文延伸推薦（用戶在文章頁平均停留 33 分鐘，是最高投入時刻）</div>
+        </div>
+
+        <div style="display:flex;align-items:flex-start;gap:10px">
+          <span style="background:#b2bec3;color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;flex-shrink:0;margin-top:1px">待規劃</span>
+          <div style="font-size:13px;color:#444;line-height:1.7">請 IT 在首頁各模組加入點擊追蹤，才能量化廣編文在不同入口的曝光與點擊效益</div>
+        </div>
+      </div>
+
+      <!-- 數據限制說明 -->
+      <div style="background:#f8f9ff;border-radius:12px;padding:16px 20px;font-size:12px;color:#888;line-height:1.7;margin-bottom:4px">
+        <strong style="color:#555">數據說明：</strong>本研究的 App 廣編文流量為估算值（基於廣編文 App:Web 佔比 2.4%:97.6%），非直接追蹤數字。App 端廣編文的獨立追蹤事件目前尚未建立，建議隨瀑布流第 2 篇功能上線同步埋入追蹤事件，以取得精確數據。
+      </div>
+
+    </div>
+  </div>
 
   <!-- ====== TAB 1: 總覽 ====== -->
   <div id="panel-overview" class="panel active">
