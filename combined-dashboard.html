@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>APP 數據總覽 | 商業周刊 2026/02–04</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: #f0f2f5; color: #1a1a2e; }
+
+header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+  color: white; padding: 24px 32px 0;
+}
+header h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+header p { font-size: 12px; color: #8892b0; margin-bottom: 16px; }
+
+/* Tabs */
+.tabs { display: flex; gap: 4px; }
+.tab {
+  padding: 10px 20px; font-size: 13px; font-weight: 600;
+  color: rgba(255,255,255,0.5); cursor: pointer; border-radius: 8px 8px 0 0;
+  border: none; background: transparent; transition: all 0.2s;
+}
+.tab:hover { color: rgba(255,255,255,0.8); }
+.tab.active { background: #f0f2f5; color: #1a1a2e; }
+
+/* Content */
+.container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+.section-title {
+  font-size: 11px; font-weight: 700; color: #8892b0;
+  letter-spacing: 1px; text-transform: uppercase; margin: 24px 0 12px;
+}
+.section-title:first-child { margin-top: 0; }
+
+/* KPI */
+.kpi-grid { display: grid; gap: 14px; }
+.kpi-4 { grid-template-columns: repeat(4, 1fr); }
+.kpi-3 { grid-template-columns: repeat(3, 1fr); }
+.kpi-card {
+  background: white; border-radius: 12px; padding: 18px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #6c63ff;
+}
+.kpi-card.green { border-top-color: #00b894; }
+.kpi-card.orange { border-top-color: #e17055; }
+.kpi-card.yellow { border-top-color: #fdcb6e; }
+.kpi-card.blue { border-top-color: #0f3460; }
+.kpi-card.red { border-top-color: #d63031; }
+.kpi-label { font-size: 11px; color: #8892b0; margin-bottom: 8px; }
+.kpi-value { font-size: 26px; font-weight: 700; line-height: 1; }
+.kpi-sub { font-size: 11px; color: #aaa; margin-top: 5px; }
+.badge {
+  display: inline-block; font-size: 10px; font-weight: 600;
+  padding: 2px 7px; border-radius: 99px; margin-top: 6px;
+}
+.badge-down { background: #ffeaea; color: #d63031; }
+.badge-up { background: #eafff5; color: #00b894; }
+.badge-warn { background: #fff8e6; color: #b7791f; }
+
+/* Chart cards */
+.chart-card {
+  background: white; border-radius: 12px; padding: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.07); margin-bottom: 16px;
+}
+.chart-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.chart-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+.chart-subtitle { font-size: 12px; color: #8892b0; margin-bottom: 14px; }
+
+/* Alert */
+.alert {
+  background: #fff8e6; border-left: 4px solid #fdcb6e;
+  border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+  font-size: 13px; color: #555; line-height: 1.7;
+}
+.alert strong { color: #1a1a2e; }
+
+/* Insight grid */
+.insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+.insight-card { background: white; border-radius: 12px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.insight-icon { font-size: 22px; margin-bottom: 8px; }
+.insight-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.insight-text { font-size: 12px; color: #555; line-height: 1.7; }
+.insight-text strong { color: #0f3460; }
+
+/* Bar rows */
+.bar-row { display: flex; align-items: center; gap: 10px; padding: 7px 0; border-bottom: 1px solid #f6f6f6; }
+.bar-row:last-child { border-bottom: none; }
+.bar-label { font-size: 12px; color: #333; width: 200px; flex-shrink: 0; font-family: monospace; }
+.bar-wrap { flex: 1; background: #f0f2f5; border-radius: 99px; height: 8px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 99px; }
+.bar-val { font-size: 12px; font-weight: 600; color: #555; width: 80px; text-align: right; flex-shrink: 0; }
+.tag { font-size: 10px; padding: 1px 6px; border-radius: 99px; font-weight: 600; flex-shrink: 0; }
+.tag-push { background: #ffeaa7; color: #b7791f; }
+.tag-content { background: #e0f7f0; color: #00796b; }
+.tag-nav { background: #ede7f6; color: #5e35b1; }
+
+/* Compare bars */
+.compare-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.compare-label { font-size: 12px; color: #555; width: 40px; flex-shrink: 0; }
+.compare-bar-wrap { flex: 1; background: #f0f2f5; border-radius: 99px; height: 10px; overflow: hidden; }
+.compare-bar { height: 100%; border-radius: 99px; }
+.compare-val { font-size: 12px; font-weight: 600; color: #1a1a2e; width: 48px; text-align: right; flex-shrink: 0; }
+
+/* Funnel */
+.funnel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.funnel-label { font-size: 12px; color: #555; width: 70px; flex-shrink: 0; }
+.funnel-bar-wrap { flex: 1; background: #f0f2f5; border-radius: 99px; height: 10px; overflow: hidden; }
+.funnel-bar { height: 100%; border-radius: 99px; }
+.funnel-val { font-size: 12px; font-weight: 600; width: 100px; text-align: right; }
+
+/* Channel table */
+.ch-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.ch-table th { text-align: left; padding: 8px 10px; border-bottom: 2px solid #f0f2f5; color: #8892b0; font-size: 11px; font-weight: 600; }
+.ch-table td { padding: 9px 10px; border-bottom: 1px solid #f6f6f6; }
+.ch-table tr:last-child td { border-bottom: none; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+
+footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
+
+@media (max-width: 768px) {
+  .kpi-4, .kpi-3 { grid-template-columns: repeat(2, 1fr); }
+  .chart-grid-2 { grid-template-columns: 1fr; }
+  .insight-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>APP 數據總覽｜商業周刊</h1>
+  <p>資料期間：2026/02/01 – 2026/04/30（89 天）｜來源：GA4 / Firebase + 數據同事 Excel</p>
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('overview')">總覽</button>
+    <button class="tab" onclick="switchTab('waterfall')">瀑布流分析</button>
+    <button class="tab" onclick="switchTab('firebase')">用戶行為</button>
+    <button class="tab" onclick="switchTab('insights')">關鍵洞察</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- ====== TAB 1: 總覽 ====== -->
+  <div id="panel-overview" class="panel active">
+
+    <div class="section-title">整體規模</div>
+    <div class="kpi-grid kpi-4" style="margin-bottom:16px">
+      <div class="kpi-card">
+        <div class="kpi-label">日均活躍用戶（DAU）</div>
+        <div class="kpi-value">3,464</div>
+        <div class="kpi-sub">人／天</div>
+        <span class="badge badge-up">Firebase 數據</span>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">月活躍用戶（MAU）</div>
+        <div class="kpi-value">~31,500</div>
+        <div class="kpi-sub">人（穩定期均值）</div>
+        <span class="badge badge-up">Firebase 數據</span>
+      </div>
+      <div class="kpi-card blue">
+        <div class="kpi-label">日均總訪客（UU）</div>
+        <div class="kpi-value">1,057</div>
+        <div class="kpi-sub">人／天</div>
+        <span class="badge badge-up">瀑布流 Excel</span>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">日均總瀏覽（PV）</div>
+        <div class="kpi-value">4,638</div>
+        <div class="kpi-sub">頁／天</div>
+        <span class="badge badge-up">瀑布流 Excel</span>
+      </div>
+    </div>
+
+    <div class="kpi-grid kpi-4" style="margin-bottom:16px">
+      <div class="kpi-card yellow">
+        <div class="kpi-label">平均每次使用參與時長</div>
+        <div class="kpi-value">4.7 分</div>
+        <div class="kpi-sub">約 280 秒／次</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">瀑布流 PV 佔比</div>
+        <div class="kpi-value">49.5%</div>
+        <div class="kpi-sub">近半數頁面瀏覽來自瀑布流</div>
+        <span class="badge badge-down">4月降至 48.8%</span>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">瀑布流 UU 佔比</div>
+        <div class="kpi-value">34.7%</div>
+        <div class="kpi-sub">連續 3 個月下滑</div>
+        <span class="badge badge-down">-3.4pp（2→4月）</span>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">主要用戶來源</div>
+        <div class="kpi-value">Direct</div>
+        <div class="kpi-sub">86% 直接開 App</div>
+      </div>
+    </div>
+
+    <div class="alert">
+      ⚡ <strong>3/8–3/9 出現爆量：DAU 從平均 3,400 暴增至 7,926 → 8,342（+145%）</strong>，但參與時長驟降至 99–111 秒（平日均值 280 秒）。大批用戶快速進來又快速離開，建議確認當天是否有行銷活動或外部曝光。
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">每日訪客趨勢（DAU vs UU）</div>
+      <div class="chart-subtitle">Firebase DAU 含所有用戶；Excel UU 為瀑布流數據的基礎母體</div>
+      <div style="position:relative;height:200px">
+        <canvas id="overviewTrendChart"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ====== TAB 2: 瀑布流 ====== -->
+  <div id="panel-waterfall" class="panel">
+
+    <div class="kpi-grid kpi-4" style="margin-bottom:16px">
+      <div class="kpi-card">
+        <div class="kpi-label">日均總UU</div>
+        <div class="kpi-value">1,057</div>
+        <div class="kpi-sub">2月→4月 +7.4%</div>
+        <span class="badge badge-up">成長中</span>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">日均瀑布流UU</div>
+        <div class="kpi-value">359</div>
+        <div class="kpi-sub">2月→4月 -2.7%</div>
+        <span class="badge badge-down">萎縮中</span>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">瀑布流 PV 佔比</div>
+        <div class="kpi-value">49.5%</div>
+        <div class="kpi-sub">最大單一流量入口</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">瀑布流人均 PV</div>
+        <div class="kpi-value">6.5 頁</div>
+        <div class="kpi-sub">整體人均 4.5 頁（+44%）</div>
+        <span class="badge badge-up">高黏著度</span>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">每日總 UU vs 瀑布流 UU</div>
+      <div class="chart-subtitle">總量成長，但瀑布流量未同步上升</div>
+      <div style="position:relative;height:200px">
+        <canvas id="waterfallUUChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-grid-2">
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">瀑布流 UU 佔比趨勢</div>
+        <div class="chart-subtitle">3 個月連續下滑（36.2% → 32.8%）</div>
+        <div style="position:relative;height:190px">
+          <canvas id="waterfallRateChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">逐月對比</div>
+        <div class="chart-subtitle">總 UU 成長，瀑布流 UU 反而微跌</div>
+        <div style="position:relative;height:190px">
+          <canvas id="monthlyBarChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px" class="chart-grid-2">
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">人均瀏覽頁數比較</div>
+        <div class="chart-subtitle">瀑布流用戶每人多看約 2 頁</div>
+        <div style="margin-top:12px">
+          <div style="font-size:12px;color:#8892b0;margin-bottom:10px">整體用戶</div>
+          <div class="compare-row"><div class="compare-label">2月</div><div class="compare-bar-wrap"><div class="compare-bar" style="width:67%;background:#6c63ff"></div></div><div class="compare-val">4.7 頁</div></div>
+          <div class="compare-row"><div class="compare-label">3月</div><div class="compare-bar-wrap"><div class="compare-bar" style="width:64%;background:#6c63ff"></div></div><div class="compare-val">4.5 頁</div></div>
+          <div class="compare-row"><div class="compare-label">4月</div><div class="compare-bar-wrap"><div class="compare-bar" style="width:63%;background:#6c63ff"></div></div><div class="compare-val">4.4 頁</div></div>
+          <div style="font-size:12px;color:#8892b0;margin-top:14px;margin-bottom:10px">瀑布流用戶</div>
+          <div class="compare-row"><div class="compare-label">2月</div><div class="compare-bar-wrap"><div class="compare-bar" style="width:96%;background:#00b894"></div></div><div class="compare-val">6.7 頁</div></div>
+          <div class="compare-row"><div class="compare-label">3月</div><div class="compare-bar-wrap"><div class="compare-bar" style="width:90%;background:#00b894"></div></div><div class="compare-val">6.3 頁</div></div>
+          <div class="compare-row"><div class="compare-label">4月</div><div class="compare-bar-wrap"><div class="compare-bar" style="width:94%;background:#00b894"></div></div><div class="compare-val">6.6 頁</div></div>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">平日 vs 週末</div>
+        <div class="chart-subtitle">週末人少但更愛刷瀑布流（+2.6%）</div>
+        <div style="position:relative;height:200px">
+          <canvas id="weekChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ====== TAB 3: 用戶行為 ====== -->
+  <div id="panel-firebase" class="panel">
+
+    <div class="kpi-grid kpi-4" style="margin-bottom:16px">
+      <div class="kpi-card blue">
+        <div class="kpi-label">日均 DAU</div>
+        <div class="kpi-value">3,464</div>
+        <div class="kpi-sub">人（排除爆量日）</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">平均參與時長</div>
+        <div class="kpi-value">4.7 分</div>
+        <div class="kpi-sub">280 秒／次</div>
+      </div>
+      <div class="kpi-card yellow">
+        <div class="kpi-label">推播點開率</div>
+        <div class="kpi-value">4.8%</div>
+        <div class="kpi-sub">關閉率高達 45.8%</div>
+        <span class="badge badge-warn">待優化</span>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">App 內搜尋次數</div>
+        <div class="kpi-value">98 次</div>
+        <div class="kpi-sub">89 天，幾乎沒人用</div>
+        <span class="badge badge-down">極低</span>
+      </div>
+    </div>
+
+    <div class="chart-grid-2">
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">每日 DAU 趨勢</div>
+        <div class="chart-subtitle">3/8–3/9 出現爆量，其他日穩定 3,000–3,800</div>
+        <div style="position:relative;height:190px">
+          <canvas id="dauChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">用戶來源管道</div>
+        <div class="chart-subtitle">Direct 86%；Organic Search 雖少但停留最久</div>
+        <div style="position:relative;height:190px">
+          <canvas id="channelChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:16px" class="chart-grid-2">
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">主要事件排行</div>
+        <div class="chart-subtitle">各類行為觸發次數（89 天累計）</div>
+        <div style="margin-top:10px">
+          <div class="bar-row"><div class="bar-label">screen_view</div><div class="bar-wrap"><div class="bar-fill" style="width:100%;background:#0f3460"></div></div><div class="bar-val">1,751,857</div><span class="tag tag-content">內容</span></div>
+          <div class="bar-row"><div class="bar-label">notification_receive</div><div class="bar-wrap"><div class="bar-fill" style="width:89%;background:#fdcb6e"></div></div><div class="bar-val">1,560,811</div><span class="tag tag-push">推播</span></div>
+          <div class="bar-row"><div class="bar-label">user_engagement</div><div class="bar-wrap"><div class="bar-fill" style="width:81%;background:#00b894"></div></div><div class="bar-val">1,422,308</div><span class="tag tag-content">互動</span></div>
+          <div class="bar-row"><div class="bar-label">notification_dismiss</div><div class="bar-wrap"><div class="bar-fill" style="width:41%;background:#e17055"></div></div><div class="bar-val">714,683</div><span class="tag tag-push">推播</span></div>
+          <div class="bar-row"><div class="bar-label">session_start</div><div class="bar-wrap"><div class="bar-fill" style="width:31%;background:#b2bec3"></div></div><div class="bar-val">538,126</div></div>
+          <div class="bar-row"><div class="bar-label">tabbar_home</div><div class="bar-wrap"><div class="bar-fill" style="width:29%;background:#5e35b1"></div></div><div class="bar-val">506,774</div><span class="tag tag-nav">導覽</span></div>
+          <div class="bar-row"><div class="bar-label">notification_open</div><div class="bar-wrap"><div class="bar-fill" style="width:4.3%;background:#00b894"></div></div><div class="bar-val">75,152</div><span class="tag tag-push">推播</span></div>
+          <div class="bar-row"><div class="bar-label">article_share</div><div class="bar-wrap"><div class="bar-fill" style="width:0.3%;background:#00b894"></div></div><div class="bar-val">5,261</div></div>
+          <div class="bar-row"><div class="bar-label" style="color:#e17055">search ⚠️</div><div class="bar-wrap"><div class="bar-fill" style="width:0.01%;background:#e17055"></div></div><div class="bar-val" style="color:#e17055">98</div></div>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">推播通知漏斗</div>
+        <div class="chart-subtitle">每 100 則推播，只有 5 人點開，46 人直接關掉</div>
+        <div style="margin-top:20px">
+          <div class="funnel-row">
+            <div class="funnel-label">收到推播</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;background:#0f3460"></div></div>
+            <div class="funnel-val" style="color:#0f3460">1,560,811</div>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-label">點開推播</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:4.8%;background:#00b894"></div></div>
+            <div class="funnel-val" style="color:#00b894">75,152（4.8%）</div>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-label">關掉推播</div>
+            <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:45.8%;background:#e17055"></div></div>
+            <div class="funnel-val" style="color:#e17055">714,683（45.8%）</div>
+          </div>
+        </div>
+        <div style="margin-top:20px">
+          <div class="chart-title" style="margin-bottom:10px">來源管道品質對比</div>
+          <table class="ch-table">
+            <thead><tr><th>來源</th><th>用戶數</th><th>平均停留</th><th>每人次數</th></tr></thead>
+            <tbody>
+              <tr><td><span class="dot" style="background:#0f3460"></span>Direct</td><td>111,247</td><td>16.9 分</td><td>3.98</td></tr>
+              <tr><td><span class="dot" style="background:#00b894"></span>Organic Search</td><td>8,110</td><td style="color:#e17055;font-weight:700">44.5 分 ⭐</td><td style="font-weight:700">10.56</td></tr>
+              <tr><td><span class="dot" style="background:#fdcb6e"></span>推播通知</td><td>2,992</td><td>14.8 分</td><td>4.11</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ====== TAB 4: 關鍵洞察 ====== -->
+  <div id="panel-insights" class="panel">
+
+    <div class="alert">
+      本頁整合瀑布流與 Firebase 兩份數據的核心發現，供報告使用。
+    </div>
+
+    <div class="section-title">現況警訊</div>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-icon">⚠️</div>
+        <div class="insight-title">瀑布流流量正在流失</div>
+        <div class="insight-text">
+          整體 UU 3 個月 <strong>+7.4%</strong>，但瀑布流 UU 卻 <strong>-2.7%</strong>。
+          新增流量沒有進入瀑布流，代表其他入口正在搶量。若廣編稿主要靠瀑布流曝光，自然流量會跟著縮水。
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">📲</div>
+        <div class="insight-title">推播效益低</div>
+        <div class="insight-text">
+          推播點開率只有 <strong>4.8%</strong>，關閉率高達 <strong>45.8%</strong>。
+          每發 100 則，有 46 人主動關掉。長期恐影響用戶對推播的容忍度，進而影響 App 黏著度。
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🔍</div>
+        <div class="insight-title">App 內搜尋幾乎沒人用</div>
+        <div class="insight-text">
+          89 天只有 <strong>98 次搜尋</strong>，平均一天不到 2 次。
+          代表廣編稿不能靠 App 內搜尋帶流量，必須依賴首頁推薦、瀑布流等被動曝光入口。
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">機會點</div>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-icon">⭐</div>
+        <div class="insight-title">瀑布流用戶是高品質讀者</div>
+        <div class="insight-text">
+          瀑布流用戶每人平均看 <strong>6.5 頁</strong>，比整體多 <strong>44%</strong>。
+          這群人黏著度高，是廣編稿最有價值的自然流量來源，應優先確保廣編稿在瀑布流中的曝光位置與頻率。
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🌐</div>
+        <div class="insight-title">Organic Search 用戶品質最高</div>
+        <div class="insight-text">
+          從 Google 搜尋進來的用戶平均停留 <strong>44.5 分鐘</strong>，是直接開 App 用戶的 <strong>2.6 倍</strong>。
+          雖然只佔 6%，但這群人對內容有高度需求，廣編稿若能出現在 App 首頁或推薦，更可能被深度閱讀。
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">📅</div>
+        <div class="insight-title">週末是廣編稿推廣好時機</div>
+        <div class="insight-text">
+          週末瀑布流 UU 佔比比平日高 <strong>+2.6%</strong>，用戶更傾向休閒瀏覽。
+          若廣編稿能在週末取得更好的瀑布流曝光位置，自然流量會比平日更高。
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title">待確認事項</div>
+    <div class="chart-card">
+      <div style="font-size:13px;line-height:2;color:#555">
+        <div>☐ &nbsp;<strong>廣編稿在 GA4 裡有沒有獨立標籤或 URL 規則？</strong>（問數據同事，才能從這份數據篩出廣編稿流量）</div>
+        <div>☐ &nbsp;<strong>3/8–3/9 爆量的原因是什麼？</strong>（確認是否有行銷活動，能否複製）</div>
+        <div>☐ &nbsp;<strong>瀑布流佔比下滑的原因？</strong>（是其他模組增加，還是瀑布流本身的觸及率降低？）</div>
+        <div>☐ &nbsp;<strong>廣編稿目前在瀑布流的曝光頻率是多少？</strong>（需要後台數據確認）</div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>APP 數據總覽 | 2026-05-21 製作｜商業周刊</footer>
+
+<script>
+const dates = ["02/01","02/02","02/03","02/04","02/05","02/06","02/07","02/08","02/09","02/10","02/11","02/12","02/13","02/14","02/15","02/16","02/17","02/18","02/19","02/20","02/21","02/22","02/23","02/24","02/25","02/26","02/27","02/28","03/01","03/02","03/03","03/04","03/05","03/06","03/07","03/08","03/09","03/10","03/11","03/12","03/13","03/14","03/15","03/16","03/17","03/18","03/19","03/20","03/21","03/22","03/23","03/24","03/25","03/26","03/27","03/28","03/29","03/30","03/31","04/01","04/02","04/03","04/04","04/05","04/06","04/07","04/08","04/09","04/10","04/11","04/12","04/13","04/14","04/15","04/16","04/17","04/18","04/19","04/20","04/21","04/22","04/23","04/24","04/25","04/26","04/27","04/28","04/29","04/30"];
+const dau = [3335,3178,3636,3682,3735,3265,3154,3308,3330,3476,3927,3623,3191,3033,2820,2606,3035,2753,2880,2800,3020,3380,3431,3481,3494,3784,3584,3339,3373,3521,3706,3158,3477,3260,3201,3242,7926,8342,3777,3671,3392,3120,3115,3179,3767,3193,3838,3550,3189,3329,3455,3652,3539,3788,3335,3168,4123,3433,3689,3333,3429,3058,3033,3087,3179,3537,3459,3983,3459,3301,3593,3722,3633,3413,3494,3479,3510,3266,3186,3450,3507,3355,3112,2906,3101,3275,3455,3249,3458];
+const totalUU = [1300,947,1175,1471,1463,978,883,887,1230,984,1412,920,1033,1065,759,770,960,651,576,801,645,1196,1239,897,1242,867,1425,911,1261,1397,1280,1033,695,723,1018,1124,1336,881,1502,1155,1022,724,725,940,1355,898,836,989,847,1242,1166,1152,1333,930,1079,786,1206,1020,751,1086,953,1051,744,1133,859,676,1134,1067,1067,1019,1627,1677,1180,1207,1023,1405,1365,827,1042,1197,1451,1038,893,711,690,1221,1181,1245,1230];
+const waterfallUU = [375,374,429,490,414,352,345,356,437,403,374,320,281,301,294,268,329,261,273,312,279,448,491,381,416,324,485,334,441,470,421,437,281,308,352,411,410,355,443,331,358,331,335,361,454,370,343,323,338,323,318,311,452,331,316,322,404,308,219,253,220,269,307,353,338,296,345,349,404,371,444,444,429,425,303,420,391,340,361,427,487,323,289,277,266,375,341,407,324];
+const waterfallRate = [28.8,39.5,36.5,33.3,28.3,36.0,39.1,40.1,35.5,41.0,26.5,34.8,27.2,28.3,38.7,34.8,34.3,40.1,47.4,39.0,43.3,37.5,39.6,42.5,33.5,37.4,34.0,36.7,35.0,33.6,32.9,42.3,40.4,42.6,34.6,36.6,30.7,40.3,29.5,28.7,35.0,45.7,46.2,38.4,33.5,41.2,41.0,32.7,39.9,26.0,27.3,27.0,33.9,35.6,29.3,41.0,33.5,30.2,29.2,23.3,23.1,25.6,41.3,31.2,39.3,43.8,30.4,32.7,37.9,36.4,27.3,26.5,36.4,35.2,29.6,29.9,28.6,41.1,34.6,35.7,33.6,31.1,32.4,39.0,38.6,30.7,28.9,32.7,26.3];
+
+const base = { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ labels:{ font:{size:11}, boxWidth:10 }}}};
+
+// Tab switching
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('panel-' + name).classList.add('active');
+  // Lazy init charts
+  if (name === 'waterfall' && !window._wInit) { initWaterfall(); window._wInit = true; }
+  if (name === 'firebase' && !window._fInit) { initFirebase(); window._fInit = true; }
+}
+
+// Overview chart
+new Chart(document.getElementById('overviewTrendChart'), {
+  type: 'line',
+  data: { labels: dates, datasets: [
+    { label: 'DAU（Firebase）', data: dau, borderColor:'#0f3460', backgroundColor:'rgba(15,52,96,0.07)', fill:true, tension:0.3, pointRadius:0, borderWidth:2 },
+    { label: 'UU（Excel）', data: totalUU, borderColor:'#00b894', backgroundColor:'rgba(0,184,148,0.07)', fill:true, tension:0.3, pointRadius:0, borderWidth:2 },
+  ]},
+  options: { ...base, scales:{ x:{ ticks:{ maxTicksLimit:12, font:{size:11}}, grid:{display:false}}, y:{ ticks:{font:{size:11}}, grid:{color:'#f0f2f5'}}}}
+});
+
+function initWaterfall() {
+  new Chart(document.getElementById('waterfallUUChart'), {
+    type:'line', data:{ labels:dates, datasets:[
+      { label:'總UU', data:totalUU, borderColor:'#6c63ff', backgroundColor:'rgba(108,99,255,0.07)', fill:true, tension:0.3, pointRadius:0, borderWidth:2 },
+      { label:'瀑布流UU', data:waterfallUU, borderColor:'#00b894', backgroundColor:'rgba(0,184,148,0.07)', fill:true, tension:0.3, pointRadius:0, borderWidth:2 },
+    ]},
+    options:{ ...base, scales:{ x:{ ticks:{maxTicksLimit:12,font:{size:11}}, grid:{display:false}}, y:{ticks:{font:{size:11}}, grid:{color:'#f0f2f5'}}}}
+  });
+  new Chart(document.getElementById('waterfallRateChart'), {
+    type:'line', data:{ labels:dates, datasets:[{ label:'瀑布流UU佔比%', data:waterfallRate, borderColor:'#e74c3c', backgroundColor:'rgba(231,76,60,0.07)', fill:true, tension:0.3, pointRadius:0, borderWidth:2 }]},
+    options:{ ...base, scales:{ x:{ticks:{maxTicksLimit:10,font:{size:11}}, grid:{display:false}}, y:{ticks:{font:{size:11}, callback:v=>v+'%'}, grid:{color:'#f0f2f5'}, min:20, max:55}}}
+  });
+  new Chart(document.getElementById('monthlyBarChart'), {
+    type:'bar', data:{ labels:['2月','3月','4月'], datasets:[
+      { label:'日均總UU', data:[1024,1045,1100], backgroundColor:'rgba(108,99,255,0.8)', borderRadius:6 },
+      { label:'日均瀑布UU', data:[362,361,353], backgroundColor:'rgba(0,184,148,0.8)', borderRadius:6 },
+    ]},
+    options:{ ...base, scales:{ x:{ticks:{font:{size:12}}, grid:{display:false}}, y:{ticks:{font:{size:11}}, grid:{color:'#f0f2f5'}}}}
+  });
+  new Chart(document.getElementById('weekChart'), {
+    type:'bar', data:{ labels:['日均UU','瀑布UU佔比%','瀑布PV佔比%'], datasets:[
+      { label:'平日', data:[1084,34.0,49.1], backgroundColor:'rgba(108,99,255,0.8)', borderRadius:6 },
+      { label:'週末', data:[988,36.6,50.6], backgroundColor:'rgba(243,156,18,0.8)', borderRadius:6 },
+    ]},
+    options:{ ...base, scales:{ x:{ticks:{font:{size:11}}, grid:{display:false}}, y:{ticks:{font:{size:11}}, grid:{color:'#f0f2f5'}}}}
+  });
+}
+
+function initFirebase() {
+  new Chart(document.getElementById('dauChart'), {
+    type:'line', data:{ labels:dates, datasets:[{ label:'DAU', data:dau, borderColor:'#0f3460', backgroundColor:'rgba(15,52,96,0.08)', fill:true, tension:0.3, pointRadius:0, borderWidth:2 }]},
+    options:{ ...base, scales:{ x:{ticks:{maxTicksLimit:12,font:{size:11}}, grid:{display:false}}, y:{ticks:{font:{size:11}}, grid:{color:'#f0f2f5'}, min:0}}}
+  });
+  new Chart(document.getElementById('channelChart'), {
+    type:'doughnut', data:{
+      labels:['Direct','Organic Search','推播通知','其他'],
+      datasets:[{ data:[111247,8110,2992,2665], backgroundColor:['#0f3460','#00b894','#fdcb6e','#b2bec3'], borderWidth:0, hoverOffset:6 }]
+    },
+    options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{ font:{size:11}, boxWidth:12, padding:8 }}}}
+  });
+}
+</script>
+</body>
+</html>
