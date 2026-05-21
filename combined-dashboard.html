@@ -913,6 +913,67 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
       2. 文章被點擊時的來源模組（從哪個區塊進入的）
     </div>
 
+    <!-- 題目二：瀑布流佔比下滑研究 -->
+    <div class="section-title" style="margin-top:20px">【題目二研究】瀑布流 UU 佔比下滑原因</div>
+    <div class="alert" style="margin-bottom:16px">
+      瀑布流 UU 佔比從 2 月 36.2% 降至 4 月 32.8%，累計下滑 <strong>3.4 個百分點</strong>。以下為目前調查進度與假說。
+    </div>
+
+    <div class="chart-grid-2" style="margin-bottom:16px">
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">下滑時間軸</div>
+        <div class="chart-subtitle">3 月之後佔比永久降低，未曾回升</div>
+        <div style="position:relative;height:200px">
+          <canvas id="declineChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">已排除的原因</div>
+        <div class="chart-subtitle">以下兩個假說已透過數據驗證並排除</div>
+        <div style="margin-top:14px">
+          <div style="display:flex;gap:10px;padding:12px;background:#eafff5;border-radius:8px;margin-bottom:10px">
+            <div style="font-size:16px;flex-shrink:0">✅</div>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:#00695c">排除：3/8–3/9 爆量造成的</div>
+              <div style="font-size:12px;color:#555;margin-top:3px;line-height:1.6">移除爆量兩天後，月均值差距只有 <strong>0.0–0.1 個百分點</strong>，幾乎沒有影響。下滑是獨立發生的。</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;padding:12px;background:#eafff5;border-radius:8px">
+            <div style="font-size:16px;flex-shrink:0">✅</div>
+            <div>
+              <div style="font-size:12px;font-weight:700;color:#00695c">排除：單純的週末效應</div>
+              <div style="font-size:12px;color:#555;margin-top:3px;line-height:1.6">週末佔比確實較高，但 3 個月的下滑趨勢在平日和週末同樣存在，不是週期性因素。</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-bottom:16px">
+      <div class="chart-title">目前待確認的假說</div>
+      <div class="chart-subtitle">需要額外數據才能驗證</div>
+      <div style="margin-top:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+        <div style="background:#fff8e6;border-radius:8px;padding:14px">
+          <div style="font-size:11px;font-weight:700;color:#b7791f;margin-bottom:6px">假說 A　待確認</div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">首頁新增模組稀釋瀑布流</div>
+          <div style="font-size:12px;color:#555;line-height:1.7">若 3 月前後首頁新增了其他推薦區塊，用戶注意力被分散，不再需要滑到瀑布流。</div>
+          <div style="font-size:11px;color:#b7791f;margin-top:8px">驗證需要：首頁各模組的點擊事件（IT 埋點）</div>
+        </div>
+        <div style="background:#fff8e6;border-radius:8px;padding:14px">
+          <div style="font-size:11px;font-weight:700;color:#b7791f;margin-bottom:6px">假說 B　待確認</div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">內容排序演算法改變</div>
+          <div style="font-size:12px;color:#555;line-height:1.7">若 3 月前後推薦演算法調整，讓某類內容更容易被提前看到，瀑布流的吸引力下降。</div>
+          <div style="font-size:11px;color:#b7791f;margin-top:8px">驗證需要：演算法版本紀錄（問 IT）</div>
+        </div>
+        <div style="background:#fff8e6;border-radius:8px;padding:14px">
+          <div style="font-size:11px;font-weight:700;color:#b7791f;margin-bottom:6px">假說 C　待確認</div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">新用戶結構改變行為均值</div>
+          <div style="font-size:12px;color:#555;line-height:1.7">3 月後 MAU 穩定在 4 萬（原 3.1 萬），這批新用戶對瀑布流的使用習慣若低於老用戶，會長期稀釋整體佔比。</div>
+          <div style="font-size:11px;color:#b7791f;margin-top:8px">驗證需要：新舊用戶的瀑布流行為分群</div>
+        </div>
+      </div>
+    </div>
+
     <div class="section-title" style="margin-top:4px">廣編稿自然流量提升建議</div>
     <div class="insight-grid">
       <div class="insight-card">
@@ -1514,6 +1575,19 @@ function initDeep() {
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
+  });
+
+  // Decline chart
+  new Chart(document.getElementById('declineChart'), {
+    type: 'line',
+    data: {
+      labels: ["02/01","02/02","02/03","02/04","02/05","02/06","02/07","02/08","02/09","02/10","02/11","02/12","02/13","02/14","02/15","02/16","02/17","02/18","02/19","02/20","02/21","02/22","02/23","02/24","02/25","02/26","02/27","02/28","03/01","03/02","03/03","03/04","03/05","03/06","03/07","03/08","03/09","03/10","03/11","03/12","03/13","03/14","03/15","03/16","03/17","03/18","03/19","03/20","03/21","03/22","03/23","03/24","03/25","03/26","03/27","03/28","03/29","03/30","03/31","04/01","04/02","04/03","04/04","04/05","04/06","04/07","04/08","04/09","04/10","04/11","04/12","04/13","04/14","04/15","04/16","04/17","04/18","04/19","04/20","04/21","04/22","04/23","04/24","04/25","04/26","04/27","04/28","04/29","04/30"],
+      datasets: [
+        { label: '瀑布UU佔比%', data: [28.8,39.5,36.5,33.3,28.3,36.0,39.1,40.1,35.5,41.0,26.5,34.8,27.2,28.3,38.7,34.8,34.3,40.1,47.4,39.0,43.3,37.5,39.6,42.5,33.5,37.4,34.0,36.7,35.0,33.6,32.9,42.3,40.4,42.6,34.6,36.6,30.7,40.3,29.5,28.7,35.0,45.7,46.2,38.4,33.5,41.2,41.0,32.7,39.9,26.0,27.3,27.0,33.9,35.6,29.3,41.0,33.5,30.2,29.2,23.3,23.1,25.6,41.3,31.2,39.3,43.8,30.4,32.7,37.9,36.4,27.3,26.5,36.4,35.2,29.6,29.9,28.6,41.1,34.6,35.7,33.6,31.1,32.4,39.0,38.6,30.7,28.9,32.7,26.3], borderColor:'#e74c3c', backgroundColor:'rgba(231,76,60,0.06)', fill:true, tension:0.3, pointRadius:0, borderWidth:2 },
+        { label: '月均線', data: Array(28).fill(36.2).concat(Array(31).fill(35.3)).concat(Array(30).fill(32.8)), borderColor:'#0f3460', borderDash:[6,3], tension:0, pointRadius:0, borderWidth:2, fill:false },
+      ]
+    },
+    options: { ...base, scales: { x:{ticks:{maxTicksLimit:10,font:{size:10}},grid:{display:false}}, y:{ticks:{font:{size:11},callback:v=>v+'%'},grid:{color:'#f0f2f5'},min:20,max:55} } }
   });
 
   // Tab distribution chart
