@@ -144,15 +144,25 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .article-row .ar-title{flex:1;line-height:1.4;}
 .article-row .ar-chips{display:flex;gap:4px;flex-shrink:0;}
 
+/* 手機模式切換列 */
+.mobile-mode-bar{display:none;background:#1a365d;padding:8px 16px;gap:8px;}
+.mobile-mode-bar .mode-btn{flex:1;padding:9px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;background:rgba(255,255,255,.15);color:rgba(255,255,255,.7);transition:all .2s;}
+.mobile-mode-bar .mode-btn.active{background:#fff;color:#1a365d;}
+
 /* ── RWD ── */
 @media (max-width: 768px) {
   .header{padding:14px 16px;flex-direction:column;align-items:flex-start;gap:8px;}
   .header-hint{display:none;}
   .mobile-hint{display:block;}
-  .summary-bar{padding:10px 16px;gap:12px;flex-wrap:wrap;}
-  .summary-item .s-val{font-size:13px;}
-  .summary-item .s-desc{font-size:11px;}
+  .mode-toggle{display:none;}
+  .mobile-mode-bar{display:flex;}
+  /* 執行摘要：2×2 卡片 */
+  .summary-bar{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 16px;}
+  .summary-bar .s-title{display:none;}
   .summary-divider{display:none;}
+  .summary-item{background:rgba(255,255,255,.1);border-radius:10px;padding:10px 12px;flex-direction:column;gap:3px;}
+  .summary-item .s-val{font-size:20px;}
+  .summary-item .s-desc{font-size:11px;color:rgba(255,255,255,.65);line-height:1.4;}
   .main{grid-template-columns:1fr;min-height:auto;}
   .left-col{border-right:none;border-bottom:1px solid #e2e8f0;padding:16px;}
   .right-col{padding:16px;}
@@ -175,7 +185,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 }
 .mobile-hint{display:none;}
 .mobile-tap-hint{display:none;align-items:center;justify-content:center;gap:4px;margin-top:8px;font-size:11px;color:#3182ce;font-weight:600;}
-.back-btn{display:none;align-items:center;gap:6px;padding:8px 14px;background:#edf2f7;border:none;border-radius:8px;font-size:13px;font-weight:600;color:#2d3748;cursor:pointer;margin-bottom:14px;width:100%;}
+.back-btn{display:none;align-items:center;justify-content:center;gap:6px;padding:10px 14px;background:#2b6cb0;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:14px;width:100%;}
 
 /* 模式切換按鈕 */
 .mode-toggle{display:flex;gap:6px;background:rgba(255,255,255,.15);border-radius:10px;padding:4px;}
@@ -286,6 +296,12 @@ body.present-mode .slide-nav{display:flex;}
     </div>
   </div>
   <div class="mobile-hint" style="font-size:12px;background:rgba(255,255,255,.15);border-radius:8px;padding:7px 14px;color:rgba(255,255,255,.9);">👇 點擊卡片查看詳細數據</div>
+</div>
+
+<!-- 手機模式切換列 -->
+<div class="mobile-mode-bar">
+  <button class="mode-btn active" id="mbtn-analyse" onclick="setMode('analyse')">📊 分析模式</button>
+  <button class="mode-btn" id="mbtn-present" onclick="setMode('present')">🎯 簡報模式</button>
 </div>
 
 <!-- 執行摘要 -->
@@ -1266,7 +1282,7 @@ function switchTab(tab) {
 }
 
 function scrollToTop() {
-  document.querySelector('.left-col').scrollIntoView({ behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function showDetail(id) {
@@ -1452,13 +1468,17 @@ let currentSlide = 1;
 const totalSlides = 5;
 
 function setMode(mode) {
-  document.getElementById('btn-analyse').classList.toggle('active', mode === 'analyse');
-  document.getElementById('btn-present').classList.toggle('active', mode === 'present');
+  ['btn-analyse','btn-present','mbtn-analyse','mbtn-present'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', id.includes(mode === 'analyse' ? 'analyse' : 'present'));
+  });
   if (mode === 'present') {
     document.body.classList.add('present-mode');
     goToSlide(1);
+    window.scrollTo({ top: 0 });
   } else {
     document.body.classList.remove('present-mode');
+    window.scrollTo({ top: 0 });
   }
 }
 
