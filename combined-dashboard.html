@@ -138,6 +138,7 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
     <button class="tab" onclick="switchTab('waterfall')">瀑布流分析</button>
     <button class="tab" onclick="switchTab('firebase')">用戶行為</button>
     <button class="tab" onclick="switchTab('deep')">深度分析</button>
+    <button class="tab" onclick="switchTab('recommend')">優化建議</button>
     <button class="tab" onclick="switchTab('insights')">關鍵洞察</button>
   </div>
 </header>
@@ -566,7 +567,216 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
 
   </div>
 
-  <!-- ====== TAB 5: 關鍵洞察 ====== -->
+  <!-- ====== TAB 5: 優化建議 ====== -->
+  <div id="panel-recommend" class="panel">
+
+    <div class="alert">
+      以下建議根據：瀑布流數據、Firebase 用戶行為、App 首頁實際截圖分析，針對廣編文自然流量的三個流程節點提出具體調整方向。
+    </div>
+
+    <!-- 現況問題 -->
+    <div class="section-title">現況問題</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px">
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border-left:4px solid #e17055">
+        <div style="font-size:12px;font-weight:700;color:#e17055;margin-bottom:8px">問題 1</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px">廣編文沒有固定曝光位</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">廣編文混在一般文章流中，依靠分類排序自然出現，位置不可控、曝光不穩定。</div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border-left:4px solid #e17055">
+        <div style="font-size:12px;font-weight:700;color:#e17055;margin-bottom:8px">問題 2</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px">個人化推薦沒有帶廣編文</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">首頁「個人化推薦」模組只推雜誌文章，廣編文完全未納入推薦邏輯，錯失曝光機會。</div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border-left:4px solid #e17055">
+        <div style="font-size:12px;font-weight:700;color:#e17055;margin-bottom:8px">問題 3</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:6px">文章看完後沒有延伸廣編文</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">用戶在文章頁平均停留 33 分鐘，看完就離開，沒有機制引導到廣編文。</div>
+      </div>
+    </div>
+
+    <!-- 流程圖 -->
+    <div class="section-title">廣編文自然流量的三個節點</div>
+    <div class="chart-card" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:wrap;padding:8px 0">
+
+        <!-- 節點1 -->
+        <div style="text-align:center;min-width:160px">
+          <div style="background:#0f3460;color:white;border-radius:12px;padding:16px;margin:0 8px">
+            <div style="font-size:20px;margin-bottom:6px">🏠</div>
+            <div style="font-size:13px;font-weight:700">節點一</div>
+            <div style="font-size:12px;margin-top:4px;opacity:0.8">首頁曝光</div>
+            <div style="font-size:11px;margin-top:8px;background:rgba(255,255,255,0.15);border-radius:6px;padding:4px 8px">停留 3.6 分鐘</div>
+          </div>
+          <div style="font-size:11px;color:#e17055;margin-top:8px;font-weight:600">決策時間極短</div>
+        </div>
+
+        <div style="font-size:24px;color:#b2bec3;margin:0 4px">→</div>
+
+        <!-- 節點2 -->
+        <div style="text-align:center;min-width:160px">
+          <div style="background:#6c63ff;color:white;border-radius:12px;padding:16px;margin:0 8px">
+            <div style="font-size:20px;margin-bottom:6px">📜</div>
+            <div style="font-size:13px;font-weight:700">節點二</div>
+            <div style="font-size:12px;margin-top:4px;opacity:0.8">瀑布流觸及</div>
+            <div style="font-size:11px;margin-top:8px;background:rgba(255,255,255,0.15);border-radius:6px;padding:4px 8px">佔整體 49.5% PV</div>
+          </div>
+          <div style="font-size:11px;color:#e17055;margin-top:8px;font-weight:600">佔比持續下滑</div>
+        </div>
+
+        <div style="font-size:24px;color:#b2bec3;margin:0 4px">→</div>
+
+        <!-- 節點3 -->
+        <div style="text-align:center;min-width:160px">
+          <div style="background:#00b894;color:white;border-radius:12px;padding:16px;margin:0 8px">
+            <div style="font-size:20px;margin-bottom:6px">📖</div>
+            <div style="font-size:13px;font-weight:700">節點三</div>
+            <div style="font-size:12px;margin-top:4px;opacity:0.8">文章頁延伸</div>
+            <div style="font-size:11px;margin-top:8px;background:rgba(255,255,255,0.15);border-radius:6px;padding:4px 8px">停留 33 分鐘</div>
+          </div>
+          <div style="font-size:11px;color:#00b894;margin-top:8px;font-weight:600">最高投入時刻</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 節點一建議 -->
+    <div class="section-title">節點一：首頁曝光優化</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="background:#0f3460;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 1-A</span>
+          <span style="font-size:11px;color:#888">快，不需要 IT 大改</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">確保廣編文在各分類前 3 篇</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">
+          首頁推薦 tab 各分類區塊（管理、職場⋯）至少保持 1 篇廣編文在前 3 位。<br><br>
+          <strong>數據依據：</strong>用戶在首頁停留 3.6 分鐘，不會滑太深，前 3 篇決定曝光。
+        </div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="background:#0f3460;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 1-B</span>
+          <span style="font-size:11px;color:#888">中期，需要產品調整</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">個人化推薦模組納入廣編文</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">
+          目前「跟金融業的領先者一起讀」模組只推雜誌文章。若廣編文能依用戶閱讀偏好進入推薦，等於多一個高曝光入口。<br><br>
+          <strong>數據依據：</strong>個人化推薦模組位於首頁視覺黃金區，用戶不需滑動就能看到。
+        </div>
+      </div>
+    </div>
+
+    <!-- 節點二建議 -->
+    <div class="section-title">節點二：瀑布流觸及優化</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="background:#6c63ff;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 2-A</span>
+          <span style="font-size:11px;color:#888">快，調整排序邏輯</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">固定廣編文在瀑布流的出現頻率</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">
+          每滑 5–8 篇文章，固定出現 1 篇廣編文，確保自然觸及不受排序影響。<br><br>
+          <strong>數據依據：</strong>瀑布流佔整體 49.5% PV，是最大流量場景，廣編文頻率可控。
+        </div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="background:#6c63ff;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 2-B</span>
+          <span style="font-size:11px;color:#888">中期，需要排程機制</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">週六優先排廣編文到瀑布流前段</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">
+          週六瀑布流佔比最高（37.8%），用戶最願意滑動。週五晚間或週六早上排廣編文上架，搭上瀑布流高峰。<br><br>
+          <strong>數據依據：</strong>週六 vs 週三瀑布佔比差 4.3 個百分點，是全週最高。
+        </div>
+      </div>
+    </div>
+
+    <!-- 節點三建議 -->
+    <div class="section-title">節點三：文章頁延伸優化</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="background:#00b894;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 3-A</span>
+          <span style="font-size:11px;color:#888">中期，需要產品開發</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">文章底部加入廣編文推薦</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">
+          用戶看完文章（停留 33 分鐘）是最投入的時刻，在底部加入「相關品牌觀點」推薦廣編文，趁熱引導點擊。<br><br>
+          <strong>數據依據：</strong>文章頁停留時間是首頁的 9 倍，用戶在此更願意繼續閱讀。
+        </div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="background:#00b894;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 3-B</span>
+          <span style="font-size:11px;color:#888">中期，需要標籤機制</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">同主題廣編文做關聯推薦</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">
+          若廣編文有分類標籤，用戶看完「管理」類文章後，自動推薦同主題的廣編文（例如看完 AI 文章 → 推薦 Google 廣編文）。<br><br>
+          <strong>數據依據：</strong>瀑布流用戶人均看 6.5 頁，有持續瀏覽意願，關聯推薦命中率更高。
+        </div>
+      </div>
+    </div>
+
+    <!-- 優先順序 -->
+    <div class="section-title">執行優先順序</div>
+    <div class="chart-card">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="border-bottom:2px solid #f0f2f5">
+            <th style="padding:10px;text-align:left;color:#8892b0;font-size:11px">優先級</th>
+            <th style="padding:10px;text-align:left;color:#8892b0;font-size:11px">建議</th>
+            <th style="padding:10px;text-align:left;color:#8892b0;font-size:11px">難度</th>
+            <th style="padding:10px;text-align:left;color:#8892b0;font-size:11px">預期效果</th>
+            <th style="padding:10px;text-align:left;color:#8892b0;font-size:11px">需要誰</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #f6f6f6">
+            <td style="padding:10px"><span style="background:#e17055;color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P1</span></td>
+            <td style="padding:10px;font-weight:600">廣編文排各分類前 3 篇</td>
+            <td style="padding:10px;color:#00b894;font-weight:600">低</td>
+            <td style="padding:10px;color:#555">立即提升首頁曝光量</td>
+            <td style="padding:10px;color:#555">編輯排程</td>
+          </tr>
+          <tr style="border-bottom:1px solid #f6f6f6">
+            <td style="padding:10px"><span style="background:#e17055;color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P1</span></td>
+            <td style="padding:10px;font-weight:600">週六優先排廣編文上架</td>
+            <td style="padding:10px;color:#00b894;font-weight:600">低</td>
+            <td style="padding:10px;color:#555">搭上瀑布流週末高峰</td>
+            <td style="padding:10px;color:#555">編輯排程</td>
+          </tr>
+          <tr style="border-bottom:1px solid #f6f6f6">
+            <td style="padding:10px"><span style="background:#fdcb6e;color:#7d5a00;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P2</span></td>
+            <td style="padding:10px;font-weight:600">瀑布流固定廣編文頻率</td>
+            <td style="padding:10px;color:#fdcb6e;font-weight:600">中</td>
+            <td style="padding:10px;color:#555">確保每次開 App 都有曝光</td>
+            <td style="padding:10px;color:#555">IT 調整排序邏輯</td>
+          </tr>
+          <tr style="border-bottom:1px solid #f6f6f6">
+            <td style="padding:10px"><span style="background:#fdcb6e;color:#7d5a00;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P2</span></td>
+            <td style="padding:10px;font-weight:600">個人化推薦納入廣編文</td>
+            <td style="padding:10px;color:#fdcb6e;font-weight:600">中</td>
+            <td style="padding:10px;color:#555">高曝光位新增廣編文入口</td>
+            <td style="padding:10px;color:#555">IT + 產品</td>
+          </tr>
+          <tr>
+            <td style="padding:10px"><span style="background:#b2bec3;color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P3</span></td>
+            <td style="padding:10px;font-weight:600">文章底部廣編文推薦</td>
+            <td style="padding:10px;color:#e17055;font-weight:600">高</td>
+            <td style="padding:10px;color:#555">延伸閱讀轉換廣編文</td>
+            <td style="padding:10px;color:#555">IT 開發新功能</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ====== TAB 6: 關鍵洞察 ====== -->
+
   <div id="panel-insights" class="panel">
 
     <div class="alert">
