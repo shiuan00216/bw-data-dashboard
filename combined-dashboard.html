@@ -138,6 +138,7 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
     <button class="tab" onclick="switchTab('waterfall')">瀑布流分析</button>
     <button class="tab" onclick="switchTab('firebase')">用戶行為</button>
     <button class="tab" onclick="switchTab('deep')">深度分析</button>
+    <button class="tab" onclick="switchTab('adbase')">廣編文基準</button>
     <button class="tab" onclick="switchTab('recommend')">優化建議</button>
     <button class="tab" onclick="switchTab('insights')">關鍵洞察</button>
   </div>
@@ -567,7 +568,111 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
 
   </div>
 
-  <!-- ====== TAB 5: 優化建議 ====== -->
+  <!-- ====== TAB 5: 廣編文基準 ====== -->
+  <div id="panel-adbase" class="panel">
+
+    <div class="alert">
+      以下為 <strong>Web 端</strong>廣編文瀑布流數據（2025/11–2026/04），作為 App 瀑布流第 2 篇固定廣編文上線後的對比基準。數據來源：Power BI PB-R005。
+    </div>
+
+    <div class="section-title">現況規模</div>
+    <div class="kpi-grid kpi-4" style="margin-bottom:16px">
+      <div class="kpi-card blue">
+        <div class="kpi-label">Web 日均瀑布廣編 PV</div>
+        <div class="kpi-value">3,591</div>
+        <div class="kpi-sub">次／天（Web 端）</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">App 估算日均瀑布廣編 PV</div>
+        <div class="kpi-value">~88</div>
+        <div class="kpi-sub">次／天（目前，基於 App 佔 2.4%）</div>
+        <span class="badge badge-down">極低，待提升</span>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">瀑布流佔廣編內部流量</div>
+        <div class="kpi-value">62.3%</div>
+        <div class="kpi-sub">Web 端瀑布流貢獻比例</div>
+      </div>
+      <div class="kpi-card green">
+        <div class="kpi-label">Web vs App 流量比</div>
+        <div class="kpi-value">97.6%</div>
+        <div class="kpi-sub">廣編文流量來自 Web，App 僅 2.4%</div>
+        <span class="badge badge-warn">App 有大幅成長空間</span>
+      </div>
+    </div>
+
+    <!-- 月份趨勢 -->
+    <div class="chart-card" style="margin-bottom:16px">
+      <div class="chart-title">廣編文瀑布流 PV 月份趨勢（Web，2025/01–2026/04）</div>
+      <div class="chart-subtitle">內部流量 PV 與瀑布流廣編 PV 的逐月走勢</div>
+      <div style="position:relative;height:220px">
+        <canvas id="adbaseMonthlyChart"></canvas>
+      </div>
+    </div>
+
+    <div class="chart-grid-2">
+      <!-- 每日趨勢 -->
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">每日瀑布流廣編 PV（Web，2025/11–2026/04）</div>
+        <div class="chart-subtitle">日均 3,591 PV，週期性波動明顯</div>
+        <div style="position:relative;height:190px">
+          <canvas id="adbaseDailyChart"></canvas>
+        </div>
+      </div>
+      <!-- 佔比趨勢 -->
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">瀑布流佔廣編內部流量 % 趨勢</div>
+        <div class="chart-subtitle">通常維持 60–78%，少數異常日低於 40%</div>
+        <div style="position:relative;height:190px">
+          <canvas id="adbaseRateChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- App 上線後追蹤說明 -->
+    <div class="section-title" style="margin-top:16px">App 瀑布流第 2 篇上線後，要追蹤這些指標</div>
+    <div class="chart-card">
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead>
+          <tr style="border-bottom:2px solid #f0f2f5">
+            <th style="padding:10px;text-align:left;color:#8892b0;font-size:11px">指標</th>
+            <th style="padding:10px;text-align:left;color:#8892b0;font-size:11px">目前基準（App 估算）</th>
+            <th style="padding:10px;text-align:left;color:#8892b0;font-size:11px">Web 參考值</th>
+            <th style="padding:10px;text-align:left;color:#8892b0;font-size:11px">說明</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid #f6f6f6">
+            <td style="padding:10px;font-weight:600">App 廣編瀑布流日均 PV</td>
+            <td style="padding:10px;color:#e17055;font-weight:600">~88 次</td>
+            <td style="padding:10px;color:#0f3460">3,591 次</td>
+            <td style="padding:10px;color:#555;font-size:12px">上線後應顯著提升，目標對標 Web 比例</td>
+          </tr>
+          <tr style="border-bottom:1px solid #f6f6f6">
+            <td style="padding:10px;font-weight:600">廣編文 App PV 佔比</td>
+            <td style="padding:10px;color:#e17055;font-weight:600">2.4%</td>
+            <td style="padding:10px;color:#0f3460">97.6%</td>
+            <td style="padding:10px;color:#555;font-size:12px">上線後 App 佔比應逐步提升</td>
+          </tr>
+          <tr style="border-bottom:1px solid #f6f6f6">
+            <td style="padding:10px;font-weight:600">廣編文達標率</td>
+            <td style="padding:10px;color:#e17055;font-weight:600">10.9%（近三週）</td>
+            <td style="padding:10px;color:#0f3460">85%（2025年）</td>
+            <td style="padding:10px;color:#555;font-size:12px">App 流量補充後，達標率應改善</td>
+          </tr>
+          <tr>
+            <td style="padding:10px;font-weight:600">瀑布流廣編 PV 佔內部流量</td>
+            <td style="padding:10px;color:#888">待量測</td>
+            <td style="padding:10px;color:#0f3460">62.3%</td>
+            <td style="padding:10px;color:#555;font-size:12px">App 上線後以 Web 的 62% 為參考目標</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- ====== TAB 6: 優化建議 ====== -->
   <div id="panel-recommend" class="panel">
 
     <div class="alert">
@@ -672,12 +777,13 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
       <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
           <span style="background:#6c63ff;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 2-A</span>
-          <span style="font-size:11px;color:#888">快，調整排序邏輯</span>
+          <span style="background:#00b894;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">✓ 開發中</span>
         </div>
-        <div style="font-size:13px;font-weight:700;margin-bottom:8px">固定廣編文在瀑布流的出現頻率</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">免費文章瀑布流第 2 篇固定放廣編文</div>
         <div style="font-size:12px;color:#555;line-height:1.7">
-          每滑 5–8 篇文章，固定出現 1 篇廣編文，確保自然觸及不受排序影響。<br><br>
-          <strong>數據依據：</strong>瀑布流佔整體 49.5% PV，是最大流量場景，廣編文頻率可控。
+          已確認執行：免費文章瀑布流第 2 篇無條件放廣編文，確保每次開啟瀑布流必定觸及廣編文一次。<br><br>
+          <strong>數據依據：</strong>瀑布流佔整體 49.5% PV，是最大流量場景。固定第 2 位等於直接綁定最高觸及率位置。<br><br>
+          <strong>上線後需追蹤：</strong>廣編文第 2 篇的點擊率、停留時間、跳出率。
         </div>
       </div>
       <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
@@ -873,6 +979,7 @@ function switchTab(name) {
   // Lazy init charts
   if (name === 'waterfall' && !window._wInit) { initWaterfall(); window._wInit = true; }
   if (name === 'firebase' && !window._fInit) { initFirebase(); window._fInit = true; }
+  if (name === 'adbase' && !window._aInit) { initAdbase(); window._aInit = true; }
   if (name === 'deep' && !window._dInit) { initDeep(); window._dInit = true; }
 }
 
@@ -925,6 +1032,45 @@ function initFirebase() {
       datasets:[{ data:[111247,8110,2992,2665], backgroundColor:['#0f3460','#00b894','#fdcb6e','#b2bec3'], borderWidth:0, hoverOffset:6 }]
     },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{ font:{size:11}, boxWidth:12, padding:8 }}}}
+  });
+}
+
+function initAdbase() {
+  const monthLabels = ['25/01','25/02','25/03','25/04','25/05','25/06','25/07','25/08','25/09','25/10','25/11','25/12','26/01','26/02','26/03','26/04'];
+  const monthInternal = [203322,153386,183144,200378,209661,172752,246984,246922,260885,250177,253398,229280,200617,167286,143502,137196];
+  const monthWaterfall = [136733,105196,117115,124457,127607,104017,130722,122170,145135,147258,169216,150620,105305,104080,98524,82752];
+  const dailyDates = ["11/30","12/01","12/02","12/03","12/04","12/05","12/06","12/07","12/08","12/09","12/10","12/11","12/12","12/13","12/14","12/15","12/16","12/17","12/18","12/19","12/20","12/21","12/22","12/23","12/24","12/25","12/26","12/27","12/28","12/29","12/30","12/31","01/01","01/02","01/03","01/04","01/05","01/06","01/07","01/08","01/09","01/10","01/11","01/12","01/13","01/14","01/15","01/16","01/17","01/18","01/19","01/20","01/21","01/22","01/23","01/24","01/25","01/26","01/27","01/28","01/29","01/30","01/31","02/01","02/02","02/03","02/04","02/05","02/06","02/07","02/08","02/09","02/10","02/11","02/12","02/13","02/14","02/15","02/16","02/17","02/18","02/19","02/20","02/21","02/22","02/23","02/24","02/25","02/26","02/27","02/28","03/01","03/02","03/03","03/04","03/05","03/06","03/07","03/08","03/09","03/10","03/11","03/12","03/13","03/14","03/15","03/16","03/17","03/18","03/19","03/20","03/21","03/22","03/23","03/24","03/25","03/26","03/27","03/28","03/29","03/30","03/31","04/01","04/02","04/03","04/04","04/05","04/06","04/07","04/08","04/09","04/10","04/11","04/12","04/13","04/14","04/15","04/16","04/17","04/18","04/19","04/20","04/21","04/22","04/23","04/24","04/25","04/26","04/27","04/28","04/29","04/30"];
+  const dailyWaterfall = [4585,5317,5065,5869,4239,4621,5328,5154,5157,6149,5160,4494,5075,5984,3767,4459,4194,4394,6179,4360,2979,3015,5342,5447,4616,4035,5458,2656,2420,4250,5683,9754,3659,3047,2804,4653,3723,3176,4195,3529,5208,3526,2572,3853,4325,3928,3982,3351,2184,2189,3573,3362,3707,3771,4468,2522,1736,2947,3047,3946,3993,2341,1988,2041,4298,5619,4197,4291,3939,3512,6309,4474,2527,2483,2937,2679,3083,2285,2347,2437,2555,2705,2845,2916,3317,4668,5380,4769,5755,6010,3702,4394,4571,3721,4718,4555,4417,3968,1238,80,2907,3631,4844,4057,2406,2530,3184,3365,3452,3083,2084,1575,1482,2511,2669,5137,4563,4228,2559,2049,2706,1840,2499,2221,1862,1838,1834,1888,2774,3411,3222,2890,2384,2321,3266,3206,3272,3135,2238,1413,1169,2268,2219,2453,3017,3413,3265,3186,4202,4246,4148,3492];
+  const dailyRate = [59.2,70.1,70.6,72.1,61.0,63.6,69.3,70.0,75.4,73.3,69.7,74.4,75.6,72.0,65.1,65.1,74.9,78.9,75.6,60.9,54.7,53.2,60.7,62.7,61.7,55.0,60.4,49.9,51.5,48.7,52.9,79.2,66.3,73.5,33.4,45.9,44.3,34.9,37.7,45.3,56.1,51.2,52.2,59.8,61.2,56.9,62.1,62.7,62.2,56.1,62.0,60.2,59.9,61.6,58.4,50.4,44.0,56.6,64.3,60.9,53.1,42.0,36.0,33.3,63.3,62.6,66.8,70.5,65.1,51.5,71.4,62.5,63.3,53.9,46.8,45.1,41.8,52.3,51.7,65.6,64.5,67.0,68.8,77.2,80.6,68.3,71.8,68.6,70.7,70.6,68.8,69.2,69.6,66.5,68.8,65.6,67.5,69.3,43.3,7.0,70.5,69.6,67.8,66.7,62.3,64.2,67.0,71.2,75.7,76.0,70.5,72.9,73.1,75.5,74.6,75.4,72.8,77.7,57.4,57.7,79.8,74.1,59.0,59.6,57.5,64.7,64.5,69.3,56.9,79.7,75.5,39.5,71.9,72.5,52.1,49.8,70.0,75.9,80.8,77.9,76.4,60.7,55.2,54.5,51.1,57.9,56.6,58.3,58.4,58.7,57.3,60.8];
+
+  new Chart(document.getElementById('adbaseMonthlyChart'), {
+    type: 'bar',
+    data: {
+      labels: monthLabels,
+      datasets: [
+        { label: '內部流量PV', data: monthInternal, backgroundColor: 'rgba(15,52,96,0.6)', borderRadius: 4 },
+        { label: '瀑布流廣編PV', data: monthWaterfall, backgroundColor: 'rgba(0,184,148,0.8)', borderRadius: 4 },
+      ]
+    },
+    options: { ...base, scales: { x: { ticks: { font: { size: 10 } }, grid: { display: false } }, y: { ticks: { font: { size: 11 } }, grid: { color: '#f0f2f5' } } } }
+  });
+
+  new Chart(document.getElementById('adbaseDailyChart'), {
+    type: 'line',
+    data: {
+      labels: dailyDates,
+      datasets: [{ label: '瀑布流廣編PV（Web）', data: dailyWaterfall, borderColor: '#00b894', backgroundColor: 'rgba(0,184,148,0.07)', fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2 }]
+    },
+    options: { ...base, scales: { x: { ticks: { maxTicksLimit: 10, font: { size: 10 } }, grid: { display: false } }, y: { ticks: { font: { size: 11 } }, grid: { color: '#f0f2f5' } } } }
+  });
+
+  new Chart(document.getElementById('adbaseRateChart'), {
+    type: 'line',
+    data: {
+      labels: dailyDates,
+      datasets: [{ label: '瀑布佔廣編內部流量%', data: dailyRate, borderColor: '#6c63ff', backgroundColor: 'rgba(108,99,255,0.07)', fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2 }]
+    },
+    options: { ...base, scales: { x: { ticks: { maxTicksLimit: 10, font: { size: 10 } }, grid: { display: false } }, y: { ticks: { font: { size: 11 }, callback: v => v + '%' }, grid: { color: '#f0f2f5' }, min: 0, max: 100 } } }
   });
 }
 
