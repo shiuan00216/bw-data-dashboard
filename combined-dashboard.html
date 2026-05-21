@@ -481,6 +481,61 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
       </div>
     </div>
 
+    <div class="section-title" style="margin-top:20px">發現四：首頁入口分析</div>
+    <div class="kpi-grid kpi-3" style="margin-bottom:16px">
+      <div class="kpi-card blue">
+        <div class="kpi-label">首頁是最大 Tab 入口</div>
+        <div class="kpi-value">65.6%</div>
+        <div class="kpi-sub">所有 Tab 點擊中，首頁佔 2/3</div>
+      </div>
+      <div class="kpi-card orange">
+        <div class="kpi-label">首頁每次帶出文章瀏覽</div>
+        <div class="kpi-value">1.94 次</div>
+        <div class="kpi-sub">每次看首頁，平均帶出近 2 篇文章</div>
+      </div>
+      <div class="kpi-card red">
+        <div class="kpi-label">首頁點擊流失</div>
+        <div class="kpi-value">25.5%</div>
+        <div class="kpi-sub">點了首頁 Tab，但沒有實際載入首頁</div>
+        <span class="badge badge-warn">待確認原因</span>
+      </div>
+    </div>
+
+    <div class="chart-grid-2" style="margin-bottom:16px">
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">Tab 點擊分布</div>
+        <div class="chart-subtitle">首頁獨佔 65.6%，Prime 和會員加起來才 32%</div>
+        <div style="position:relative;height:200px">
+          <canvas id="deepTabChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">首頁 vs 文章頁 停留時間</div>
+        <div class="chart-subtitle">用戶在首頁做決策快（3.6分），看文章很投入（33分）</div>
+        <div style="margin-top:24px">
+          <div class="compare-row">
+            <div class="compare-label" style="width:80px">首頁</div>
+            <div class="compare-bar-wrap"><div class="compare-bar" style="width:11%;background:#fdcb6e"></div></div>
+            <div class="compare-val">3.6 分鐘</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-label" style="width:80px">文章頁</div>
+            <div class="compare-bar-wrap"><div class="compare-bar" style="width:100%;background:#00b894"></div></div>
+            <div class="compare-val">33 分鐘</div>
+          </div>
+          <div style="margin-top:16px;padding:12px;background:#f0f0ff;border-radius:8px;font-size:12px;color:#3d31b0;line-height:1.7">
+            用戶在首頁平均只花 <strong>3.6 分鐘</strong>做決策，代表廣編稿在首頁的<strong>標題、縮圖、位置</strong>極為關鍵——用戶不會停下來細看，只有 3 秒吸引力決定點不點。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="alert" style="margin-bottom:16px">
+      ⚠️ <strong>現有數據的限制：</strong>我們知道有多少人進首頁、多少人看文章，但不知道首頁上的<strong>哪個模組</strong>被點最多（輪播、推薦、瀑布流、廣編稿區塊等）。需要補以下數據才能繼續深挖：<br><br>
+      1. 首頁各模組的點擊事件（例如 <code>homepage_banner_click</code>、<code>homepage_recommend_click</code>）<br>
+      2. 文章被點擊時的來源模組（從哪個區塊進入的）
+    </div>
+
     <div class="section-title" style="margin-top:4px">廣編稿自然流量提升建議</div>
     <div class="insight-grid">
       <div class="insight-card">
@@ -728,6 +783,23 @@ function initDeep() {
       tr.appendChild(td);
     });
     tbody.appendChild(tr);
+  });
+
+  // Tab distribution chart
+  new Chart(document.getElementById('deepTabChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['首頁','我的（Member）','Prime','WeGrow','其他'],
+      datasets: [{
+        data: [506774, 145693, 100341, 12295, 7715],
+        backgroundColor: ['#0f3460','#6c63ff','#00b894','#fdcb6e','#b2bec3'],
+        borderWidth: 0, hoverOffset: 6,
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins:{ legend:{ position:'bottom', labels:{ font:{size:11}, boxWidth:12, padding:8 }}}
+    }
   });
 
   // Scatter chart
