@@ -137,6 +137,7 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
     <button class="tab active" onclick="switchTab('overview')">總覽</button>
     <button class="tab" onclick="switchTab('waterfall')">瀑布流分析</button>
     <button class="tab" onclick="switchTab('firebase')">用戶行為</button>
+    <button class="tab" onclick="switchTab('deep')">深度分析</button>
     <button class="tab" onclick="switchTab('insights')">關鍵洞察</button>
   </div>
 </header>
@@ -390,7 +391,127 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
 
   </div>
 
-  <!-- ====== TAB 4: 關鍵洞察 ====== -->
+  <!-- ====== TAB 4: 深度分析 ====== -->
+  <div id="panel-deep" class="panel">
+
+    <div class="alert">
+      以下分析針對「什麼時候廣編稿最容易被自然觸及」，從瀑布流數據找出規律，提供可執行的投放建議。
+    </div>
+
+    <div class="section-title">發現一：總流量越高，瀑布流佔比反而越低</div>
+    <div class="chart-grid-2">
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">總 UU 區間 vs 瀑布流 UU 佔比</div>
+        <div class="chart-subtitle">流量越低的日子，瀑布流觸及率越高</div>
+        <div style="position:relative;height:200px">
+          <canvas id="deepUUBandChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">人均瀏覽頁數：高瀑布日 vs 低瀑布日</div>
+        <div class="chart-subtitle">高瀑布日用戶更願意繼續往下看</div>
+        <div style="margin-top: 24px;">
+          <div style="font-size:12px;color:#8892b0;margin-bottom:14px">瀑布流佔比 前25%（高佔比日，佔比 ≥ 39.1%）</div>
+          <div class="compare-row">
+            <div class="compare-label" style="width:60px">人均PV</div>
+            <div class="compare-bar-wrap"><div class="compare-bar" style="width:100%;background:#00b894"></div></div>
+            <div class="compare-val">5.40 頁</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-label" style="width:60px">平均UU</div>
+            <div class="compare-bar-wrap"><div class="compare-bar" style="width:64%;background:#00b894"></div></div>
+            <div class="compare-val">824 人</div>
+          </div>
+          <div style="font-size:12px;color:#8892b0;margin-top:18px;margin-bottom:14px">瀑布流佔比 後25%（低佔比日，佔比 ≤ 30.2%）</div>
+          <div class="compare-row">
+            <div class="compare-label" style="width:60px">人均PV</div>
+            <div class="compare-bar-wrap"><div class="compare-bar" style="width:71%;background:#e17055"></div></div>
+            <div class="compare-val">3.85 頁</div>
+          </div>
+          <div class="compare-row">
+            <div class="compare-label" style="width:60px">平均UU</div>
+            <div class="compare-bar-wrap"><div class="compare-bar" style="width:100%;background:#e17055"></div></div>
+            <div class="compare-val">1,215 人</div>
+          </div>
+          <div style="margin-top:14px;padding:10px;background:#e0f7f0;border-radius:8px;font-size:12px;color:#00695c;">
+            高瀑布日的用戶，每人多看 <strong>1.55 頁（+40%）</strong>，廣編稿被看到的機會更高。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px">發現二：週六是廣編稿自然觸及的最佳日</div>
+    <div class="chart-grid-2">
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">每週幾的瀑布流 UU 佔比</div>
+        <div class="chart-subtitle">週六最高（37.8%），週三／週五最低（33.5%）</div>
+        <div style="position:relative;height:200px">
+          <canvas id="deepDayChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">月份 × 週幾 熱力圖（瀑布 UU 佔比 %）</div>
+        <div class="chart-subtitle">週六在 3 月表現最突出（40.3%）</div>
+        <div style="margin-top:12px;overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:12px;text-align:center">
+            <thead>
+              <tr>
+                <th style="padding:6px;color:#8892b0;font-weight:600;text-align:left">月份</th>
+                <th style="padding:6px;color:#8892b0;font-weight:600">週一</th>
+                <th style="padding:6px;color:#8892b0;font-weight:600">週二</th>
+                <th style="padding:6px;color:#8892b0;font-weight:600">週三</th>
+                <th style="padding:6px;color:#8892b0;font-weight:600">週四</th>
+                <th style="padding:6px;color:#8892b0;font-weight:600">週五</th>
+                <th style="padding:6px;color:#8892b0;font-weight:600">週六</th>
+                <th style="padding:6px;color:#8892b0;font-weight:600">週日</th>
+              </tr>
+            </thead>
+            <tbody id="heatmapBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:20px">發現三：相關係數 -0.65，爆量日反而是廣編稿的壞日子</div>
+    <div class="chart-card">
+      <div class="chart-title">總 UU 與瀑布流佔比的關係</div>
+      <div class="chart-subtitle">負相關 -0.65：UU 越高的日子，瀑布流佔比越低，廣編稿自然觸及反而越少</div>
+      <div style="position:relative;height:200px">
+        <canvas id="deepScatterChart"></canvas>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:4px">廣編稿自然流量提升建議</div>
+    <div class="insight-grid">
+      <div class="insight-card">
+        <div class="insight-icon">📅</div>
+        <div class="insight-title">建議 1：優先排週六上稿</div>
+        <div class="insight-text">
+          週六瀑布流佔比最高（<strong>37.8%</strong>），用戶最願意滑瀑布流。
+          廣編稿若能在週五晚間或週六早上排程上架，可在瀑布流高峰期獲得最多自然曝光。
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">📉</div>
+        <div class="insight-title">建議 2：低流量日是曝光好時機</div>
+        <div class="insight-text">
+          UU 低於 800 的日子，瀑布流佔比高達 <strong>40.8%</strong>，且用戶人均多看 40%。
+          不要只看「流量高不高」，低流量日的廣編稿觸及率反而更高、讀者更有耐心。
+        </div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-icon">🚫</div>
+        <div class="insight-title">建議 3：避免在推播活動日主打廣編稿</div>
+        <div class="insight-text">
+          高 UU 日通常是推播活動帶來的，但這些用戶不走瀑布流（佔比只有 <strong>31.5%</strong>）。
+          推播活動日把廣編稿當主打，效益會低於預期，不如拿這類日子推訂閱轉換。
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ====== TAB 5: 關鍵洞察 ====== -->
   <div id="panel-insights" class="panel">
 
     <div class="alert">
@@ -487,6 +608,7 @@ function switchTab(name) {
   // Lazy init charts
   if (name === 'waterfall' && !window._wInit) { initWaterfall(); window._wInit = true; }
   if (name === 'firebase' && !window._fInit) { initFirebase(); window._fInit = true; }
+  if (name === 'deep' && !window._dInit) { initDeep(); window._dInit = true; }
 }
 
 // Overview chart
@@ -538,6 +660,95 @@ function initFirebase() {
       datasets:[{ data:[111247,8110,2992,2665], backgroundColor:['#0f3460','#00b894','#fdcb6e','#b2bec3'], borderWidth:0, hoverOffset:6 }]
     },
     options:{ responsive:true, maintainAspectRatio:false, plugins:{ legend:{ position:'bottom', labels:{ font:{size:11}, boxWidth:12, padding:8 }}}}
+  });
+}
+
+function initDeep() {
+  // UU Band Chart
+  new Chart(document.getElementById('deepUUBandChart'), {
+    type: 'bar',
+    data: {
+      labels: ['低（<800人）','中低（800–1000）','中高（1000–1200）','高（>1200人）'],
+      datasets: [{
+        label: '瀑布流 UU 佔比 %',
+        data: [40.8, 37.5, 32.1, 31.5],
+        backgroundColor: ['#00b894','#55efc4','#fdcb6e','#e17055'],
+        borderRadius: 6,
+      }]
+    },
+    options: { ...base,
+      scales: {
+        x: { ticks:{ font:{size:11}}, grid:{display:false}},
+        y: { ticks:{ font:{size:11}, callback: v=>v+'%'}, grid:{color:'#f0f2f5'}, min:25, max:45 }
+      }
+    }
+  });
+
+  // Day of week chart
+  new Chart(document.getElementById('deepDayChart'), {
+    type: 'bar',
+    data: {
+      labels: ['週一','週二','週三','週四','週五','週六','週日'],
+      datasets: [{
+        label: '瀑布流 UU 佔比 %',
+        data: [33.9, 35.5, 33.5, 33.6, 33.5, 37.8, 35.4],
+        backgroundColor: ['#b2bec3','#b2bec3','#b2bec3','#b2bec3','#b2bec3','#6c63ff','#b2bec3'],
+        borderRadius: 6,
+      }]
+    },
+    options: { ...base,
+      scales: {
+        x: { ticks:{ font:{size:12}}, grid:{display:false}},
+        y: { ticks:{ font:{size:11}, callback: v=>v+'%'}, grid:{color:'#f0f2f5'}, min:30, max:40 }
+      }
+    }
+  });
+
+  // Heatmap
+  const heatData = {
+    '2月': [37.4, 38.6, 33.3, 37.0, 34.0, 36.8, 36.3],
+    '3月': [32.0, 32.6, 36.7, 36.4, 34.9, 40.3, 35.5],
+    '4月': [32.8, 36.2, 31.0, 28.6, 31.4, 36.3, 34.5],
+  };
+  const tbody = document.getElementById('heatmapBody');
+  Object.entries(heatData).forEach(([month, vals]) => {
+    const tr = document.createElement('tr');
+    const tdLabel = document.createElement('td');
+    tdLabel.textContent = month;
+    tdLabel.style.cssText = 'padding:8px;font-weight:600;text-align:left';
+    tr.appendChild(tdLabel);
+    vals.forEach(v => {
+      const td = document.createElement('td');
+      td.textContent = v.toFixed(1) + '%';
+      const intensity = (v - 28) / (41 - 28);
+      const r = Math.round(0 + intensity * 108);
+      const g = Math.round(184 - intensity * 36);
+      const b = Math.round(148 - intensity * 4);
+      td.style.cssText = `padding:8px;border-radius:6px;font-weight:600;background:rgba(${r},${g},${b},${0.2 + intensity*0.5});color:#1a1a2e`;
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+
+  // Scatter chart
+  new Chart(document.getElementById('deepScatterChart'), {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: '每日數據點',
+        data: totalUU.map((uu, i) => ({ x: uu, y: waterfallRate[i] })),
+        backgroundColor: 'rgba(108,99,255,0.4)',
+        pointRadius: 4,
+        pointHoverRadius: 6,
+      }]
+    },
+    options: { ...base,
+      scales: {
+        x: { title:{ display:true, text:'總UU（人）', font:{size:11}}, ticks:{font:{size:11}}, grid:{color:'#f0f2f5'}},
+        y: { title:{ display:true, text:'瀑布流UU佔比（%）', font:{size:11}}, ticks:{font:{size:11}, callback: v=>v+'%'}, grid:{color:'#f0f2f5'}}
+      },
+      plugins: { ...base.plugins, tooltip:{ callbacks:{ label: ctx => `UU:${ctx.parsed.x} / 瀑布佔比:${ctx.parsed.y}%` }}}
+    }
   });
 }
 </script>
