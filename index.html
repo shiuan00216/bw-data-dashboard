@@ -165,7 +165,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   .summary-item .s-desc{font-size:11px;color:rgba(255,255,255,.65);line-height:1.4;}
   .main{grid-template-columns:1fr;min-height:auto;}
   .left-col{border-right:none;border-bottom:1px solid #e2e8f0;padding:16px;}
-  .right-col{padding:16px 16px 100px;}
+  .right-col{padding:16px;}
   .kpi-row{grid-template-columns:1fr 1fr;gap:8px;}
   .kpi-v{font-size:18px;}
   .hotspot-grid{grid-template-columns:1fr;}
@@ -185,7 +185,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 }
 .mobile-hint{display:none;}
 .mobile-tap-hint{display:none;align-items:center;justify-content:center;gap:4px;margin-top:8px;font-size:11px;color:#3182ce;font-weight:600;}
-.back-btn{display:none;align-items:center;justify-content:center;gap:6px;padding:10px 20px;background:#2b6cb0;color:#fff;border:none;border-radius:30px;font-size:13px;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(43,108,176,.5);position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:200;white-space:nowrap;}
+.back-btn{display:none;align-items:center;justify-content:center;gap:6px;padding:10px 20px;background:#2b6cb0;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-bottom:14px;}
 
 /* 模式切換按鈕 */
 .mode-toggle{display:flex;gap:6px;background:rgba(255,255,255,.15);border-radius:10px;padding:4px;}
@@ -257,13 +257,13 @@ body.present-mode .slide-nav{display:flex;}
 .slide-counter{font-size:12px;color:#718096;min-width:40px;text-align:center;}
 
 @media(max-width:768px){
-  .slide{padding:28px 20px 140px;justify-content:flex-start;min-height:auto;}
+  .slide{padding:80px 20px 40px;justify-content:flex-start;min-height:auto;}
   .slide h2{font-size:24px;}
   .slide-kpi-row{grid-template-columns:1fr 1fr;gap:10px;}
   .slide-hotspot-grid{grid-template-columns:1fr 1fr;}
   .slide-kpi .sk-v{font-size:22px;}
   .mode-toggle{display:none;}
-  .slide-nav{bottom:16px;padding:8px 16px;gap:10px;}
+  .slide-nav{bottom:auto;top:80px;padding:8px 16px;gap:10px;border-radius:30px;}
 }
 
 /* 預設概覽面板 */
