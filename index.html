@@ -147,8 +147,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 /* ── RWD ── */
 @media (max-width: 768px) {
   .header{padding:14px 16px;flex-direction:column;align-items:flex-start;gap:8px;}
-  .header-hint{font-size:11px;padding:6px 10px;}
-  .summary-bar{padding:10px 16px;gap:12px;}
+  .header-hint{display:none;}
+  .mobile-hint{display:block;}
+  .summary-bar{padding:10px 16px;gap:12px;flex-wrap:wrap;}
   .summary-item .s-val{font-size:13px;}
   .summary-item .s-desc{font-size:11px;}
   .summary-divider{display:none;}
@@ -164,14 +165,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
   .rank-badges{display:none;}
   .tab-btn{font-size:12px;padding:7px 8px;}
   .panel-chart-wrap{height:160px;}
-  .summary-bar{flex-wrap:wrap;}
+  .mobile-tap-hint{display:flex;}
+  .back-btn{display:flex;}
 }
 @media (max-width: 420px) {
   .kpi-row{grid-template-columns:1fr 1fr;}
   .hotspot-grid{grid-template-columns:1fr;}
   .overview-grid{grid-template-columns:1fr;}
-  .summary-bar{gap:8px;}
 }
+.mobile-hint{display:none;}
+.mobile-tap-hint{display:none;align-items:center;justify-content:center;gap:4px;margin-top:8px;font-size:11px;color:#3182ce;font-weight:600;}
+.back-btn{display:none;align-items:center;gap:6px;padding:8px 14px;background:#edf2f7;border:none;border-radius:8px;font-size:13px;font-weight:600;color:#2d3748;cursor:pointer;margin-bottom:14px;width:100%;}
 
 /* 預設概覽面板 */
 .overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
@@ -197,6 +201,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     <p>商周.COM｜資料區間：2026/02/19–2026/05/19（近 90 天）｜GA4</p>
   </div>
   <div class="header-hint">👈 點擊左側卡片或子項目，右側即時顯示詳細數據</div>
+  <div class="mobile-hint" style="font-size:12px;background:rgba(255,255,255,.15);border-radius:8px;padding:7px 14px;color:rgba(255,255,255,.9);">👇 點擊卡片，下方即時顯示詳細數據</div>
 </div>
 
 <!-- 執行摘要 -->
@@ -510,7 +515,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 </div><!-- end left-col -->
 
 <!-- ══════ 右欄 ══════ -->
-<div class="right-col">
+<div class="right-col" id="right-col">
+  <button class="back-btn" onclick="scrollToTop()">← 返回列表</button>
 
   <!-- 預設概覽 -->
   <div id="detail-overview" class="detail-section show">
@@ -983,10 +989,19 @@ function switchTab(tab) {
   });
 }
 
+function scrollToTop() {
+  document.querySelector('.left-col').scrollIntoView({ behavior: 'smooth' });
+}
+
 function showDetail(id) {
   document.querySelectorAll('.detail-section').forEach(el => el.classList.remove('show'));
   const el = document.getElementById('detail-' + id);
   if (el) el.classList.add('show');
+  if (window.innerWidth <= 768) {
+    setTimeout(() => {
+      document.getElementById('right-col').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
 }
 
 function selectHotspot(id) {
