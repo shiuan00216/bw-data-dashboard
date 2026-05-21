@@ -421,16 +421,17 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
   <!-- ====== TAB 3: 用戶行為 ====== -->
   <div id="panel-firebase" class="panel">
 
+    <!-- KPI -->
     <div class="kpi-grid kpi-4" style="margin-bottom:16px">
       <div class="kpi-card blue">
-        <div class="kpi-label">日均 DAU</div>
+        <div class="kpi-label">日均活躍用戶（DAU）</div>
         <div class="kpi-value">3,464</div>
         <div class="kpi-sub">人（排除爆量日）</div>
       </div>
       <div class="kpi-card green">
-        <div class="kpi-label">平均參與時長</div>
+        <div class="kpi-label">平均每次使用時長</div>
         <div class="kpi-value">4.7 分</div>
-        <div class="kpi-sub">280 秒／次</div>
+        <div class="kpi-sub">用戶每次開 App 的參與時間</div>
       </div>
       <div class="kpi-card yellow">
         <div class="kpi-label">推播點開率</div>
@@ -439,14 +440,15 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
         <span class="badge badge-warn">待優化</span>
       </div>
       <div class="kpi-card red">
-        <div class="kpi-label">App 內搜尋次數</div>
-        <div class="kpi-value">98 次</div>
-        <div class="kpi-sub">89 天，幾乎沒人用</div>
+        <div class="kpi-label">App 內搜尋使用率</div>
+        <div class="kpi-value">0.02%</div>
+        <div class="kpi-sub">89天僅 98 次，幾乎無人使用</div>
         <span class="badge badge-down">極低</span>
       </div>
     </div>
 
-    <div class="chart-grid-2">
+    <!-- DAU + 來源管道 -->
+    <div class="chart-grid-2" style="margin-bottom:16px">
       <div class="chart-card" style="margin-bottom:0">
         <div class="chart-title">每日 DAU 趨勢</div>
         <div class="chart-subtitle">3/8–3/9 出現爆量，其他日穩定 3,000–3,800</div>
@@ -456,32 +458,170 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
       </div>
       <div class="chart-card" style="margin-bottom:0">
         <div class="chart-title">用戶來源管道</div>
-        <div class="chart-subtitle">Direct 86%；Organic Search 雖少但停留最久</div>
+        <div class="chart-subtitle">Direct（直接開 App）佔 86%；Organic Search 雖少但品質最高</div>
         <div style="position:relative;height:190px">
           <canvas id="channelChart"></canvas>
         </div>
       </div>
     </div>
 
-    <div style="margin-top:16px" class="chart-grid-2">
-      <div class="chart-card" style="margin-bottom:0">
-        <div class="chart-title">主要事件排行</div>
-        <div class="chart-subtitle">各類行為觸發次數（89 天累計）</div>
-        <div style="margin-top:10px">
-          <div class="bar-row"><div class="bar-label">screen_view</div><div class="bar-wrap"><div class="bar-fill" style="width:100%;background:#0f3460"></div></div><div class="bar-val">1,751,857</div><span class="tag tag-content">內容</span></div>
-          <div class="bar-row"><div class="bar-label">notification_receive</div><div class="bar-wrap"><div class="bar-fill" style="width:89%;background:#fdcb6e"></div></div><div class="bar-val">1,560,811</div><span class="tag tag-push">推播</span></div>
-          <div class="bar-row"><div class="bar-label">user_engagement</div><div class="bar-wrap"><div class="bar-fill" style="width:81%;background:#00b894"></div></div><div class="bar-val">1,422,308</div><span class="tag tag-content">互動</span></div>
-          <div class="bar-row"><div class="bar-label">notification_dismiss</div><div class="bar-wrap"><div class="bar-fill" style="width:41%;background:#e17055"></div></div><div class="bar-val">714,683</div><span class="tag tag-push">推播</span></div>
-          <div class="bar-row"><div class="bar-label">session_start</div><div class="bar-wrap"><div class="bar-fill" style="width:31%;background:#b2bec3"></div></div><div class="bar-val">538,126</div></div>
-          <div class="bar-row"><div class="bar-label">tabbar_home</div><div class="bar-wrap"><div class="bar-fill" style="width:29%;background:#5e35b1"></div></div><div class="bar-val">506,774</div><span class="tag tag-nav">導覽</span></div>
-          <div class="bar-row"><div class="bar-label">notification_open</div><div class="bar-wrap"><div class="bar-fill" style="width:4.3%;background:#00b894"></div></div><div class="bar-val">75,152</div><span class="tag tag-push">推播</span></div>
-          <div class="bar-row"><div class="bar-label">article_share</div><div class="bar-wrap"><div class="bar-fill" style="width:0.3%;background:#00b894"></div></div><div class="bar-val">5,261</div></div>
-          <div class="bar-row"><div class="bar-label" style="color:#e17055">search ⚠️</div><div class="bar-wrap"><div class="bar-fill" style="width:0.01%;background:#e17055"></div></div><div class="bar-val" style="color:#e17055">98</div></div>
+    <!-- 使用漏斗 -->
+    <div class="section-title">使用行為漏斗：開 App → 看文章 → 分享</div>
+    <div class="chart-card" style="margin-bottom:16px">
+      <div class="chart-subtitle" style="margin-bottom:16px">每個環節的實際數字，看出用戶在哪裡流失</div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap">
+        <div style="text-align:center">
+          <div style="background:#0f3460;color:white;border-radius:10px;padding:14px 20px">
+            <div style="font-size:11px;opacity:0.7;margin-bottom:4px">開啟 App</div>
+            <div style="font-size:20px;font-weight:700">538,126</div>
+            <div style="font-size:10px;opacity:0.7;margin-top:2px">session_start</div>
+          </div>
+          <div style="font-size:11px;color:#00b894;margin-top:4px">100%</div>
+        </div>
+        <div style="font-size:20px;color:#b2bec3">→</div>
+        <div style="text-align:center">
+          <div style="background:#1a4a7a;color:white;border-radius:10px;padding:14px 20px">
+            <div style="font-size:11px;opacity:0.7;margin-bottom:4px">點了首頁</div>
+            <div style="font-size:20px;font-weight:700">506,774</div>
+            <div style="font-size:10px;opacity:0.7;margin-top:2px">tabbar_home</div>
+          </div>
+          <div style="font-size:11px;color:#00b894;margin-top:4px">94.2%</div>
+        </div>
+        <div style="font-size:20px;color:#b2bec3">→</div>
+        <div style="text-align:center">
+          <div style="background:#6c63ff;color:white;border-radius:10px;padding:14px 20px">
+            <div style="font-size:11px;opacity:0.7;margin-bottom:4px">打開文章</div>
+            <div style="font-size:20px;font-weight:700">1,266,183</div>
+            <div style="font-size:10px;opacity:0.7;margin-top:2px">web_page</div>
+          </div>
+          <div style="font-size:11px;color:#aaa;margin-top:4px">每次開App看 2.35 篇</div>
+        </div>
+        <div style="font-size:20px;color:#b2bec3">→</div>
+        <div style="text-align:center">
+          <div style="background:#00b894;color:white;border-radius:10px;padding:14px 20px">
+            <div style="font-size:11px;opacity:0.7;margin-bottom:4px">真正在看</div>
+            <div style="font-size:20px;font-weight:700">1,422,308</div>
+            <div style="font-size:10px;opacity:0.7;margin-top:2px">user_engagement</div>
+          </div>
+          <div style="font-size:11px;color:#00b894;margin-top:4px">超過文章數（持續互動）</div>
+        </div>
+        <div style="font-size:20px;color:#b2bec3">→</div>
+        <div style="text-align:center">
+          <div style="background:#e17055;color:white;border-radius:10px;padding:14px 20px">
+            <div style="font-size:11px;opacity:0.7;margin-bottom:4px">分享文章</div>
+            <div style="font-size:20px;font-weight:700">5,261</div>
+            <div style="font-size:10px;opacity:0.7;margin-top:2px">article_share</div>
+          </div>
+          <div style="font-size:11px;color:#e17055;margin-top:4px">分享率僅 0.4%</div>
         </div>
       </div>
+    </div>
+
+    <!-- Tab 導覽 + 功能使用率 -->
+    <div class="chart-grid-2" style="margin-bottom:16px">
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">Tab 導覽點擊分布</div>
+        <div class="chart-subtitle">用戶最常點哪個 Tab（底部導覽列）</div>
+        <div style="margin-top:14px">
+          <div class="bar-row">
+            <div class="bar-label" style="width:160px">🏠 首頁</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:100%;background:#0f3460"></div></div>
+            <div class="bar-val">506,774</div>
+            <div style="font-size:11px;color:#888;width:40px;text-align:right">65.6%</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label" style="width:160px">👤 我的</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:28.8%;background:#6c63ff"></div></div>
+            <div class="bar-val">145,693</div>
+            <div style="font-size:11px;color:#888;width:40px;text-align:right">18.9%</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label" style="width:160px">💎 看雜誌（Prime）</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:19.8%;background:#00b894"></div></div>
+            <div class="bar-val">100,341</div>
+            <div style="font-size:11px;color:#888;width:40px;text-align:right">13.0%</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label" style="width:160px">🌱 共學圈（WeGrow）</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:2.4%;background:#fdcb6e"></div></div>
+            <div class="bar-val">12,295</div>
+            <div style="font-size:11px;color:#888;width:40px;text-align:right">1.6%</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-label" style="width:160px">🎯 主題（Theme）</div>
+            <div class="bar-wrap"><div class="bar-fill" style="width:1.5%;background:#b2bec3"></div></div>
+            <div class="bar-val">7,715</div>
+            <div style="font-size:11px;color:#888;width:40px;text-align:right">1.0%</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;padding:10px;background:#f0f0ff;border-radius:8px;font-size:12px;color:#3d31b0">
+          首頁獨佔 65.6%，但 WeGrow 和主題合計不到 3%，顯示這兩個功能幾乎沒被使用。
+        </div>
+      </div>
+
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">功能使用率分析</div>
+        <div class="chart-subtitle">各功能在 89 天內的實際使用次數</div>
+        <div style="margin-top:14px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f6f6f6">
+            <div>
+              <div style="font-size:13px;font-weight:600">文章分享</div>
+              <div style="font-size:11px;color:#888">article_share — 分享給朋友</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:16px;font-weight:700;color:#e17055">5,261 次</div>
+              <div style="font-size:11px;color:#888">每篇文章 0.4% 被分享</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f6f6f6">
+            <div>
+              <div style="font-size:13px;font-weight:600">共學圈</div>
+              <div style="font-size:11px;color:#888">tabbar_Wegrow — 進入 WeGrow</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:16px;font-weight:700;color:#fdcb6e">12,295 次</div>
+              <div style="font-size:11px;color:#888">日均 138 次</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f6f6f6">
+            <div>
+              <div style="font-size:13px;font-weight:600">聽全文（TTS）</div>
+              <div style="font-size:11px;color:#888">play_tts — 文章朗讀功能</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:16px;font-weight:700;color:#b2bec3">131 次</div>
+              <div style="font-size:11px;color:#888">幾乎沒人用</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f6f6f6">
+            <div>
+              <div style="font-size:13px;font-weight:600">影音播放</div>
+              <div style="font-size:11px;color:#888">article_play — 播放影片</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:16px;font-weight:700;color:#b2bec3">39 次</div>
+              <div style="font-size:11px;color:#888">幾乎沒人用</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0">
+            <div>
+              <div style="font-size:13px;font-weight:600">App 內搜尋</div>
+              <div style="font-size:11px;color:#888">search — 搜尋文章</div>
+            </div>
+            <div style="text-align:right">
+              <div style="font-size:16px;font-weight:700;color:#e74c3c">98 次</div>
+              <div style="font-size:11px;color:#e74c3c">89天，日均1次</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 推播 + 來源品質 -->
+    <div class="chart-grid-2">
       <div class="chart-card" style="margin-bottom:0">
         <div class="chart-title">推播通知漏斗</div>
-        <div class="chart-subtitle">每 100 則推播，只有 5 人點開，46 人直接關掉</div>
+        <div class="chart-subtitle">每 100 則推播：只有 5 人點開，46 人直接關掉</div>
         <div style="margin-top:20px">
           <div class="funnel-row">
             <div class="funnel-label">收到推播</div>
@@ -499,16 +639,46 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
             <div class="funnel-val" style="color:#e17055">714,683（45.8%）</div>
           </div>
         </div>
-        <div style="margin-top:20px">
-          <div class="chart-title" style="margin-bottom:10px">來源管道品質對比</div>
-          <table class="ch-table">
-            <thead><tr><th>來源</th><th>用戶數</th><th>平均停留</th><th>每人次數</th></tr></thead>
-            <tbody>
-              <tr><td><span class="dot" style="background:#0f3460"></span>Direct</td><td>111,247</td><td>16.9 分</td><td>3.98</td></tr>
-              <tr><td><span class="dot" style="background:#00b894"></span>Organic Search</td><td>8,110</td><td style="color:#e17055;font-weight:700">44.5 分 ⭐</td><td style="font-weight:700">10.56</td></tr>
-              <tr><td><span class="dot" style="background:#fdcb6e"></span>推播通知</td><td>2,992</td><td>14.8 分</td><td>4.11</td></tr>
-            </tbody>
-          </table>
+        <div style="margin-top:12px;padding:10px;background:#fff8e6;border-radius:8px;font-size:12px;color:#7d5a00;line-height:1.7">
+          推播關閉率接近一半，代表用戶覺得推播內容與自己不相關，長期下去可能影響 App 黏著度。
+        </div>
+      </div>
+
+      <div class="chart-card" style="margin-bottom:0">
+        <div class="chart-title">來源管道品質對比</div>
+        <div class="chart-subtitle">Organic Search 用戶雖少，但是品質最高的讀者</div>
+        <table class="ch-table" style="margin-top:12px">
+          <thead>
+            <tr>
+              <th>來源管道</th>
+              <th>用戶數</th>
+              <th>平均停留</th>
+              <th>每人工作階段</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="dot" style="background:#0f3460"></span>Direct（直接開 App）</td>
+              <td>111,247</td>
+              <td>16.9 分</td>
+              <td>3.98</td>
+            </tr>
+            <tr>
+              <td><span class="dot" style="background:#00b894"></span>Organic Search（Google 搜尋）</td>
+              <td>8,110</td>
+              <td style="color:#e17055;font-weight:700">44.5 分 ⭐</td>
+              <td style="font-weight:700">10.56</td>
+            </tr>
+            <tr>
+              <td><span class="dot" style="background:#fdcb6e"></span>推播通知</td>
+              <td>2,992</td>
+              <td>14.8 分</td>
+              <td>4.11</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:12px;padding:10px;background:#e0f7f0;border-radius:8px;font-size:12px;color:#00695c;line-height:1.7">
+          從 Google 搜尋進來的用戶停留時間是直接開 App 的 <strong>2.6 倍</strong>，每人使用次數 <strong>2.7 倍</strong>。這群人對內容有強烈需求，是最有價值的讀者。
         </div>
       </div>
     </div>
