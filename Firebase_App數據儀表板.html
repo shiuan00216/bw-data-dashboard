@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Firebase App 數據總覽 | 2026/02–04</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif; background: #f0f2f5; color: #1a1a2e; }
+
+  header {
+    background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+    color: white; padding: 28px 32px 24px;
+  }
+  header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  header p { font-size: 13px; color: #8892b0; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
+
+  .section-title {
+    font-size: 13px; font-weight: 700; color: #8892b0;
+    letter-spacing: 1px; text-transform: uppercase;
+    margin: 28px 0 12px;
+  }
+
+  /* KPI */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .kpi-card {
+    background: white; border-radius: 12px; padding: 18px 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07); border-top: 3px solid #0f3460;
+  }
+  .kpi-card.g { border-top-color: #00b894; }
+  .kpi-card.o { border-top-color: #e17055; }
+  .kpi-card.y { border-top-color: #fdcb6e; }
+  .kpi-label { font-size: 11px; color: #8892b0; margin-bottom: 8px; }
+  .kpi-value { font-size: 26px; font-weight: 700; line-height: 1; }
+  .kpi-sub { font-size: 11px; color: #aaa; margin-top: 5px; }
+
+  /* Chart cards */
+  .chart-card {
+    background: white; border-radius: 12px; padding: 20px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .chart-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+  .chart-subtitle { font-size: 12px; color: #8892b0; margin-bottom: 16px; }
+  .chart-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .chart-full { margin-bottom: 16px; }
+
+  /* Alert box */
+  .alert {
+    background: #fff8e6; border-left: 4px solid #fdcb6e;
+    border-radius: 8px; padding: 12px 16px; margin-bottom: 16px;
+    font-size: 13px; color: #555; line-height: 1.6;
+  }
+  .alert strong { color: #1a1a2e; }
+
+  /* Channel table */
+  .channel-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .channel-table th {
+    text-align: left; padding: 8px 10px;
+    border-bottom: 2px solid #f0f2f5; color: #8892b0; font-size: 11px;
+    font-weight: 600; letter-spacing: 0.5px;
+  }
+  .channel-table td { padding: 9px 10px; border-bottom: 1px solid #f6f6f6; }
+  .channel-table tr:last-child td { border-bottom: none; }
+  .bar-inline { display: inline-block; height: 8px; border-radius: 99px; vertical-align: middle; margin-right: 6px; }
+
+  /* Event list */
+  .event-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 8px 0; border-bottom: 1px solid #f6f6f6;
+  }
+  .event-row:last-child { border-bottom: none; }
+  .event-name { font-size: 12px; color: #333; width: 220px; flex-shrink: 0; font-family: monospace; }
+  .event-bar-wrap { flex: 1; background: #f0f2f5; border-radius: 99px; height: 8px; overflow: hidden; }
+  .event-bar { height: 100%; border-radius: 99px; background: #0f3460; }
+  .event-val { font-size: 12px; font-weight: 600; color: #555; width: 80px; text-align: right; flex-shrink: 0; }
+  .event-tag {
+    font-size: 10px; padding: 1px 6px; border-radius: 99px;
+    font-weight: 600; flex-shrink: 0;
+  }
+  .tag-push { background: #ffeaa7; color: #b7791f; }
+  .tag-content { background: #e0f7f0; color: #00796b; }
+  .tag-nav { background: #ede7f6; color: #5e35b1; }
+  .tag-system { background: #f0f0f0; color: #888; }
+
+  /* Screen list */
+  .screen-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 0; border-bottom: 1px solid #f6f6f6; font-size: 12px;
+  }
+  .screen-row:last-child { border-bottom: none; }
+  .screen-name { width: 200px; flex-shrink: 0; color: #333; font-family: monospace; }
+  .screen-name-zh { font-family: -apple-system, sans-serif; }
+  .screen-bar-wrap { flex: 1; background: #f0f2f5; border-radius: 99px; height: 7px; overflow: hidden; }
+  .screen-bar { height: 100%; border-radius: 99px; background: #00b894; }
+  .screen-val { font-size: 12px; font-weight: 600; color: #555; width: 65px; text-align: right; }
+  .screen-time { font-size: 11px; color: #aaa; width: 55px; text-align: right; }
+
+  /* Insight cards */
+  .insight-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 16px; }
+  .insight-card { background: white; border-radius: 12px; padding: 18px; box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+  .insight-icon { font-size: 22px; margin-bottom: 8px; }
+  .insight-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .insight-text { font-size: 12px; color: #555; line-height: 1.7; }
+  .insight-text strong { color: #0f3460; }
+
+  /* Push funnel */
+  .funnel-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .funnel-label { font-size: 12px; color: #555; width: 70px; flex-shrink: 0; }
+  .funnel-bar-wrap { flex: 1; background: #f0f2f5; border-radius: 99px; height: 10px; overflow: hidden; }
+  .funnel-bar { height: 100%; border-radius: 99px; }
+  .funnel-val { font-size: 12px; font-weight: 600; width: 90px; text-align: right; }
+
+  footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
+
+  @media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .chart-grid-2 { grid-template-columns: 1fr; }
+    .insight-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Firebase App 數據總覽</h1>
+  <p>資料期間：2026/02/01 – 2026/04/30（89 天）｜帳戶：Businessweekly／bwplus-1a78b-GA4</p>
+</header>
+
+<div class="container">
+
+  <!-- KPI -->
+  <div class="section-title">整體規模</div>
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-label">日均活躍用戶（DAU）</div>
+      <div class="kpi-value">3,464</div>
+      <div class="kpi-sub">人／天（排除 3/8-9 爆量）</div>
+    </div>
+    <div class="kpi-card g">
+      <div class="kpi-label">月活躍用戶（MAU）</div>
+      <div class="kpi-value">~31,500</div>
+      <div class="kpi-sub">人（穩定期均值）</div>
+    </div>
+    <div class="kpi-card o">
+      <div class="kpi-label">平均每次使用參與時間</div>
+      <div class="kpi-value">4.7 分</div>
+      <div class="kpi-sub">約 280 秒／次</div>
+    </div>
+    <div class="kpi-card y">
+      <div class="kpi-label">最大流量入口</div>
+      <div class="kpi-value">Direct</div>
+      <div class="kpi-sub">86% 用戶直接開 App</div>
+    </div>
+  </div>
+
+  <!-- Alert -->
+  <div class="section-title">重要異常</div>
+  <div class="alert">
+    ⚡ <strong>3/8（週六）和 3/9（週日）出現爆量：DAU 從平均 3,400 人暴增至 7,926 → 8,342 人（+145%）</strong>，
+    MAU 同期從 3.1 萬跳升至 3.6 萬，之後維持在 4 萬左右。
+    這兩天的參與時間卻驟降至 111 秒 / 99 秒（平日均值 280 秒），代表大批新用戶快速進來又快速離開。
+    建議確認 3/8-9 是否有做任何行銷推播或外部曝光活動。
+  </div>
+
+  <!-- DAU Chart -->
+  <div class="chart-full">
+    <div class="chart-card">
+      <div class="chart-title">每日活躍用戶（DAU）趨勢</div>
+      <div class="chart-subtitle">3/8–3/9 出現明顯爆量，其餘日子維持 3,000–3,800 人</div>
+      <div style="position:relative;height:200px">
+        <canvas id="dauChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- Engagement + Push funnel -->
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="chart-title">每日平均參與時長</div>
+      <div class="chart-subtitle">正常日約 270–340 秒，爆量日驟降（用戶進來就走）</div>
+      <div style="position:relative;height:190px">
+        <canvas id="engChart"></canvas>
+      </div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">推播通知漏斗</div>
+      <div class="chart-subtitle">收到推播後，只有 4.8% 會點開；45.8% 直接關掉</div>
+      <div style="margin-top: 20px;">
+        <div class="funnel-row">
+          <div class="funnel-label">收到推播</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:100%;background:#0f3460"></div></div>
+          <div class="funnel-val" style="color:#0f3460">1,560,811</div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">點開推播</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:4.8%;background:#00b894"></div></div>
+          <div class="funnel-val" style="color:#00b894">75,152 <span style="font-size:10px;font-weight:400;color:#aaa">（4.8%）</span></div>
+        </div>
+        <div class="funnel-row">
+          <div class="funnel-label">關掉推播</div>
+          <div class="funnel-bar-wrap"><div class="funnel-bar" style="width:45.8%;background:#e17055"></div></div>
+          <div class="funnel-val" style="color:#e17055">714,683 <span style="font-size:10px;font-weight:400;color:#aaa">（45.8%）</span></div>
+        </div>
+        <div style="margin-top:16px;padding:10px;background:#fff8e6;border-radius:8px;font-size:12px;color:#7d5a00;">
+          每收到 100 則推播，只有 5 人點開，46 人直接關掉。推播品質或頻率需要檢視。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- User acquisition -->
+  <div class="section-title">用戶來源</div>
+  <div class="chart-card chart-full" style="margin-bottom:16px">
+    <div class="chart-title">用戶來源管道分布</div>
+    <div class="chart-subtitle">Direct（直接開 App）佔絕對主導；Organic Search 用戶雖少，但品質最高</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:8px">
+      <div>
+        <div style="position:relative;height:200px">
+          <canvas id="channelChart"></canvas>
+        </div>
+      </div>
+      <div>
+        <table class="channel-table">
+          <thead>
+            <tr>
+              <th>來源管道</th>
+              <th>用戶數</th>
+              <th>平均參與時長</th>
+              <th>每人工作階段數</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="bar-inline" style="width:14px;background:#0f3460"></span>Direct（直接）</td>
+              <td>111,247</td>
+              <td>16.9 分</td>
+              <td>3.98</td>
+            </tr>
+            <tr>
+              <td><span class="bar-inline" style="width:14px;background:#00b894"></span>Organic Search（搜尋）</td>
+              <td>8,110</td>
+              <td style="color:#e17055;font-weight:600">44.5 分 ⭐</td>
+              <td style="color:#e17055;font-weight:600">10.56</td>
+            </tr>
+            <tr>
+              <td><span class="bar-inline" style="width:14px;background:#fdcb6e"></span>推播通知</td>
+              <td>2,992</td>
+              <td>14.8 分</td>
+              <td>4.11</td>
+            </tr>
+            <tr>
+              <td><span class="bar-inline" style="width:14px;background:#b2bec3"></span>其他</td>
+              <td>2,665</td>
+              <td>—</td>
+              <td>—</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="margin-top:12px;padding:10px;background:#e0f7f0;border-radius:8px;font-size:12px;color:#00695c;">
+          Organic Search 用戶平均停留 <strong>44.5 分鐘</strong>，是 Direct 用戶的 <strong>2.6 倍</strong>。雖然量少，但這群人是高品質讀者。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Events breakdown -->
+  <div class="chart-grid-2">
+    <div class="chart-card">
+      <div class="chart-title">主要事件排行（Top 12）</div>
+      <div class="chart-subtitle">各類用戶行為的觸發次數</div>
+      <div style="margin-top:12px">
+        <div class="event-row">
+          <div class="event-name">screen_view</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:100%;background:#0f3460"></div></div>
+          <div class="event-val">1,751,857</div>
+          <span class="event-tag tag-content">內容</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">notification_receive</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:89%;background:#fdcb6e"></div></div>
+          <div class="event-val">1,560,811</div>
+          <span class="event-tag tag-push">推播</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">user_engagement</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:81%;background:#00b894"></div></div>
+          <div class="event-val">1,422,308</div>
+          <span class="event-tag tag-content">互動</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">web_page</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:72%;background:#0f3460"></div></div>
+          <div class="event-val">1,266,183</div>
+          <span class="event-tag tag-content">內容</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">notification_dismiss</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:41%;background:#e17055"></div></div>
+          <div class="event-val">714,683</div>
+          <span class="event-tag tag-push">推播</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">session_start</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:31%;background:#b2bec3"></div></div>
+          <div class="event-val">538,126</div>
+          <span class="event-tag tag-system">系統</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">tabbar_home</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:29%;background:#5e35b1"></div></div>
+          <div class="event-val">506,774</div>
+          <span class="event-tag tag-nav">導覽</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">tabbar_member</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:8%;background:#5e35b1"></div></div>
+          <div class="event-val">145,693</div>
+          <span class="event-tag tag-nav">導覽</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">tabbar_prime</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:6%;background:#5e35b1"></div></div>
+          <div class="event-val">100,341</div>
+          <span class="event-tag tag-nav">導覽</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">notification_open</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:4.3%;background:#00b894"></div></div>
+          <div class="event-val">75,152</div>
+          <span class="event-tag tag-push">推播</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">article_share</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:0.3%;background:#00b894"></div></div>
+          <div class="event-val">5,261</div>
+          <span class="event-tag tag-content">分享</span>
+        </div>
+        <div class="event-row">
+          <div class="event-name">search</div>
+          <div class="event-bar-wrap"><div class="event-bar" style="width:0.01%;background:#e17055"></div></div>
+          <div class="event-val" style="color:#e17055">98 ⚠️</div>
+          <span class="event-tag tag-nav">搜尋</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top screens -->
+    <div class="chart-card">
+      <div class="chart-title">熱門頁面 / 畫面（依瀏覽數）</div>
+      <div class="chart-subtitle">文章瀏覽頁（BaseWebViewController）排名第一</div>
+      <div style="margin-top:12px">
+        <div class="screen-row">
+          <div class="screen-name">BaseWebViewController</div>
+          <div class="screen-bar-wrap"><div class="screen-bar" style="width:100%"></div></div>
+          <div class="screen-val">404,726</div>
+          <div class="screen-time">33 分</div>
+        </div>
+        <div class="screen-row">
+          <div class="screen-name">HomeViewController</div>
+          <div class="screen-bar-wrap"><div class="screen-bar" style="width:93%"></div></div>
+          <div class="screen-val">377,799</div>
+          <div class="screen-time">3.6 分</div>
+        </div>
+        <div class="screen-row">
+          <div class="screen-name">MainActivity</div>
+          <div class="screen-bar-wrap"><div class="screen-bar" style="width:88%"></div></div>
+          <div class="screen-val">355,950</div>
+          <div class="screen-time">8.3 分</div>
+        </div>
+        <div class="screen-row">
+          <div class="screen-name">WebActivity</div>
+          <div class="screen-bar-wrap"><div class="screen-bar" style="width:81%"></div></div>
+          <div class="screen-val">328,115</div>
+          <div class="screen-time">34.6 分</div>
+        </div>
+        <div class="screen-row">
+          <div class="screen-name screen-name-zh">/ （根目錄）</div>
+          <div class="screen-bar-wrap"><div class="screen-bar" style="width:62%;background:#6c63ff"></div></div>
+          <div class="screen-val">249,477</div>
+          <div class="screen-time">0.9 分</div>
+        </div>
+        <div class="screen-row">
+          <div class="screen-name">PrimeViewController</div>
+          <div class="screen-bar-wrap"><div class="screen-bar" style="width:25%"></div></div>
+          <div class="screen-val">100,675</div>
+          <div class="screen-time">5.6 分</div>
+        </div>
+        <div class="screen-row">
+          <div class="screen-name">MemberViewController</div>
+          <div class="screen-bar-wrap"><div class="screen-bar" style="width:25%"></div></div>
+          <div class="screen-val">100,557</div>
+          <div class="screen-time">3.5 分</div>
+        </div>
+        <div style="margin-top:14px;padding:10px;background:#f0f0ff;border-radius:8px;font-size:12px;color:#3d31b0;">
+          文章頁（BaseWebViewController + WebActivity）合計 <strong>732,841 次瀏覽</strong>，平均停留 33–35 分鐘，是深度閱讀的主要場景。廣編稿也在這裡顯示。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Insight cards -->
+  <div class="section-title">關鍵洞察</div>
+  <div class="insight-grid">
+    <div class="insight-card">
+      <div class="insight-icon">🔍</div>
+      <div class="insight-title">搜尋功能幾乎沒人用</div>
+      <div class="insight-text">
+        89 天內 search 事件只有 <strong>98 次</strong>，平均一天只有 1 人用搜尋。
+        但 Organic Search 進來的用戶停留時間最長（44.5分鐘）。
+        代表有搜尋意圖的人都在 Google 而不是在 App 裡搜尋，App 內搜尋體驗可能需要改善。
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon">📲</div>
+      <div class="insight-title">推播效益低，關閉率高</div>
+      <div class="insight-text">
+        推播點開率只有 <strong>4.8%</strong>，但關閉率高達 <strong>45.8%</strong>。
+        每發 100 則推播，有 46 人主動關掉。
+        推播內容與頻率可能與用戶預期不符，長期可能影響 App 黏著度。
+      </div>
+    </div>
+    <div class="insight-card">
+      <div class="insight-icon">⭐</div>
+      <div class="insight-title">Organic Search 是高品質用戶</div>
+      <div class="insight-text">
+        雖然只有 8,110 人（佔 6%），但平均停留 <strong>44.5 分鐘</strong>，
+        是 Direct 用戶的 2.6 倍。
+        這群從 Google 搜尋進來的人，對內容有高度興趣，是廣編稿最有價值的潛在讀者。
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>Firebase App 數據分析 | 2026-05-21 製作</footer>
+
+<script>
+const dates = ["02/01","02/02","02/03","02/04","02/05","02/06","02/07","02/08","02/09","02/10","02/11","02/12","02/13","02/14","02/15","02/16","02/17","02/18","02/19","02/20","02/21","02/22","02/23","02/24","02/25","02/26","02/27","02/28","03/01","03/02","03/03","03/04","03/05","03/06","03/07","03/08","03/09","03/10","03/11","03/12","03/13","03/14","03/15","03/16","03/17","03/18","03/19","03/20","03/21","03/22","03/23","03/24","03/25","03/26","03/27","03/28","03/29","03/30","03/31","04/01","04/02","04/03","04/04","04/05","04/06","04/07","04/08","04/09","04/10","04/11","04/12","04/13","04/14","04/15","04/16","04/17","04/18","04/19","04/20","04/21","04/22","04/23","04/24","04/25","04/26","04/27","04/28","04/29","04/30"];
+const dau = [3335,3178,3636,3682,3735,3265,3154,3308,3330,3476,3927,3623,3191,3033,2820,2606,3035,2753,2880,2800,3020,3380,3431,3481,3494,3784,3584,3339,3373,3521,3706,3158,3477,3260,3201,3242,7926,8342,3777,3671,3392,3120,3115,3179,3767,3193,3838,3550,3189,3329,3455,3652,3539,3788,3335,3168,4123,3433,3689,3333,3429,3058,3033,3087,3179,3537,3459,3983,3459,3301,3593,3722,3633,3413,3494,3479,3510,3266,3186,3450,3507,3355,3112,2906,3101,3275,3455,3249,3458];
+const eng = [313,300,272,270,297,283,288,297,260,239,239,286,261,266,258,240,222,265,227,272,215,259,248,227,251,272,292,317,274,245,235,256,273,284,301,290,111,99,282,323,288,312,331,269,234,256,267,275,301,296,255,233,265,308,294,319,287,258,224,243,307,305,317,291,325,230,259,301,311,335,299,271,251,294,312,293,301,330,290,249,280,346,300,339,320,289,256,288,337];
+
+const opts = { responsive:true, maintainAspectRatio:false, plugins:{ legend:{ labels:{ font:{size:11}, boxWidth:10 }}}};
+
+// DAU
+new Chart(document.getElementById('dauChart'), {
+  type: 'line',
+  data: {
+    labels: dates,
+    datasets: [{
+      label: 'DAU（日活躍用戶）',
+      data: dau,
+      borderColor: '#0f3460',
+      backgroundColor: ctx => {
+        const g = ctx.chart.ctx.createLinearGradient(0,0,0,200);
+        g.addColorStop(0,'rgba(15,52,96,0.15)');
+        g.addColorStop(1,'rgba(15,52,96,0)');
+        return g;
+      },
+      fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2,
+    }]
+  },
+  options: { ...opts, scales:{
+    x:{ ticks:{ maxTicksLimit:12, font:{size:11}}, grid:{display:false}},
+    y:{ ticks:{ font:{size:11}}, grid:{color:'#f0f2f5'}, min:0}
+  }}
+});
+
+// Engagement
+new Chart(document.getElementById('engChart'), {
+  type: 'line',
+  data: {
+    labels: dates,
+    datasets: [{
+      label: '平均參與時長（秒）',
+      data: eng,
+      borderColor: '#e17055',
+      backgroundColor: 'rgba(225,112,85,0.07)',
+      fill: true, tension: 0.3, pointRadius: 0, borderWidth: 2,
+    }]
+  },
+  options: { ...opts, scales:{
+    x:{ ticks:{ maxTicksLimit:10, font:{size:11}}, grid:{display:false}},
+    y:{ ticks:{ font:{size:11}, callback: v => v+'s'}, grid:{color:'#f0f2f5'}, min:0}
+  }}
+});
+
+// Channel
+new Chart(document.getElementById('channelChart'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Direct（直接）','Organic Search','推播通知','其他'],
+    datasets: [{
+      data: [111247, 8110, 2992, 2665],
+      backgroundColor: ['#0f3460','#00b894','#fdcb6e','#b2bec3'],
+      borderWidth: 0, hoverOffset: 6,
+    }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins:{
+      legend:{ position:'bottom', labels:{ font:{size:11}, boxWidth:12, padding:10 }}
+    }
+  }
+});
+</script>
+</body>
+</html>
