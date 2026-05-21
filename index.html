@@ -162,6 +162,33 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </div>
   </div>
 
+  <!-- 時間趨勢 -->
+  <div class="sec-title">時間趨勢（與前期對比） <span class="hint">點擊查看詳細數據</span></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;">
+
+    <div class="hotspot" data-hotspot="trend" onclick="selectHotspot('trend')" style="cursor:pointer;">
+      <div class="hotspot-head"><span class="hotspot-icon">📉</span><span class="hotspot-title">流量下滑中</span></div>
+      <div class="hotspot-sub">前期 vs 現期（各90天）</div>
+      <div class="stat-row">
+        <span class="stat red">PV ↓20.3%</span>
+        <span class="stat red">UU ↓9.4%</span>
+        <span class="stat orange">PV/UU ↓0.16</span>
+      </div>
+      <div class="hotspot-link">→ 點擊查看完整對比</div>
+    </div>
+
+    <div class="hotspot" data-hotspot="sticky" onclick="selectHotspot('sticky')" style="cursor:pointer;">
+      <div class="hotspot-head"><span class="hotspot-icon">⭐</span><span class="hotspot-title">高黏著度頁面</span></div>
+      <div class="hotspot-sub">只有 4 頁達標，共同特徵明確</div>
+      <div class="stat-row">
+        <span class="stat green">頁深 1.98 頁/session</span>
+        <span class="stat green">跳出率 24%</span>
+      </div>
+      <div class="hotspot-link">→ 點擊查看分析</div>
+    </div>
+
+  </div>
+
   <!-- 裝置 & 流量來源 -->
   <div class="sec-title">流量結構分析 <span class="hint">點擊查看詳細數據</span></div>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;">
@@ -722,6 +749,76 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </div>
   </div>
 
+  <!-- ── 詳細：時間趨勢 ── -->
+  <div id="detail-trend" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">📉 時間趨勢 → 前期 vs 現期比較</div>
+      <h2>流量趨勢對比</h2>
+      <p>前期：2025/11/21–2026/02/18｜現期：2026/02/19–2026/05/19（各90天）</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi red"><div class="pv">-20.3%</div><div class="pl">PV 下滑（2,164萬→1,630萬）</div></div>
+      <div class="panel-kpi red"><div class="pv">-9.4%</div><div class="pl">UU 下滑（1,525萬→1,381萬）</div></div>
+      <div class="panel-kpi orange"><div class="pv">1.34→1.18</div><div class="pl">PV/UU 比下降（每人看更少頁）</div></div>
+      <div class="panel-kpi green"><div class="pv">+3.8秒</div><div class="pl">參與時間微升（48.6→52.4秒）</div></div>
+    </div>
+    <div class="panel-chart-wrap"><canvas id="chart-trend"></canvas></div>
+    <table class="compare-table">
+      <tr><th>指標</th><th>前期（11/21–2/18）</th><th>現期（2/19–5/19）</th><th>變化</th></tr>
+      <tr><td>總瀏覽量（PV）</td><td>2,046萬</td><td class="bad">1,630萬</td><td class="bad">▼ 20.3%</td></tr>
+      <tr><td>總活躍使用者（UU）</td><td>1,525萬</td><td class="bad">1,381萬</td><td class="bad">▼ 9.4%</td></tr>
+      <tr><td>PV/UU 比</td><td>1.34</td><td class="bad">1.18</td><td class="bad">▼ 0.16</td></tr>
+      <tr><td>加權平均跳出率</td><td>28.9%</td><td class="mid">32.5%</td><td class="mid">▲ 3.6%</td></tr>
+      <tr><td>加權平均參與時間</td><td>48.6秒</td><td class="good">52.4秒</td><td class="good">▲ 3.8秒</td></tr>
+      <tr><td>加權平均頁深</td><td>1.09頁</td><td class="good">1.11頁</td><td class="good">▲ 0.02頁</td></tr>
+    </table>
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>PV 下滑幅度（-20.3%）遠大於 UU 下滑幅度（-9.4%），每位用戶平均瀏覽頁數在減少</li>
+      <li>跳出率僅微幅上升 3.6 個百分點，參與時間與頁深反而略有改善</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>流量下滑的主因可能是 SEO 表現、內容量或外部搜尋趨勢變化，而非用戶體驗問題——因為體驗指標反而微幅改善</li>
+      <li>改善頁面體驗（404、文章引導）可以提升每次造訪的價值，但不能直接解決流量下滑問題</li>
+      <li>建議同步調查 Google Search Console 數據，確認自然搜尋流量的變化原因</li>
+    </div>
+  </div>
+
+  <!-- ── 詳細：高黏著度頁面 ── -->
+  <div id="detail-sticky" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">⭐ 時間趨勢 → 高黏著度頁面分析</div>
+      <h2>高黏著度頁面特徵分析</h2>
+      <p>全站符合高黏著標準（跳出&lt;40%、頁深≥1.3、參與≥40秒）的頁面只有 4 頁</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi green"><div class="pv">4 頁</div><div class="pl">達標頁面數（全站 10 萬頁中）</div></div>
+      <div class="panel-kpi green"><div class="pv">1.98頁</div><div class="pl">高黏著頁面平均頁深/session</div></div>
+      <div class="panel-kpi red"><div class="pv">1.04頁</div><div class="pl">低黏著頁面平均頁深/session</div></div>
+      <div class="panel-kpi blue"><div class="pv">55秒</div><div class="pl">高黏著頁面平均參與時間</div></div>
+    </div>
+    <div class="panel-chart-wrap"><canvas id="chart-sticky"></canvas></div>
+    <table class="compare-table">
+      <tr><th>頁面</th><th>頁深</th><th>跳出率</th><th>參與時間</th><th>類型</th></tr>
+      <tr><td>首頁</td><td class="good">2.50頁</td><td class="good">25%</td><td>48秒</td><td>匯集型・導覽頁</td></tr>
+      <tr><td>股東會紀念品怎麼領？</td><td class="good">1.99頁</td><td class="good">11%</td><td>68秒</td><td>完整攻略型</td></tr>
+      <tr><td>今日最新</td><td class="good">1.52頁</td><td class="good">31%</td><td>54秒</td><td>匯集型・列表頁</td></tr>
+      <tr><td>AI創新百強年會議程表</td><td class="good">1.93頁</td><td class="good">32%</td><td>50秒</td><td>活動頁・多連結</td></tr>
+    </table>
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>高黏著 vs 低黏著頁面的參與時間幾乎相同（55秒 vs 53秒），差距完全在頁深（1.98 vs 1.04）</li>
+      <li>4 個高黏著頁面都屬於「匯集型」或「攻略型」，頁面內有多個可點擊的延伸連結</li>
+      <li>低黏著頁面共 34 頁（瀏覽 ≥5萬），用戶花了時間讀，但讀完就離開</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>用戶不是因為「沒興趣」而離開，而是讀完後沒有明確的下一步，因此離開——這支持文章引導優化的價值</li>
+      <li>若文章底部加入攻略型的「相關閱讀」區塊，有機會提升頁深，但實際效果需 A/B 測試驗證</li>
+    </div>
+  </div>
+
 </div><!-- end right-col -->
 </div><!-- end main -->
 
@@ -730,7 +827,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 let activeHotspot = null;
 let activeProject = null;
 
-const hotspotToProject = { h404:['b','st'], hnv:['nv'], harticle:['c'], hdirect:['dir'], hdesktop:['dsk'], highlight:[], device:[], source:[], retention:[] };
+const hotspotToProject = { h404:['b','st'], hnv:['nv'], harticle:['c'], hdirect:['dir'], hdesktop:['dsk'], highlight:[], device:[], source:[], retention:[], trend:[], sticky:[] };
 const projectToHotspot = { b:'h404', st:'h404', c:'harticle', nv:'hnv', dir:'hdirect', dsk:'hdesktop', a:'h404' };
 
 function showDetail(id) {
@@ -950,6 +1047,37 @@ function renderCharts() {
 }
 
 // 初始：預設顯示第一個子項目
+  if (id === 'trend') {
+    destroyChart('trend');
+    charts['trend'] = new Chart(document.getElementById('chart-trend'), {
+      type: 'bar',
+      data: {
+        labels: ['PV（百萬）', 'UU（百萬）'],
+        datasets: [
+          { label: '前期（11/21–2/18）', data: [20.5, 15.2], backgroundColor: '#90cdf4', borderRadius: 4 },
+          { label: '現期（2/19–5/19）', data: [16.3, 13.8], backgroundColor: '#fc8181', borderRadius: 4 }
+        ]
+      },
+      options: { responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'bottom', labels:{boxWidth:12,font:{size:11}} } },
+        scales:{ y:{beginAtZero:true, title:{display:true,text:'百萬'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}} } }
+    });
+  }
+
+  if (id === 'sticky') {
+    destroyChart('sticky');
+    charts['sticky'] = new Chart(document.getElementById('chart-sticky'), {
+      type: 'bar',
+      data: {
+        labels: ['首頁', '股東會攻略', 'AI年會議程', '今日最新', '全站低黏著均值'],
+        datasets: [{ label: '頁深（頁/session）', data: [2.50, 1.99, 1.93, 1.52, 1.04],
+          backgroundColor: ['#68d391','#68d391','#68d391','#68d391','#fc8181'], borderRadius: 5 }]
+      },
+      options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
+        scales:{ y:{beginAtZero:true, max:3, title:{display:true,text:'頁/session'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}, ticks:{font:{size:10}}} } }
+    });
+  }
+
 selectProject('b');
 </script>
 </body>
