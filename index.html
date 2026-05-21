@@ -3,66 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PV/UU 流失診斷 × 子項目選擇｜商周.COM</title>
+<title>PV/UU 流失診斷儀表板｜商周.COM</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f0f4f8;color:#1a202c;font-size:14px;}
 
-/* ── Header ── */
-.header{background:linear-gradient(135deg,#1a365d,#2c5282);color:#fff;padding:24px 40px;display:flex;align-items:center;justify-content:space-between;}
-.header h1{font-size:20px;font-weight:700;margin-bottom:3px;}
+/* Header */
+.header{background:linear-gradient(135deg,#1a365d,#2c5282);color:#fff;padding:20px 32px;display:flex;align-items:center;justify-content:space-between;}
+.header h1{font-size:19px;font-weight:700;margin-bottom:2px;}
 .header p{font-size:12px;opacity:.7;}
-.header-hint{font-size:12px;background:rgba(255,255,255,.15);border-radius:8px;padding:8px 14px;color:rgba(255,255,255,.9);}
+.header-hint{font-size:12px;background:rgba(255,255,255,.15);border-radius:8px;padding:7px 14px;color:rgba(255,255,255,.9);}
 
-/* ── Layout ── */
-.main{display:grid;grid-template-columns:1fr 420px;gap:0;min-height:calc(100vh - 72px);}
-.left-col{padding:24px;overflow-y:auto;border-right:1px solid #e2e8f0;}
-.right-col{padding:24px;background:#fff;overflow-y:auto;}
+/* 執行摘要 */
+.summary-bar{background:#1a202c;color:#fff;padding:12px 32px;display:flex;gap:32px;align-items:center;flex-wrap:wrap;}
+.summary-bar .s-title{font-size:11px;font-weight:700;color:#a0aec0;letter-spacing:.5px;white-space:nowrap;}
+.summary-item{display:flex;align-items:center;gap:8px;}
+.summary-item .s-val{font-size:15px;font-weight:800;}
+.summary-item .s-val.red{color:#fc8181;}
+.summary-item .s-val.orange{color:#f6ad55;}
+.summary-item .s-val.green{color:#68d391;}
+.summary-item .s-desc{font-size:12px;color:#a0aec0;line-height:1.4;}
+.summary-divider{width:1px;height:32px;background:rgba(255,255,255,.15);}
 
-/* ── Section title ── */
-.sec-title{font-size:15px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:8px;color:#2d3748;}
-.sec-title .hint{font-size:11px;font-weight:500;color:#718096;background:#edf2f7;padding:2px 9px;border-radius:20px;}
+/* Layout */
+.main{display:grid;grid-template-columns:1fr 420px;gap:0;min-height:calc(100vh - 108px);}
+.left-col{padding:20px;overflow-y:auto;border-right:1px solid #e2e8f0;}
+.right-col{padding:20px;background:#fff;overflow-y:auto;}
 
-/* ── KPI ── */
-.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px;}
-.kpi{background:#fff;border-radius:10px;padding:16px 14px;box-shadow:0 1px 3px rgba(0,0,0,.07);border-top:3px solid #e2e8f0;}
+/* Tab 導覽 */
+.tab-nav{display:flex;gap:4px;margin-bottom:16px;background:#edf2f7;border-radius:10px;padding:4px;}
+.tab-btn{flex:1;padding:8px 12px;border:none;border-radius:7px;cursor:pointer;font-size:13px;font-weight:600;color:#718096;background:transparent;transition:all .2s;}
+.tab-btn.active{background:#fff;color:#1a202c;box-shadow:0 1px 4px rgba(0,0,0,.1);}
+.tab-btn:hover:not(.active){background:rgba(255,255,255,.5);}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* KPI */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+.kpi{background:#fff;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.07);border-top:3px solid #e2e8f0;}
 .kpi.red{border-top-color:#e53e3e;}.kpi.orange{border-top-color:#dd6b20;}.kpi.blue{border-top-color:#3182ce;}
-.kpi-v{font-size:26px;font-weight:800;line-height:1;}
+.kpi-v{font-size:22px;font-weight:800;line-height:1;}
 .kpi.red .kpi-v{color:#e53e3e;}.kpi.orange .kpi-v{color:#dd6b20;}.kpi.blue .kpi-v{color:#3182ce;}
-.kpi-l{font-size:11px;color:#718096;margin-top:5px;}
+.kpi-l{font-size:11px;color:#718096;margin-top:4px;}
+.kpi-sub{font-size:11px;margin-top:5px;font-weight:600;}
 
-/* ── 熱點卡片 ── */
-.hotspot-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;}
-.hotspot{background:#fff;border-radius:10px;padding:18px;box-shadow:0 1px 3px rgba(0,0,0,.07);cursor:pointer;border:2px solid transparent;transition:all .2s;}
+/* Section title */
+.sec-title{font-size:13px;font-weight:700;margin-bottom:12px;color:#4a5568;display:flex;align-items:center;gap:6px;}
+.sec-title .hint{font-size:11px;font-weight:500;color:#718096;background:#edf2f7;padding:1px 8px;border-radius:20px;}
+
+/* 熱點卡片 */
+.hotspot-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.hotspot{background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.07);cursor:pointer;border:2px solid transparent;transition:all .2s;}
 .hotspot:hover{box-shadow:0 3px 10px rgba(0,0,0,.12);transform:translateY(-2px);}
 .hotspot.active{border-color:#3182ce;box-shadow:0 3px 14px rgba(49,130,206,.3);}
-.hotspot.dimmed{opacity:.4;}
-.hotspot-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.hotspot-icon{font-size:18px;}
+.hotspot.dimmed{opacity:.35;}
+.hotspot-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.hotspot-title-row{display:flex;align-items:center;gap:6px;}
+.hotspot-icon{font-size:16px;}
 .hotspot-title{font-size:13px;font-weight:700;}
-.hotspot-sub{font-size:11px;color:#718096;margin-bottom:10px;}
-.stat-row{display:flex;gap-8px;flex-wrap:wrap;gap:6px;}
+.hotspot-sub{font-size:11px;color:#718096;margin-bottom:8px;}
+.stat-row{display:flex;flex-wrap:wrap;gap:5px;}
 .stat{font-size:11px;font-weight:600;padding:2px 7px;border-radius:5px;}
 .stat.red{background:#fff5f5;color:#c53030;}
 .stat.orange{background:#fffaf0;color:#c05621;}
 .stat.blue{background:#ebf8ff;color:#2b6cb0;}
 .stat.green{background:#f0fff4;color:#276749;}
 .stat.gray{background:#edf2f7;color:#4a5568;}
-.hotspot-link{margin-top:10px;font-size:11px;color:#3182ce;font-weight:600;}
+.hotspot-link{margin-top:8px;font-size:11px;color:#3182ce;font-weight:600;}
 
-/* ── 排序列 ── */
-.rank-list{display:flex;flex-direction:column;gap:10px;margin-bottom:22px;}
-.rank-item{background:#fff;border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.07);cursor:pointer;border:2px solid transparent;transition:all .2s;display:grid;grid-template-columns:40px 1fr auto;align-items:center;gap:12px;}
+/* 完整度標籤 */
+.cbadge{font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px;white-space:nowrap;}
+.cbadge.complete{background:#c6f6d5;color:#22543d;}
+.cbadge.partial{background:#fefcbf;color:#744210;}
+.cbadge.gap{background:#fed7d7;color:#742a2a;}
+
+/* 子項目排序 */
+.rank-list{display:flex;flex-direction:column;gap:8px;}
+.rank-item{background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 1px 3px rgba(0,0,0,.07);cursor:pointer;border:2px solid transparent;transition:all .2s;}
 .rank-item:hover{box-shadow:0 3px 10px rgba(0,0,0,.12);}
 .rank-item.active{border-color:#3182ce;box-shadow:0 3px 14px rgba(49,130,206,.3);}
-.rank-item.dimmed{opacity:.4;}
-.rank-num{font-size:26px;font-weight:800;text-align:center;}
+.rank-item.dimmed{opacity:.35;}
+.rank-row{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:10px;}
+.rank-num{font-size:22px;font-weight:800;text-align:center;}
 .rank-item[data-id="b"] .rank-num{color:#e53e3e;}
-.rank-item[data-id="a"] .rank-num{color:#dd6b20;}
-.rank-item[data-id="c"] .rank-num{color:#38a169;}
-.rank-item[data-id="d"] .rank-num{color:#a0aec0;}
-.rank-name{font-size:13px;font-weight:700;margin-bottom:3px;}
+.rank-item[data-id="st"] .rank-num{color:#e53e3e;}
+.rank-item[data-id="c"] .rank-num{color:#dd6b20;}
+.rank-item[data-id="nv"] .rank-num{color:#38a169;}
+.rank-item[data-id="dir"] .rank-num{color:#718096;}
+.rank-item[data-id="a"] .rank-num{color:#718096;}
+.rank-name{font-size:13px;font-weight:700;margin-bottom:2px;}
 .rank-reason{font-size:11px;color:#718096;}
 .rank-badges{display:flex;flex-direction:column;gap:4px;align-items:flex-end;}
 .diff{font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;}
@@ -71,299 +101,410 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .diff.high{background:#fed7d7;color:#742a2a;}
 .score-mini{font-size:11px;color:#a0aec0;text-align:right;}
 
-/* ── 右側面板 ── */
-.panel-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#a0aec0;text-align:center;gap:12px;}
-.panel-placeholder .icon{font-size:48px;}
-.panel-placeholder p{font-size:13px;line-height:1.6;}
+/* 下一步行動 */
+.action-next{background:#f7fafc;border-radius:7px;padding:8px 12px;margin-top:10px;font-size:12px;color:#2d3748;display:flex;align-items:flex-start;gap:6px;}
+.action-next .a-label{font-weight:700;color:#2b6cb0;flex-shrink:0;}
 
+/* 右側面板 */
 .detail-section{display:none;}
 .detail-section.show{display:block;}
-
-.panel-header{padding-bottom:16px;margin-bottom:16px;border-bottom:2px solid #edf2f7;}
-.panel-header h2{font-size:17px;font-weight:700;margin-bottom:4px;}
+.panel-header{padding-bottom:14px;margin-bottom:14px;border-bottom:2px solid #edf2f7;}
+.panel-header h2{font-size:17px;font-weight:700;margin-bottom:3px;}
 .panel-header p{font-size:12px;color:#718096;}
-
-.panel-kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
-.panel-kpi{border-radius:8px;padding:14px;text-align:center;}
+.panel-kpi-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.panel-kpi{border-radius:8px;padding:12px;text-align:center;}
 .panel-kpi.red{background:#fff5f5;}.panel-kpi.orange{background:#fffaf0;}
 .panel-kpi.blue{background:#ebf8ff;}.panel-kpi.green{background:#f0fff4;}
-.panel-kpi .pv{font-size:22px;font-weight:800;}
+.panel-kpi .pv{font-size:20px;font-weight:800;}
 .panel-kpi.red .pv{color:#e53e3e;}.panel-kpi.orange .pv{color:#dd6b20;}
 .panel-kpi.blue .pv{color:#2b6cb0;}.panel-kpi.green .pv{color:#276749;}
 .panel-kpi .pl{font-size:11px;color:#718096;margin-top:3px;}
-
-.panel-chart-wrap{position:relative;height:200px;margin-bottom:16px;}
-
-.compare-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px;}
-.compare-table th{background:#edf2f7;padding:7px 10px;text-align:left;font-weight:600;color:#4a5568;}
-.compare-table td{padding:8px 10px;border-bottom:1px solid #f7fafc;}
+.panel-chart-wrap{position:relative;height:190px;margin-bottom:14px;}
+.compare-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px;}
+.compare-table th{background:#edf2f7;padding:6px 10px;text-align:left;font-weight:600;color:#4a5568;}
+.compare-table td{padding:7px 10px;border-bottom:1px solid #f7fafc;}
 .compare-table tr:last-child td{border-bottom:none;}
 .bad{color:#e53e3e;font-weight:600;}.good{color:#38a169;font-weight:600;}.mid{color:#dd6b20;font-weight:600;}
-
-.insight{background:#ebf8ff;border-left:3px solid #3182ce;border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:#2c5282;line-height:1.7;margin-bottom:12px;}
+.insight{background:#ebf8ff;border-left:3px solid #3182ce;border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:#2c5282;line-height:1.7;margin-bottom:10px;}
 .insight strong{font-weight:700;}
-.warn{background:#fff5f5;border-left:3px solid #e53e3e;border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:#742a2a;line-height:1.7;margin-bottom:12px;}
-.gap{background:#fffff0;border-left:3px solid #d69e2e;border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:#744210;line-height:1.7;margin-bottom:12px;}
-.gap strong{font-weight:700;}
-.gap-badge{font-size:11px;font-weight:700;background:#fefcbf;color:#744210;border:1px solid #f6e05e;padding:2px 8px;border-radius:20px;display:inline-block;}
-.fact-box{background:#f0fff4;border-left:3px solid #38a169;border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:#22543d;line-height:1.8;margin-bottom:8px;}
-.fact-box .box-title{font-weight:700;font-size:11px;letter-spacing:.5px;margin-bottom:6px;display:block;}
-.infer-box{background:#fffff0;border-left:3px solid #d69e2e;border-radius:0 8px 8px 0;padding:12px 14px;font-size:12px;color:#744210;line-height:1.8;margin-bottom:12px;}
-.infer-box .box-title{font-weight:700;font-size:11px;letter-spacing:.5px;margin-bottom:6px;display:block;}
+.warn{background:#fff5f5;border-left:3px solid #e53e3e;border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:#742a2a;line-height:1.7;margin-bottom:10px;}
+.gap-box{background:#fffff0;border-left:3px solid #d69e2e;border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:#744210;line-height:1.7;margin-bottom:10px;}
+.gap-box strong{font-weight:700;}
+.fact-box{background:#f0fff4;border-left:3px solid #38a169;border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:#22543d;line-height:1.8;margin-bottom:8px;}
+.fact-box .box-title{font-weight:700;font-size:11px;letter-spacing:.5px;margin-bottom:5px;display:block;}
+.infer-box{background:#fffff0;border-left:3px solid #d69e2e;border-radius:0 8px 8px 0;padding:11px 14px;font-size:12px;color:#744210;line-height:1.8;margin-bottom:10px;}
+.infer-box .box-title{font-weight:700;font-size:11px;letter-spacing:.5px;margin-bottom:5px;display:block;}
 .fact-box li,.infer-box li{margin-left:14px;margin-bottom:2px;}
 .fact-box strong,.infer-box strong{font-weight:700;}
-
+.connects-label{font-size:11px;color:#3182ce;background:#ebf8ff;padding:2px 8px;border-radius:5px;display:inline-block;margin-bottom:8px;}
+.gap-badge{font-size:11px;font-weight:700;background:#fefcbf;color:#744210;border:1px solid #f6e05e;padding:2px 8px;border-radius:20px;display:inline-block;}
 .article-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f7fafc;font-size:12px;}
 .article-row:last-child{border-bottom:none;}
 .article-row .ar-rank{width:18px;color:#a0aec0;flex-shrink:0;}
 .article-row .ar-title{flex:1;line-height:1.4;}
 .article-row .ar-chips{display:flex;gap:4px;flex-shrink:0;}
 
-/* ── 連動高亮線 ── */
-.connects-label{font-size:11px;color:#3182ce;background:#ebf8ff;padding:2px 8px;border-radius:5px;display:inline-block;margin-bottom:8px;}
+/* 預設概覽面板 */
+.overview-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.overview-card{background:#f7fafc;border-radius:10px;padding:14px;border-left:3px solid #e2e8f0;}
+.overview-card.red{border-left-color:#e53e3e;background:#fff5f5;}
+.overview-card.orange{border-left-color:#dd6b20;background:#fffaf0;}
+.overview-card.green{border-left-color:#38a169;background:#f0fff4;}
+.overview-card.blue{border-left-color:#3182ce;background:#ebf8ff;}
+.overview-card .oc-title{font-size:11px;font-weight:700;color:#718096;margin-bottom:6px;}
+.overview-card .oc-val{font-size:18px;font-weight:800;}
+.overview-card.red .oc-val{color:#e53e3e;}
+.overview-card.orange .oc-val{color:#dd6b20;}
+.overview-card.green .oc-val{color:#38a169;}
+.overview-card.blue .oc-val{color:#2b6cb0;}
+.overview-card .oc-desc{font-size:11px;color:#718096;margin-top:3px;}
 </style>
 </head>
 <body>
 
 <div class="header">
   <div>
-    <h1>PV/UU 流失診斷 × 子項目選擇</h1>
-    <p>商周.COM｜資料區間：2026/02/19 – 2026/05/19（近 90 天）｜GA4</p>
+    <h1>PV/UU 流失診斷儀表板</h1>
+    <p>商周.COM｜資料區間：2026/02/19–2026/05/19（近 90 天）｜GA4</p>
   </div>
-  <div class="header-hint">👈 點擊左側任一熱點或子項目，右側即時顯示數據</div>
+  <div class="header-hint">👈 點擊左側卡片或子項目，右側即時顯示詳細數據</div>
+</div>
+
+<!-- 執行摘要 -->
+<div class="summary-bar">
+  <span class="s-title">執行摘要</span>
+  <div class="summary-item">
+    <span class="s-val red">▼20.3%</span>
+    <span class="s-desc">PV 季度下滑<br>1,630萬（前期 2,046萬）</span>
+  </div>
+  <div class="summary-divider"></div>
+  <div class="summary-item">
+    <span class="s-val red">1.18頁</span>
+    <span class="s-desc">每人平均瀏覽頁數<br>目標值應 ≥ 3 頁</span>
+  </div>
+  <div class="summary-divider"></div>
+  <div class="summary-item">
+    <span class="s-val orange">5 大</span>
+    <span class="s-desc">已識別流失熱點<br>其中 3 個數據明確</span>
+  </div>
+  <div class="summary-divider"></div>
+  <div class="summary-item">
+    <span class="s-val green">6 個</span>
+    <span class="s-desc">改善子項目已排序<br>#2 搜尋追蹤為最緊急前置</span>
+  </div>
 </div>
 
 <div class="main">
 <!-- ══════ 左欄 ══════ -->
 <div class="left-col">
 
-  <!-- KPI -->
-  <div style="font-size:11px;color:#718096;margin-bottom:8px;">資料區間：2026/02/19 – 2026/05/19（90天累計）｜日均為 ÷90 粗估值，UU 日均需另拉日報表確認</div>
-  <div class="kpi-row">
-    <div class="kpi blue">
-      <div class="kpi-v">1,630萬</div>
-      <div class="kpi-l">總瀏覽量（PV）・90天累計</div>
-      <div style="font-size:12px;color:#3182ce;margin-top:6px;font-weight:600;">日均約 18.1 萬</div>
-    </div>
-    <div class="kpi blue">
-      <div class="kpi-v">1,090萬</div>
-      <div class="kpi-l">不重複使用者（UU）・90天累計</div>
-      <div style="font-size:12px;color:#3182ce;margin-top:6px;font-weight:600;">日均約 12.1 萬（粗估）</div>
-    </div>
-    <div class="kpi red">
-      <div class="kpi-v">1.49 頁</div>
-      <div class="kpi-l">PV ÷ UU・每人平均瀏覽頁數</div>
-      <div style="font-size:11px;color:#e53e3e;margin-top:4px;">健康值應 ≥ 3 頁</div>
-    </div>
-    <div class="kpi red">
-      <div class="kpi-v">67.6%</div>
-      <div class="kpi-l">平均跳出率</div>
-      <div style="font-size:11px;color:#e53e3e;margin-top:4px;">10 人中有 7 人看完就離開</div>
-    </div>
+  <!-- Tab 導覽 -->
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('diagnose')">🔍 診斷 <span style="font-size:11px;opacity:.7;">（5 熱點）</span></button>
+    <button class="tab-btn" onclick="switchTab('trend')">📊 趨勢 <span style="font-size:11px;opacity:.7;">（4 分析）</span></button>
+    <button class="tab-btn" onclick="switchTab('projects')">🎯 子項目 <span style="font-size:11px;opacity:.7;">（6 個）</span></button>
   </div>
 
-  <!-- 時間趨勢 -->
-  <div class="sec-title">時間趨勢（與前期對比） <span class="hint">點擊查看詳細數據</span></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;">
+  <!-- ══ Tab 1：診斷 ══ -->
+  <div id="tab-diagnose" class="tab-panel active">
 
-    <div class="hotspot" data-hotspot="trend" onclick="selectHotspot('trend')" style="cursor:pointer;">
-      <div class="hotspot-head"><span class="hotspot-icon">📉</span><span class="hotspot-title">流量下滑中</span></div>
-      <div class="hotspot-sub">前期 vs 現期（各90天）</div>
-      <div class="stat-row">
-        <span class="stat red">PV ↓20.3%</span>
-        <span class="stat red">UU ↓9.4%</span>
-        <span class="stat orange">PV/UU ↓0.16</span>
+    <div style="font-size:11px;color:#718096;margin-bottom:10px;">資料區間：2026/02/19–05/19（90天）｜日均為粗估值</div>
+    <div class="kpi-row">
+      <div class="kpi blue">
+        <div class="kpi-v">1,630萬</div>
+        <div class="kpi-l">總瀏覽量（PV）・90天累計</div>
+        <div class="kpi-sub" style="color:#3182ce;">日均約 18.1 萬</div>
       </div>
-      <div class="hotspot-link">→ 點擊查看完整對比</div>
+      <div class="kpi blue">
+        <div class="kpi-v">1,090萬</div>
+        <div class="kpi-l">不重複使用者（UU）・90天累計</div>
+        <div class="kpi-sub" style="color:#3182ce;">日均約 12.1 萬（粗估）</div>
+      </div>
+      <div class="kpi red">
+        <div class="kpi-v">1.18 頁</div>
+        <div class="kpi-l">PV ÷ UU・每人平均瀏覽頁數</div>
+        <div class="kpi-sub" style="color:#e53e3e;">健康值應 ≥ 3 頁</div>
+      </div>
+      <div class="kpi red">
+        <div class="kpi-v">67.6%</div>
+        <div class="kpi-l">平均跳出率</div>
+        <div class="kpi-sub" style="color:#e53e3e;">10 人有 7 人看完就走</div>
+      </div>
     </div>
 
-    <div class="hotspot" data-hotspot="sticky" onclick="selectHotspot('sticky')" style="cursor:pointer;">
-      <div class="hotspot-head"><span class="hotspot-icon">⭐</span><span class="hotspot-title">高黏著度頁面</span></div>
-      <div class="hotspot-sub">只有 4 頁達標，共同特徵明確</div>
-      <div class="stat-row">
-        <span class="stat green">頁深 1.98 頁/session</span>
-        <span class="stat green">跳出率 24%</span>
+    <div class="sec-title">流失熱點診斷 <span class="hint">點擊查看數據與對應解法</span></div>
+    <div class="hotspot-grid">
+
+      <div class="hotspot" data-hotspot="h404" onclick="selectHotspot('h404')">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">🔴</span><span class="hotspot-title">技術問題頁</span></div>
+          <span class="cbadge complete">數據明確</span>
+        </div>
+        <div class="hotspot-sub">404頁確認・搜尋頁待追蹤</div>
+        <div class="stat-row">
+          <span class="stat red">404頁 9.2萬 sessions</span>
+          <span class="stat red">平均停留 5秒</span>
+          <span class="gap-badge">⚠ 搜尋缺口</span>
+        </div>
+        <div class="hotspot-link">→ 對應子項目 #1 #2</div>
       </div>
-      <div class="hotspot-link">→ 點擊查看分析</div>
+
+      <div class="hotspot" data-hotspot="hnv" onclick="selectHotspot('hnv')">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">🟠</span><span class="hotspot-title">新訪客大量單次即走</span></div>
+          <span class="cbadge complete">數據明確</span>
+        </div>
+        <div class="hotspot-sub">用戶來了不回頭</div>
+        <div class="stat-row">
+          <span class="stat orange">新訪客 64.4%</span>
+          <span class="stat red">30天留存 0.35%</span>
+        </div>
+        <div class="hotspot-link">→ 對應子項目 #4</div>
+      </div>
+
+      <div class="hotspot" data-hotspot="harticle" onclick="selectHotspot('harticle')">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">🟡</span><span class="hotspot-title">文章看完不繼續</span></div>
+          <span class="cbadge complete">數據明確</span>
+        </div>
+        <div class="hotspot-sub">影響規模最大</div>
+        <div class="stat-row">
+          <span class="stat blue">600萬瀏覽/季</span>
+          <span class="stat orange">頁深 1.06頁</span>
+        </div>
+        <div class="hotspot-link">→ 對應子項目 #3</div>
+      </div>
+
+      <div class="hotspot" data-hotspot="hdirect" onclick="selectHotspot('hdirect')">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">⚠️</span><span class="hotspot-title">直接流量跳出偏高</span></div>
+          <span class="cbadge partial">原因待查</span>
+        </div>
+        <div class="hotspot-sub">393萬瀏覽・55% 跳出</div>
+        <div class="stat-row">
+          <span class="stat red">55.2% 跳出</span>
+          <span class="stat gray">Google 僅 28%</span>
+        </div>
+        <div class="hotspot-link">→ 對應子項目 #5</div>
+      </div>
+
+      <div class="hotspot" data-hotspot="hdesktop" onclick="selectHotspot('hdesktop')">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">💻</span><span class="hotspot-title">電腦版參與度偏低</span></div>
+          <span class="cbadge partial">根因待確認</span>
+        </div>
+        <div class="hotspot-sub">32% 用戶受影響</div>
+        <div class="stat-row">
+          <span class="stat orange">電腦版 52.1%</span>
+          <span class="stat green">手機版 68.8%</span>
+        </div>
+        <div class="hotspot-link">→ 對應子項目 #6</div>
+      </div>
+
+      <div class="hotspot" data-hotspot="highlight" onclick="selectHotspot('highlight')">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">✅</span><span class="hotspot-title">首頁表現正常</span></div>
+          <span class="cbadge complete">參考基準</span>
+        </div>
+        <div class="hotspot-sub">可作為改善目標</div>
+        <div class="stat-row">
+          <span class="stat green">跳出 24.7%</span>
+          <span class="stat green">2.5頁/session</span>
+        </div>
+        <div class="hotspot-link">→ 點擊查看對比數據</div>
+      </div>
+
+    </div>
+  </div><!-- end tab-diagnose -->
+
+  <!-- ══ Tab 2：趨勢 ══ -->
+  <div id="tab-trend" class="tab-panel">
+
+    <div class="sec-title">時間趨勢對比 <span class="hint">前後各 90 天</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">
+
+      <div class="hotspot" data-hotspot="trend" onclick="selectHotspot('trend')">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">📉</span><span class="hotspot-title">流量下滑中</span></div>
+          <span class="cbadge complete">數據明確</span>
+        </div>
+        <div class="hotspot-sub">前期 vs 現期（各90天）</div>
+        <div class="stat-row">
+          <span class="stat red">PV ↓20.3%</span>
+          <span class="stat red">UU ↓9.4%</span>
+        </div>
+        <div class="hotspot-link">→ 點擊查看完整對比</div>
+      </div>
+
+      <div class="hotspot" data-hotspot="sticky" onclick="selectHotspot('sticky')">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">⭐</span><span class="hotspot-title">高黏著度頁面</span></div>
+          <span class="cbadge complete">數據明確</span>
+        </div>
+        <div class="hotspot-sub">全站只有 4 頁達標</div>
+        <div class="stat-row">
+          <span class="stat green">頁深 1.98頁</span>
+          <span class="stat green">跳出率 24%</span>
+        </div>
+        <div class="hotspot-link">→ 點擊查看特徵分析</div>
+      </div>
+
     </div>
 
-  </div>
+    <div class="sec-title">流量結構分析 <span class="hint">點擊查看詳細數據</span></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
 
-  <!-- 裝置 & 流量來源 -->
-  <div class="sec-title">流量結構分析 <span class="hint">點擊查看詳細數據</span></div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;">
-
-    <div class="hotspot" data-hotspot="device" onclick="selectHotspot('device')" style="cursor:pointer;">
-      <div class="hotspot-head"><span class="hotspot-icon">📱</span><span class="hotspot-title">裝置比例</span></div>
-      <div class="hotspot-sub">手機為主力，佔整體 65%</div>
-      <div class="stat-row">
-        <span class="stat blue">手機 65.6%</span>
-        <span class="stat gray">電腦 32.3%</span>
-        <span class="stat gray">平板 1.4%</span>
+      <div class="hotspot" data-hotspot="device" onclick="selectHotspot('device')">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">📱</span><span class="hotspot-title">裝置比例</span></div>
+          <span class="cbadge complete">數據明確</span>
+        </div>
+        <div class="hotspot-sub">手機為主力 65%</div>
+        <div class="stat-row">
+          <span class="stat blue">手機 65.6%</span>
+          <span class="stat gray">電腦 32.3%</span>
+        </div>
+        <div class="hotspot-link">→ 點擊查看完整數據</div>
       </div>
-      <div class="hotspot-link">→ 點擊查看完整數據</div>
-    </div>
 
-    <div class="hotspot" data-hotspot="source" onclick="selectHotspot('source')" style="cursor:pointer;">
-      <div class="hotspot-head"><span class="hotspot-icon">🔍</span><span class="hotspot-title">流量來源</span></div>
-      <div class="hotspot-sub">Google 自然搜尋佔最大宗</div>
-      <div class="stat-row">
-        <span class="stat green">Google 自然 28% 跳出</span>
-        <span class="stat red">直接流量 55% 跳出</span>
+      <div class="hotspot" data-hotspot="source" onclick="selectHotspot('source')">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">🔍</span><span class="hotspot-title">流量來源</span></div>
+          <span class="cbadge complete">數據明確</span>
+        </div>
+        <div class="hotspot-sub">Google 最大且最健康</div>
+        <div class="stat-row">
+          <span class="stat green">Google 28% 跳出</span>
+          <span class="stat red">直接 55% 跳出</span>
+        </div>
+        <div class="hotspot-link">→ 點擊查看完整數據</div>
       </div>
-      <div class="hotspot-link">→ 點擊查看完整數據</div>
-    </div>
 
-    <div class="hotspot" data-hotspot="retention" onclick="selectHotspot('retention')" style="cursor:pointer;">
-      <div class="hotspot-head"><span class="hotspot-icon">🔄</span><span class="hotspot-title">新訪客 vs 回訪客</span></div>
-      <div class="hotspot-sub">留存率極低，用戶來了不回頭</div>
-      <div class="stat-row">
-        <span class="stat blue">新訪客 64.4%</span>
-        <span class="stat orange">30天留存僅 0.35%</span>
+      <div class="hotspot" data-hotspot="retention" onclick="selectHotspot('retention')" style="grid-column:1/-1;">
+        <div class="hotspot-head">
+          <div class="hotspot-title-row"><span class="hotspot-icon">🔄</span><span class="hotspot-title">新訪客 vs 回訪客・留存率</span></div>
+          <span class="cbadge complete">數據明確</span>
+        </div>
+        <div class="hotspot-sub">用戶幾乎不回頭</div>
+        <div class="stat-row">
+          <span class="stat blue">新訪客 64.4%</span>
+          <span class="stat red">隔天留存 2.32%</span>
+          <span class="stat red">30天留存 0.35%</span>
+        </div>
+        <div class="hotspot-link">→ 點擊查看完整數據</div>
       </div>
-      <div class="hotspot-link">→ 點擊查看完整數據</div>
+
     </div>
+  </div><!-- end tab-trend -->
 
-  </div>
+  <!-- ══ Tab 3：子項目 ══ -->
+  <div id="tab-projects" class="tab-panel">
 
-  <!-- 流失熱點 -->
-  <div class="sec-title">流失熱點診斷 <span class="hint">點擊查看對應解法</span></div>
-  <div class="hotspot-grid">
+    <div class="sec-title">子項目優先排序 <span class="hint">點擊查看數據佐證</span></div>
+    <div class="rank-list">
 
-    <div class="hotspot" data-hotspot="h404" onclick="selectHotspot('h404')">
-      <div class="hotspot-head"><span class="hotspot-icon">🔴</span><span class="hotspot-title">技術問題頁</span></div>
-      <div class="hotspot-sub">數據明確・進來就撞牆</div>
-      <div class="stat-row">
-        <span class="stat red">404頁 9.2萬 sessions / 5秒</span>
-        <span class="gap-badge">⚠ 搜尋頁追蹤缺口</span>
+      <div class="rank-item" data-id="b" onclick="selectProject('b')">
+        <div class="rank-row">
+          <div class="rank-num">1</div>
+          <div>
+            <div class="rank-name">404 頁面引導優化</div>
+            <div class="rank-reason">數據明確・難度低・9.2萬 sessions 可回收</div>
+            <div class="action-next"><span class="a-label">下一步：</span>PM 撰寫需求規格 → IT 排入開發</div>
+          </div>
+          <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">92分</div></div>
+        </div>
       </div>
-      <div class="hotspot-link">→ 對應子項目 #1 #2</div>
-    </div>
 
-    <div class="hotspot" data-hotspot="hnv" onclick="selectHotspot('hnv')">
-      <div class="hotspot-head"><span class="hotspot-icon">🟠</span><span class="hotspot-title">新訪客大量單次即走</span></div>
-      <div class="hotspot-sub">數據明確・用戶來了不回頭</div>
-      <div class="stat-row">
-        <span class="stat orange">新訪客 64.4%</span>
-        <span class="stat red">30天留存 0.35%</span>
+      <div class="rank-item" data-id="st" onclick="selectProject('st')">
+        <div class="rank-row">
+          <div class="rank-num">2</div>
+          <div>
+            <div class="rank-name">搜尋事件追蹤補設定</div>
+            <div class="rank-reason">IT 設定工時低・是 #6 搜尋優化的前置需求</div>
+            <div class="action-next"><span class="a-label">下一步：</span>PM 向 IT 提需求，預估 1–2 天完成設定</div>
+          </div>
+          <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">85分</div></div>
+        </div>
       </div>
-      <div class="hotspot-link">→ 對應子項目 #4</div>
-    </div>
 
-    <div class="hotspot" data-hotspot="harticle" onclick="selectHotspot('harticle')">
-      <div class="hotspot-head"><span class="hotspot-icon">🟡</span><span class="hotspot-title">文章看完不繼續</span></div>
-      <div class="hotspot-sub">數據明確・影響規模最大</div>
-      <div class="stat-row">
-        <span class="stat blue">600萬瀏覽/季</span>
-        <span class="stat orange">頁深 1.06頁</span>
+      <div class="rank-item" data-id="c" onclick="selectProject('c')">
+        <div class="rank-row">
+          <div class="rank-num">3</div>
+          <div>
+            <div class="rank-name">文章頁閱讀後引導優化</div>
+            <div class="rank-reason">影響規模最大（600萬/季）・需演算法或規則支援</div>
+            <div class="action-next"><span class="a-label">下一步：</span>確認推薦邏輯（規則 or 算法）→ IT 評估工時</div>
+          </div>
+          <div class="rank-badges"><span class="diff high">難度 高</span><div class="score-mini">72分</div></div>
+        </div>
       </div>
-      <div class="hotspot-link">→ 對應子項目 #3</div>
-    </div>
 
-    <div class="hotspot" data-hotspot="hdirect" onclick="selectHotspot('hdirect')">
-      <div class="hotspot-head"><span class="hotspot-icon">⚠️</span><span class="hotspot-title">直接流量跳出率偏高</span></div>
-      <div class="hotspot-sub">原因待查・需交叉分析</div>
-      <div class="stat-row">
-        <span class="stat red">393萬瀏覽・55% 跳出</span>
-        <span class="stat gray">Google 自然僅 28%</span>
+      <div class="rank-item" data-id="nv" onclick="selectProject('nv')">
+        <div class="rank-row">
+          <div class="rank-num">4</div>
+          <div>
+            <div class="rank-name">新訪客首訪留存引導</div>
+            <div class="rank-reason">64% 為新訪客・留存率僅 0.35%・策略方向需定義</div>
+            <div class="action-next"><span class="a-label">下一步：</span>PM 定義策略方向 → 與設計師討論</div>
+          </div>
+          <div class="rank-badges"><span class="diff mid">難度 中</span><div class="score-mini">60分</div></div>
+        </div>
       </div>
-      <div class="hotspot-link">→ 對應子項目 #5</div>
-    </div>
 
-    <div class="hotspot" data-hotspot="hdesktop" onclick="selectHotspot('hdesktop')">
-      <div class="hotspot-head"><span class="hotspot-icon">💻</span><span class="hotspot-title">電腦版參與度偏低</span></div>
-      <div class="hotspot-sub">數據明確・根因待確認</div>
-      <div class="stat-row">
-        <span class="stat orange">電腦版參與度 52.1%</span>
-        <span class="stat green">手機版 68.8%</span>
+      <div class="rank-item" data-id="dir" onclick="selectProject('dir')">
+        <div class="rank-row">
+          <div class="rank-num">5</div>
+          <div>
+            <div class="rank-name">直接流量根因調查</div>
+            <div class="rank-reason">393萬瀏覽・55% 跳出・需交叉分析確認原因</div>
+            <div class="action-next"><span class="a-label">下一步：</span>GA4 探索交叉分析（PM 可自行操作）</div>
+          </div>
+          <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">45分</div></div>
+        </div>
       </div>
-      <div class="hotspot-link">→ 對應子項目 #6</div>
-    </div>
 
-    <div class="hotspot" data-hotspot="highlight" onclick="selectHotspot('highlight')">
-      <div class="hotspot-head"><span class="hotspot-icon">✅</span><span class="hotspot-title">首頁表現正常</span></div>
-      <div class="hotspot-sub">可作為改善目標的參考基準</div>
-      <div class="stat-row">
-        <span class="stat green">跳出率 24.7%</span>
-        <span class="stat green">參與 48秒・2.5頁</span>
+      <div class="rank-item" data-id="a" onclick="selectProject('a')">
+        <div class="rank-row">
+          <div class="rank-num">6</div>
+          <div>
+            <div class="rank-name">搜尋頁體驗優化 <span class="gap-badge">⚠ 須先完成 #2</span></div>
+            <div class="rank-reason">需等搜尋追蹤上線 4 週後再啟動，才有數據支撐</div>
+            <div class="action-next"><span class="a-label">下一步：</span>等 #2 完成並累積 4 週數據後啟動</div>
+          </div>
+          <div class="rank-badges"><span class="diff mid">難度 中</span><div class="score-mini">待補數據</div></div>
+        </div>
       </div>
-      <div class="hotspot-link">→ 點擊查看對比數據</div>
+
     </div>
+  </div><!-- end tab-projects -->
 
-  </div>
-
-  <!-- 子項目排序 -->
-  <div class="sec-title">子項目優先排序 <span class="hint">點擊查看數據佐證</span></div>
-  <div class="rank-list">
-
-    <div class="rank-item" data-id="b" onclick="selectProject('b')">
-      <div class="rank-num">1</div>
-      <div>
-        <div class="rank-name">404 頁面引導優化</div>
-        <div class="rank-reason">數據明確・難度低・最快交付・9.2萬 sessions 可回收</div>
-      </div>
-      <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">92分</div></div>
-    </div>
-
-    <div class="rank-item" data-id="st" onclick="selectProject('st')">
-      <div class="rank-num">2</div>
-      <div>
-        <div class="rank-name">搜尋事件追蹤補設定</div>
-        <div class="rank-reason">IT 設定工時低・是搜尋頁優化的前置需求・11萬 sessions 待釐清</div>
-      </div>
-      <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">85分</div></div>
-    </div>
-
-    <div class="rank-item" data-id="c" onclick="selectProject('c')">
-      <div class="rank-num">3</div>
-      <div>
-        <div class="rank-name">文章頁閱讀後引導優化</div>
-        <div class="rank-reason">影響規模最大（600萬/季）・需演算法支援・長期效益</div>
-      </div>
-      <div class="rank-badges"><span class="diff high">難度 高</span><div class="score-mini">72分</div></div>
-    </div>
-
-    <div class="rank-item" data-id="nv" onclick="selectProject('nv')">
-      <div class="rank-num">4</div>
-      <div>
-        <div class="rank-name">新訪客首訪留存引導</div>
-        <div class="rank-reason">64% 為新訪客・留存率僅 0.35%・策略方向需定義</div>
-      </div>
-      <div class="rank-badges"><span class="diff mid">難度 中</span><div class="score-mini">60分</div></div>
-    </div>
-
-    <div class="rank-item" data-id="dir" onclick="selectProject('dir')">
-      <div class="rank-num">5</div>
-      <div>
-        <div class="rank-name">直接流量根因調查</div>
-        <div class="rank-reason">393萬瀏覽・55% 跳出・需交叉分析確認原因後再決定改版方向</div>
-      </div>
-      <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">45分</div></div>
-    </div>
-
-    <div class="rank-item" data-id="a" onclick="selectProject('a')">
-      <div class="rank-num">6</div>
-      <div>
-        <div class="rank-name">搜尋頁體驗優化 <span class="gap-badge">⚠ 須先完成 #2</span></div>
-        <div class="rank-reason">需等搜尋追蹤上線 4 週後，才有數據支撐改版決策</div>
-      </div>
-      <div class="rank-badges"><span class="diff mid">難度 中</span><div class="score-mini">待補數據</div></div>
-    </div>
-
-  </div>
-
-</div>
+</div><!-- end left-col -->
 
 <!-- ══════ 右欄 ══════ -->
 <div class="right-col">
 
-  <!-- 預設提示 -->
-  <div id="placeholder" class="panel-placeholder">
-    <div class="icon">👆</div>
-    <p>點擊左側任一<strong>流失熱點</strong>或<strong>子項目</strong><br>右側即時顯示詳細數據與佐證</p>
+  <!-- 預設概覽 -->
+  <div id="detail-overview" class="detail-section show">
+    <div class="panel-header">
+      <h2>整體診斷摘要</h2>
+      <p>點擊左側任一卡片或子項目，查看對應的詳細數據與佐證</p>
+    </div>
+    <div class="overview-grid">
+      <div class="overview-card red"><div class="oc-title">PV 季度變化</div><div class="oc-val">▼ 20.3%</div><div class="oc-desc">2,046萬 → 1,630萬</div></div>
+      <div class="overview-card red"><div class="oc-title">UU 季度變化</div><div class="oc-val">▼ 9.4%</div><div class="oc-desc">1,525萬 → 1,381萬</div></div>
+      <div class="overview-card red"><div class="oc-title">每人平均瀏覽頁數</div><div class="oc-val">1.18 頁</div><div class="oc-desc">目標值 ≥ 3 頁</div></div>
+      <div class="overview-card orange"><div class="oc-title">平均跳出率</div><div class="oc-val">67.6%</div><div class="oc-desc">加權後 32.5%</div></div>
+      <div class="overview-card orange"><div class="oc-title">30天留存率</div><div class="oc-val">0.35%</div><div class="oc-desc">100人來只有 0.35 人回頭</div></div>
+      <div class="overview-card blue"><div class="oc-title">404 月均流失</div><div class="oc-val">3.1萬</div><div class="oc-desc">sessions / 月</div></div>
+      <div class="overview-card blue"><div class="oc-title">文章受影響瀏覽</div><div class="oc-val">200萬</div><div class="oc-desc">頁深 &lt; 1.15 的頁面 / 月</div></div>
+      <div class="overview-card green"><div class="oc-title">首頁跳出率（參考）</div><div class="oc-val">24.7%</div><div class="oc-desc">改版目標基準</div></div>
+    </div>
+    <div class="insight">
+      <strong>核心結論：</strong>流量在縮減（PV -20.3%），但用戶體驗指標微幅改善（參與時間 +3.8秒）。問題有兩個層次——①流量來源在流失（需查 SEO）；②進站後用戶不深入瀏覽（需改頁面引導）。目前儀表板聚焦在第②層的診斷與改善。
+    </div>
   </div>
 
-  <!-- ── 詳細：404 ── -->
+  <!-- ── 404 ── -->
   <div id="detail-b" class="detail-section">
     <div class="panel-header">
       <div class="connects-label">🔴 熱點：技術問題頁 → 子項目 #1</div>
@@ -381,139 +522,26 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <tr><th>指標</th><th>404頁（現況）</th><th>首頁（參考）</th></tr>
       <tr><td>平均參與時間</td><td class="bad">5 秒</td><td class="good">48 秒</td></tr>
       <tr><td>每session瀏覽頁數</td><td class="bad">~1頁</td><td class="good">2.5 頁</td></tr>
-      <tr><td>頁面有推薦內容</td><td class="mid">✅ 有 4 篇靜態熱門文章</td><td class="good">✅ 完整動態導覽</td></tr>
+      <tr><td>頁面有推薦內容</td><td class="mid">✅ 4 篇靜態熱門文章</td><td class="good">✅ 完整動態導覽</td></tr>
       <tr><td>頁面有搜尋入口</td><td class="mid">⚠ 僅 header 放大鏡圖示</td><td class="good">✅ 明顯搜尋框</td></tr>
     </table>
     <div class="fact-box">
       <span class="box-title">✅ 直接觀察（GA4 數據）</span>
       <li>90天共 91,839 sessions 進入 404 頁面，平均停留 5 秒</li>
       <li>月均約 30,613 sessions 流失</li>
-      <li>頁面目前有 4 篇靜態熱門文章推薦與完整導覽列（頁面直接觀察）</li>
-      <li>搜尋入口僅在 header 右上角放大鏡圖示，非頁面主視覺區</li>
+      <li>頁面目前有 4 篇靜態熱門文章與完整導覽列（頁面直接觀察）</li>
+      <li>搜尋入口僅在 header 右上角放大鏡，非頁面主視覺區</li>
     </div>
     <div class="infer-box">
       <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>5 秒離開的原因：推測是頁面缺乏有效引導，但也可能是用戶本來就打算離開</li>
-      <li>機會試算：若引導 20% 用戶繼續瀏覽，可增加約 1.5 萬次頁面瀏覽／月（假設值，非實測）</li>
-      <li>加入搜尋框與推薦內容後能否提升留存，需上線後以 GA4 A/B 測試驗證</li>
+      <li>5 秒離開的原因：推測頁面缺乏有效引導，但也可能是用戶本來就打算離開</li>
+      <li>機會試算：若引導 20% 用戶繼續瀏覽，可增加約 1.5 萬次頁面瀏覽／月（假設值）</li>
+      <li>加入搜尋框與推薦內容後能否提升留存，需上線後以 GA4 驗證</li>
     </div>
+    <div class="insight"><strong>下一步行動：</strong>PM 撰寫需求規格（含搜尋框位置、推薦模組邏輯）→ IT 評估工時 → 排入開發排程</div>
   </div>
 
-  <!-- ── 詳細：搜尋 ── -->
-  <div id="detail-a" class="detail-section">
-    <div class="panel-header">
-      <div class="connects-label">🔴 熱點：技術問題頁 → 子項目 #2</div>
-      <h2>搜尋頁體驗優化</h2>
-      <p>優先排序第 2｜難度中｜⚠ 目前存在資料缺口，結論需補數據後確認</p>
-    </div>
-
-    <div class="gap">
-      <strong>⚠ 資料缺口：GA4 未追蹤搜尋事件</strong><br>
-      已確認 GA4 事件列表中<strong>不存在 search 或 view_search_results 事件</strong>，代表目前完全無法從數據判斷：<br>
-      ・用戶搜尋了哪些關鍵字<br>
-      ・搜尋後有沒有點進文章<br>
-      ・哪些搜尋找不到結果<br><br>
-      <strong>必要前置動作：</strong>請 IT 在 GA4 補設定搜尋事件追蹤，蒐集至少 4 週數據後，才能對搜尋體驗做出可靠判斷。
-    </div>
-
-    <div class="panel-kpi-row">
-      <div class="panel-kpi orange"><div class="pv">109,849</div><div class="pl">從外部直接落地搜尋頁的 sessions（90天）</div></div>
-      <div class="panel-kpi orange"><div class="pv">6 秒</div><div class="pl">這批 sessions 的平均停留（含整段旅程）</div></div>
-      <div class="panel-kpi blue"><div class="pv">⚠ 未知</div><div class="pl">搜尋後點進文章的比例</div></div>
-      <div class="panel-kpi blue"><div class="pv">⚠ 未知</div><div class="pl">站內導航使用搜尋的行為</div></div>
-    </div>
-
-    <div class="gap">
-      <strong>現有數據的正確解讀：</strong><br>
-      6 秒停留是指「從外部直接進入 /Search 頁面」的 sessions，這群人可能在搜尋頁就離開了，但也可能搜尋後點進文章——後者的時間會被計入整段 session，<strong>無法從現有數據區分這兩種情況</strong>。
-    </div>
-
-    <table class="compare-table">
-      <tr><th>資料項目</th><th>現況</th><th>需補齊方式</th></tr>
-      <tr><td>搜尋關鍵字分布</td><td class="bad">❌ 無資料</td><td>GA4 設定 search_term 參數</td></tr>
-      <tr><td>搜尋後點擊率</td><td class="bad">❌ 無資料</td><td>追蹤 search 後的 page_view 事件</td></tr>
-      <tr><td>零結果搜尋比例</td><td class="bad">❌ 無資料</td><td>後端記錄空結果搜尋並回傳 GA4</td></tr>
-      <tr><td>搜尋頁落地 sessions</td><td class="mid">✅ 有（109,849）</td><td>已有，但不足以單獨判斷問題</td></tr>
-    </table>
-
-    <div class="fact-box">
-      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
-      <li>90天共 109,849 sessions 從外部直接落地 /Search 頁面</li>
-      <li>這批 sessions 的整段旅程平均參與時間為 6 秒</li>
-      <li>GA4 事件列表中確認不存在 search 或 view_search_results 事件</li>
-    </div>
-    <div class="infer-box">
-      <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>6 秒是否代表「搜尋後無結果就離開」，目前無法確認——也可能是搜尋成功後點進文章，6 秒只是搜尋頁本身的停留時間</li>
-      <li>搜尋體驗是否有問題，需補設追蹤後才能判斷</li>
-      <li>站內使用搜尋的總行為量目前完全不可見</li>
-    </div>
-  </div>
-
-  <!-- ── 詳細：文章 ── -->
-  <div id="detail-c" class="detail-section">
-    <div class="panel-header">
-      <div class="connects-label">🟡 熱點：文章看完不繼續 → 子項目 #3</div>
-      <h2>文章頁閱讀後引導優化</h2>
-      <p>優先排序第 3｜難度高｜影響規模最大・長期效益</p>
-    </div>
-    <div class="panel-kpi-row">
-      <div class="panel-kpi red"><div class="pv">600萬</div><div class="pl">90天受影響瀏覽量</div></div>
-      <div class="panel-kpi red"><div class="pv">1.06頁</div><div class="pl">平均頁深/session</div></div>
-      <div class="panel-kpi blue"><div class="pv">200萬</div><div class="pl">月均受影響瀏覽</div></div>
-      <div class="panel-kpi orange"><div class="pv">2.5頁</div><div class="pl">首頁參考值</div></div>
-    </div>
-    <div class="panel-chart-wrap"><canvas id="chart-c"></canvas></div>
-    <div id="article-list-panel"></div>
-    <div class="fact-box" style="margin-top:12px;">
-      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
-      <li>高流量文章（單篇瀏覽 ≥ 3 萬）平均頁深為 1.06 頁/session，90天受影響瀏覽量共 600 萬</li>
-      <li>首頁頁深 2.5 頁/session，兩者差距達 1.44 頁</li>
-      <li>受影響文章以工具型內容為主（演唱會攻略、勞保薪資表、WBC 賽程等）</li>
-    </div>
-    <div class="infer-box">
-      <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>頁深低的原因：推測是文章底部缺乏有效引導，但也可能是用戶找到答案後本來就打算離開（工具型內容的自然行為）</li>
-      <li>機會試算：若 10% 讀者點擊推薦文章，每月可增加約 20 萬次瀏覽（假設值，非實測）</li>
-      <li>加入推薦內容後的實際點擊率，需上線後才能驗證</li>
-      <li>工具型文章的用戶是否有繼續閱讀的意願，目前未知</li>
-    </div>
-  </div>
-
-
-  <!-- ── 詳細：首頁亮點 ── -->
-  <div id="detail-highlight" class="detail-section">
-    <div class="panel-header">
-      <div class="connects-label">✅ 亮點：首頁表現正常</div>
-      <h2>首頁不是問題所在</h2>
-      <p>首頁指標良好，可作為其他頁面的改善目標參考值</p>
-    </div>
-    <div class="panel-kpi-row">
-      <div class="panel-kpi green"><div class="pv">24.7%</div><div class="pl">跳出率（全站最低之一）</div></div>
-      <div class="panel-kpi green"><div class="pv">48 秒</div><div class="pl">平均參與時間</div></div>
-      <div class="panel-kpi green"><div class="pv">2.5 頁</div><div class="pl">每session瀏覽頁數</div></div>
-      <div class="panel-kpi blue"><div class="pv">559,880</div><div class="pl">90天瀏覽量</div></div>
-    </div>
-    <div class="panel-chart-wrap"><canvas id="chart-highlight"></canvas></div>
-    <div class="fact-box">
-      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
-      <li>首頁跳出率 24.7%、參與時間 48 秒、頁深 2.5 頁，為全站表現最佳的頁面之一</li>
-      <li>404 頁停留 5 秒、搜尋頁停留 6 秒，與首頁差距顯著</li>
-    </div>
-    <div class="infer-box">
-      <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>以首頁數據作為改版目標是參考值，問題頁面改版後能否達到首頁水準，需實測後才能確認</li>
-    </div>
-    <table class="compare-table">
-      <tr><th>頁面</th><th>跳出率</th><th>參與時間</th><th>頁深/session</th></tr>
-      <tr><td>首頁 ✅</td><td class="good">24.7%</td><td class="good">48秒</td><td class="good">2.5頁</td></tr>
-      <tr><td>搜尋頁 ❌</td><td class="bad">估>80%</td><td class="bad">6秒</td><td class="bad">~1頁</td></tr>
-      <tr><td>404頁 ❌</td><td class="bad">~100%</td><td class="bad">5秒</td><td class="bad">~1頁</td></tr>
-      <tr><td>全站平均</td><td class="mid">67.6%</td><td class="mid">15秒</td><td class="mid">1.3頁</td></tr>
-    </table>
-  </div>
-
-  <!-- ── 詳細：搜尋追蹤設定 ── -->
+  <!-- ── 搜尋追蹤 ── -->
   <div id="detail-st" class="detail-section">
     <div class="panel-header">
       <div class="connects-label">🔴 熱點：技術問題頁 → 子項目 #2</div>
@@ -539,12 +567,42 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </div>
     <div class="infer-box">
       <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>搜尋體驗是否有問題，目前完全無法判斷</li>
-      <li>追蹤設定上線後需至少 4 週才能累積足夠數據支撐後續改版決策</li>
+      <li>6 秒停留無法判斷是「搜尋失敗後離開」還是「搜尋成功後點進文章」</li>
+      <li>追蹤設定上線後需至少 4 週才能累積足夠數據</li>
     </div>
+    <div class="insight"><strong>下一步行動：</strong>PM 向 IT 提出 GA4 設定需求 → IT 評估設定工時（預估 1–2 天）→ 追蹤上線後 4 週再啟動 #6</div>
   </div>
 
-  <!-- ── 詳細：新訪客留存 ── -->
+  <!-- ── 文章 ── -->
+  <div id="detail-c" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">🟡 熱點：文章看完不繼續 → 子項目 #3</div>
+      <h2>文章頁閱讀後引導優化</h2>
+      <p>優先排序第 3｜難度高｜影響規模最大・長期效益</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi red"><div class="pv">600萬</div><div class="pl">90天受影響瀏覽量</div></div>
+      <div class="panel-kpi red"><div class="pv">1.06頁</div><div class="pl">平均頁深/session</div></div>
+      <div class="panel-kpi blue"><div class="pv">200萬</div><div class="pl">月均受影響瀏覽</div></div>
+      <div class="panel-kpi orange"><div class="pv">2.5頁</div><div class="pl">首頁參考值</div></div>
+    </div>
+    <div class="panel-chart-wrap"><canvas id="chart-c"></canvas></div>
+    <div id="article-list-panel"></div>
+    <div class="fact-box" style="margin-top:12px;">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>高流量文章（≥3萬瀏覽）平均頁深 1.06，90天受影響瀏覽量 600萬</li>
+      <li>高黏著 vs 低黏著頁面參與時間幾乎相同（55秒 vs 53秒），差距完全在頁深（1.98 vs 1.04）</li>
+      <li>受影響文章以工具型內容為主（攻略、查詢、賽程等）</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>頁深低推測是文章底部缺乏引導，但工具型文章用戶找到答案後本來就可能離開</li>
+      <li>機會試算：若 10% 讀者點擊推薦文章，每月可多增加約 20 萬次瀏覽（假設值）</li>
+    </div>
+    <div class="insight"><strong>下一步行動：</strong>確認推薦邏輯（規則型 or 算法型）→ IT 評估工時 → 考慮先以 A/B 測試小規模驗證</div>
+  </div>
+
+  <!-- ── 新訪客留存 ── -->
   <div id="detail-nv" class="detail-section">
     <div class="panel-header">
       <div class="connects-label">🟠 熱點：新訪客大量單次即走 → 子項目 #4</div>
@@ -559,7 +617,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </div>
     <table class="compare-table">
       <tr><th>可能的改善方向</th><th>說明</th><th>難度</th></tr>
-      <tr><td>文章底部訂閱電子報引導</td><td>電子報用戶參與時間達 110 秒，為最高黏著來源</td><td class="mid">中</td></tr>
+      <tr><td>文章底部訂閱電子報引導</td><td>電子報用戶參與時間達 110 秒，最高黏著來源</td><td class="mid">中</td></tr>
       <tr><td>首訪推薦個人化</td><td>根據進站文章類型推薦相關內容</td><td class="bad">高</td></tr>
       <tr><td>Push 通知訂閱提示</td><td>首訪時邀請訂閱，建立回訪管道</td><td class="mid">中</td></tr>
     </table>
@@ -571,18 +629,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </div>
     <div class="infer-box">
       <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>留存率低是否為媒體網站的結構性問題，目前無法確認</li>
-      <li>加入訂閱引導後能否提升回訪率，需上線後追蹤</li>
-      <li>改善文章引導（#3）是否能連帶提升留存，為合理推測但未實測</li>
+      <li>留存率低可能是媒體網站的結構性問題，需對照同類競品確認</li>
+      <li>加入訂閱引導後能否提升回訪率，需上線後追蹤才能驗證</li>
     </div>
+    <div class="insight"><strong>下一步行動：</strong>PM 定義策略方向（訂閱引導 or 推薦 or Push）→ 與設計師討論 UX → 提 IT 需求評估</div>
   </div>
 
-  <!-- ── 詳細：直接流量調查 ── -->
+  <!-- ── 直接流量 ── -->
   <div id="detail-dir" class="detail-section">
     <div class="panel-header">
       <div class="connects-label">⚠️ 熱點：直接流量跳出偏高 → 子項目 #5</div>
       <h2>直接流量根因調查</h2>
-      <p>優先排序第 5｜難度低（數據分析）｜393萬瀏覽・跳出 55%，原因不明</p>
+      <p>優先排序第 5｜難度低（數據分析）｜原因不明・需先調查再行動</p>
     </div>
     <div class="panel-kpi-row">
       <div class="panel-kpi red"><div class="pv">393萬</div><div class="pl">直接流量瀏覽量（90天）</div></div>
@@ -605,11 +663,70 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     <div class="infer-box">
       <span class="box-title">💭 推測（尚未有數據驗證）</span>
       <li>跳出率高可能來自：書籤流量、輸入網址錯誤、App 內嵌瀏覽器等，需交叉分析才能判斷</li>
-      <li>在確認根因前，不建議直接進入改版，避免方向錯誤</li>
+      <li>在確認根因前，不建議直接進入改版</li>
     </div>
+    <div class="insight"><strong>下一步行動：</strong>使用 GA4「探索」功能做交叉分析，確認直接流量的主要到達頁面與用戶類型</div>
   </div>
 
-  <!-- ── 詳細：電腦版優化 ── -->
+  <!-- ── 搜尋頁 ── -->
+  <div id="detail-a" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">🔴 熱點：技術問題頁 → 子項目 #6</div>
+      <h2>搜尋頁體驗優化</h2>
+      <p>優先排序第 6｜⚠ 須先完成 #2 搜尋追蹤設定後再啟動</p>
+    </div>
+    <div class="gap-box">
+      <strong>⚠ 前置條件未完成：GA4 未追蹤搜尋事件</strong><br>
+      GA4 事件列表中確認不存在 search 事件，目前無法判斷搜尋體驗是否有問題。需先完成 #2 設定，蒐集 4 週數據後再啟動本項目。
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi orange"><div class="pv">109,849</div><div class="pl">搜尋頁落地 sessions（90天）</div></div>
+      <div class="panel-kpi orange"><div class="pv">6 秒</div><div class="pl">這批 sessions 平均停留</div></div>
+      <div class="panel-kpi blue"><div class="pv">⚠ 未知</div><div class="pl">搜尋後點進文章的比例</div></div>
+      <div class="panel-kpi blue"><div class="pv">⚠ 未知</div><div class="pl">站內使用搜尋的行為量</div></div>
+    </div>
+    <table class="compare-table">
+      <tr><th>資料項目</th><th>現況</th><th>需補齊方式</th></tr>
+      <tr><td>搜尋關鍵字分布</td><td class="bad">❌ 無資料</td><td>GA4 設定 search_term 參數</td></tr>
+      <tr><td>搜尋後點擊率</td><td class="bad">❌ 無資料</td><td>追蹤 search 後的 page_view 事件</td></tr>
+      <tr><td>零結果搜尋比例</td><td class="bad">❌ 無資料</td><td>後端回傳空結果事件</td></tr>
+    </table>
+    <div class="insight"><strong>下一步行動：</strong>等 #2 上線並累積 4 週數據後，用真實搜尋行為數據決定本項目的改版方向</div>
+  </div>
+
+  <!-- ── 首頁 ── -->
+  <div id="detail-highlight" class="detail-section">
+    <div class="panel-header">
+      <div class="connects-label">✅ 參考基準 → 首頁表現</div>
+      <h2>首頁不是問題所在</h2>
+      <p>首頁指標良好，可作為改版目標的參考基準值</p>
+    </div>
+    <div class="panel-kpi-row">
+      <div class="panel-kpi green"><div class="pv">24.7%</div><div class="pl">跳出率（全站最低之一）</div></div>
+      <div class="panel-kpi green"><div class="pv">48 秒</div><div class="pl">平均參與時間</div></div>
+      <div class="panel-kpi green"><div class="pv">2.5 頁</div><div class="pl">每session瀏覽頁數</div></div>
+      <div class="panel-kpi blue"><div class="pv">559,880</div><div class="pl">90天瀏覽量</div></div>
+    </div>
+    <div class="panel-chart-wrap"><canvas id="chart-highlight"></canvas></div>
+    <div class="fact-box">
+      <span class="box-title">✅ 直接觀察（GA4 數據）</span>
+      <li>首頁跳出率 24.7%、參與時間 48 秒、頁深 2.5 頁，為全站表現最佳頁面之一</li>
+      <li>404 頁停留 5 秒、搜尋頁停留 6 秒，與首頁差距顯著</li>
+    </div>
+    <div class="infer-box">
+      <span class="box-title">💭 推測（尚未有數據驗證）</span>
+      <li>以首頁數據作為改版目標是參考值，問題頁面改版後能否達到首頁水準，需實測確認</li>
+    </div>
+    <table class="compare-table">
+      <tr><th>頁面</th><th>跳出率</th><th>參與時間</th><th>頁深/session</th></tr>
+      <tr><td>首頁 ✅</td><td class="good">24.7%</td><td class="good">48秒</td><td class="good">2.5頁</td></tr>
+      <tr><td>搜尋頁 ❌</td><td class="bad">估>80%</td><td class="bad">6秒</td><td class="bad">~1頁</td></tr>
+      <tr><td>404頁 ❌</td><td class="bad">~100%</td><td class="bad">5秒</td><td class="bad">~1頁</td></tr>
+      <tr><td>全站平均</td><td class="mid">67.6%</td><td class="mid">15秒</td><td class="mid">1.3頁</td></tr>
+    </table>
+  </div>
+
+  <!-- ── 電腦版 ── -->
   <div id="detail-dsk" class="detail-section">
     <div class="panel-header">
       <div class="connects-label">💻 熱點：電腦版參與度偏低 → 子項目 #6</div>
@@ -632,17 +749,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <span class="box-title">✅ 直接觀察（GA4 數據）</span>
       <li>電腦版參與度 52.1%，低於手機 68.8%，差距 16.7 個百分點</li>
       <li>電腦版參與時間 90 秒，與手機（92 秒）差異不大</li>
-      <li>電腦用戶佔整體 32.3%，283 萬用戶規模不小</li>
     </div>
     <div class="infer-box">
       <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>電腦版參與度低的原因目前不明，可能是版面設計、內容呈現或使用情境差異</li>
-      <li>參與時間差異不大，表示問題可能在「是否開始參與」而非「參與深度」</li>
-      <li>建議先做電腦版用戶行為分析，再決定改版優先範圍</li>
+      <li>參與時間相近但參與度低，問題可能在「是否開始參與」而非「參與深度」</li>
+      <li>可能原因包含電腦版版面、廣告密度或內容呈現差異，需進一步分析</li>
     </div>
+    <div class="insight"><strong>下一步行動：</strong>先做電腦版用戶行為分析（頁面捲動深度、點擊熱圖），再決定改版優先範圍</div>
   </div>
 
-  <!-- ── 詳細：裝置比例 ── -->
+  <!-- ── 裝置比例 ── -->
   <div id="detail-device" class="detail-section">
     <div class="panel-header">
       <div class="connects-label">📱 流量結構 → 裝置比例</div>
@@ -657,7 +773,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     </div>
     <div class="panel-chart-wrap"><canvas id="chart-device"></canvas></div>
     <table class="compare-table">
-      <tr><th>裝置</th><th>活躍使用者</th><th>佔比</th><th>參與度</th><th>平均參與時間</th></tr>
+      <tr><th>裝置</th><th>活躍使用者</th><th>佔比</th><th>參與度</th><th>參與時間</th></tr>
       <tr><td>📱 手機</td><td>574萬</td><td class="good">65.6%</td><td class="good">68.8%</td><td>92秒</td></tr>
       <tr><td>💻 電腦</td><td>283萬</td><td class="mid">32.3%</td><td class="bad">52.1%</td><td>90秒</td></tr>
       <tr><td>📟 平板</td><td>12.3萬</td><td class="gray">1.4%</td><td class="good">76.3%</td><td>114秒</td></tr>
@@ -666,17 +782,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <span class="box-title">✅ 直接觀察（GA4 數據）</span>
       <li>手機用戶佔 65.6%、電腦 32.3%、平板 1.4%</li>
       <li>手機參與度 68.8%，高於電腦 52.1%</li>
-      <li>三種裝置參與時間相近（手機 92 秒、電腦 90 秒、平板 114 秒）</li>
     </div>
     <div class="infer-box">
       <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>手機參與度較高，推測手機用戶黏著意願較強，但也可能是內容類型或來源不同所致，需進一步分析</li>
-      <li>電腦版參與度偏低（52.1%），可能是 UI 或版型問題，目前無法確認根因</li>
       <li>建議改版以手機版優先，但仍需同步確保電腦版品質</li>
+      <li>電腦版參與度偏低（52.1%）的根因目前不明</li>
     </div>
   </div>
 
-  <!-- ── 詳細：流量來源 ── -->
+  <!-- ── 流量來源 ── -->
   <div id="detail-source" class="detail-section">
     <div class="panel-header">
       <div class="connects-label">🔍 流量結構 → 流量來源</div>
@@ -702,19 +816,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
     <div class="fact-box">
       <span class="box-title">✅ 直接觀察（GA4 數據）</span>
       <li>Google 自然搜尋為最大來源（990萬瀏覽），跳出率 28.2%，參與時間 62 秒</li>
-      <li>直接輸入為第二大來源（393萬瀏覽），跳出率 55.2%，參與時間 41 秒</li>
       <li>電子報流量最小（16.2萬），但參與時間最長（110 秒）</li>
-      <li>App Banner 跳出率最高（82%），參與時間 7 秒</li>
+      <li>App Banner 跳出率最高（82%），已確認為 App 流程導流，排除在本次分析範圍</li>
     </div>
     <div class="infer-box">
       <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>直接流量跳出率偏高的原因目前不明，需交叉分析到達頁面才能判斷</li>
-      <li>電子報參與時間高，推測訂閱用戶黏著度較高，但擴大電子報規模後是否維持相同品質，尚不確定</li>
-      <li>App Banner 高跳出屬 App 流程導流，非網站本身問題（已確認排除在本次分析範圍）</li>
+      <li>直接流量跳出率偏高原因不明，需交叉分析到達頁面才能判斷</li>
+      <li>電子報參與時間高，推測訂閱用戶黏著度較高，但擴大規模後是否維持，尚不確定</li>
     </div>
   </div>
 
-  <!-- ── 詳細：回訪留存 ── -->
+  <!-- ── 回訪留存 ── -->
   <div id="detail-retention" class="detail-section">
     <div class="panel-header">
       <div class="connects-label">🔄 流量結構 → 新訪客 vs 回訪客</div>
@@ -733,34 +845,31 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <tr><td>第 1 天</td><td class="bad">2.32%</td><td>100人造訪，隔天只有 2 人回來</td></tr>
       <tr><td>第 7 天</td><td class="bad">0.75%</td><td>一週後剩不到 1 人</td></tr>
       <tr><td>第 30 天</td><td class="bad">0.35%</td><td>一個月後幾乎全部流失</td></tr>
-      <tr><td>第 1 週後穩定值</td><td class="mid">~0.5%</td><td>極少數固定回訪用戶</td></tr>
     </table>
     <div class="fact-box">
       <span class="box-title">✅ 直接觀察（GA4 數據）</span>
       <li>新訪客 7,435,243（64.4%），回訪客 4,112,730（35.6%）</li>
       <li>第 1 天平均留存率 2.32%、第 7 天 0.75%、第 30 天 0.35%</li>
-      <li>第一週後每週活躍留存穩定在約 0.5%</li>
     </div>
     <div class="infer-box">
       <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>留存率低可能是媒體網站的正常現象（用戶有需求才來），但也可能代表內容黏著度不足</li>
-      <li>若文章引導改善後能讓用戶多看一頁，是否會提升回訪意願，需改版後追蹤才能確認</li>
-      <li>404 頁面對新訪客（64%）影響特別大，第一次來就撞牆可能導致永不回頭，但無法從現有數據直接驗證</li>
+      <li>留存率低可能是媒體網站的正常現象，需對照同類競品確認</li>
+      <li>改善文章引導若能讓用戶多看一頁，是否會提升回訪，需改版後追蹤</li>
     </div>
   </div>
 
-  <!-- ── 詳細：時間趨勢 ── -->
+  <!-- ── 時間趨勢 ── -->
   <div id="detail-trend" class="detail-section">
     <div class="panel-header">
-      <div class="connects-label">📉 時間趨勢 → 前期 vs 現期比較</div>
+      <div class="connects-label">📉 時間趨勢 → 前後期比較</div>
       <h2>流量趨勢對比</h2>
       <p>前期：2025/11/21–2026/02/18｜現期：2026/02/19–2026/05/19（各90天）</p>
     </div>
     <div class="panel-kpi-row">
-      <div class="panel-kpi red"><div class="pv">-20.3%</div><div class="pl">PV 下滑（2,164萬→1,630萬）</div></div>
+      <div class="panel-kpi red"><div class="pv">-20.3%</div><div class="pl">PV 下滑（2,046萬→1,630萬）</div></div>
       <div class="panel-kpi red"><div class="pv">-9.4%</div><div class="pl">UU 下滑（1,525萬→1,381萬）</div></div>
-      <div class="panel-kpi orange"><div class="pv">1.34→1.18</div><div class="pl">PV/UU 比下降（每人看更少頁）</div></div>
-      <div class="panel-kpi green"><div class="pv">+3.8秒</div><div class="pl">參與時間微升（48.6→52.4秒）</div></div>
+      <div class="panel-kpi orange"><div class="pv">1.34→1.18</div><div class="pl">PV/UU 比下降</div></div>
+      <div class="panel-kpi green"><div class="pv">+3.8秒</div><div class="pl">參與時間微升</div></div>
     </div>
     <div class="panel-chart-wrap"><canvas id="chart-trend"></canvas></div>
     <table class="compare-table">
@@ -770,52 +879,49 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
       <tr><td>PV/UU 比</td><td>1.34</td><td class="bad">1.18</td><td class="bad">▼ 0.16</td></tr>
       <tr><td>加權平均跳出率</td><td>28.9%</td><td class="mid">32.5%</td><td class="mid">▲ 3.6%</td></tr>
       <tr><td>加權平均參與時間</td><td>48.6秒</td><td class="good">52.4秒</td><td class="good">▲ 3.8秒</td></tr>
-      <tr><td>加權平均頁深</td><td>1.09頁</td><td class="good">1.11頁</td><td class="good">▲ 0.02頁</td></tr>
     </table>
     <div class="fact-box">
       <span class="box-title">✅ 直接觀察（GA4 數據）</span>
       <li>PV 下滑幅度（-20.3%）遠大於 UU 下滑幅度（-9.4%），每位用戶平均瀏覽頁數在減少</li>
-      <li>跳出率僅微幅上升 3.6 個百分點，參與時間與頁深反而略有改善</li>
+      <li>跳出率僅微幅上升，參與時間與頁深反而略有改善</li>
     </div>
     <div class="infer-box">
       <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>流量下滑的主因可能是 SEO 表現、內容量或外部搜尋趨勢變化，而非用戶體驗問題——因為體驗指標反而微幅改善</li>
-      <li>改善頁面體驗（404、文章引導）可以提升每次造訪的價值，但不能直接解決流量下滑問題</li>
-      <li>建議同步調查 Google Search Console 數據，確認自然搜尋流量的變化原因</li>
+      <li>流量下滑主因可能是 SEO 或外部趨勢變化，而非用戶體驗問題（因體驗指標反而微幅改善）</li>
+      <li>建議同步調查 Google Search Console，確認自然搜尋流量的變化原因</li>
     </div>
   </div>
 
-  <!-- ── 詳細：高黏著度頁面 ── -->
+  <!-- ── 高黏著頁面 ── -->
   <div id="detail-sticky" class="detail-section">
     <div class="panel-header">
       <div class="connects-label">⭐ 時間趨勢 → 高黏著度頁面分析</div>
       <h2>高黏著度頁面特徵分析</h2>
-      <p>全站符合高黏著標準（跳出&lt;40%、頁深≥1.3、參與≥40秒）的頁面只有 4 頁</p>
+      <p>全站 10 萬頁中，符合高黏著標準的只有 4 頁</p>
     </div>
     <div class="panel-kpi-row">
-      <div class="panel-kpi green"><div class="pv">4 頁</div><div class="pl">達標頁面數（全站 10 萬頁中）</div></div>
-      <div class="panel-kpi green"><div class="pv">1.98頁</div><div class="pl">高黏著頁面平均頁深/session</div></div>
-      <div class="panel-kpi red"><div class="pv">1.04頁</div><div class="pl">低黏著頁面平均頁深/session</div></div>
-      <div class="panel-kpi blue"><div class="pv">55秒</div><div class="pl">高黏著頁面平均參與時間</div></div>
+      <div class="panel-kpi green"><div class="pv">4 頁</div><div class="pl">達標頁面數</div></div>
+      <div class="panel-kpi green"><div class="pv">1.98頁</div><div class="pl">高黏著平均頁深</div></div>
+      <div class="panel-kpi red"><div class="pv">1.04頁</div><div class="pl">低黏著平均頁深（34頁）</div></div>
+      <div class="panel-kpi blue"><div class="pv">55秒</div><div class="pl">高黏著平均參與時間</div></div>
     </div>
     <div class="panel-chart-wrap"><canvas id="chart-sticky"></canvas></div>
     <table class="compare-table">
-      <tr><th>頁面</th><th>頁深</th><th>跳出率</th><th>參與時間</th><th>類型</th></tr>
-      <tr><td>首頁</td><td class="good">2.50頁</td><td class="good">25%</td><td>48秒</td><td>匯集型・導覽頁</td></tr>
-      <tr><td>股東會紀念品怎麼領？</td><td class="good">1.99頁</td><td class="good">11%</td><td>68秒</td><td>完整攻略型</td></tr>
-      <tr><td>今日最新</td><td class="good">1.52頁</td><td class="good">31%</td><td>54秒</td><td>匯集型・列表頁</td></tr>
-      <tr><td>AI創新百強年會議程表</td><td class="good">1.93頁</td><td class="good">32%</td><td>50秒</td><td>活動頁・多連結</td></tr>
+      <tr><th>頁面</th><th>頁深</th><th>跳出率</th><th>類型</th></tr>
+      <tr><td>首頁</td><td class="good">2.50頁</td><td class="good">25%</td><td>匯集型・導覽頁</td></tr>
+      <tr><td>股東會紀念品怎麼領？</td><td class="good">1.99頁</td><td class="good">11%</td><td>完整攻略型</td></tr>
+      <tr><td>AI創新百強年會議程表</td><td class="good">1.93頁</td><td class="good">32%</td><td>活動頁・多連結</td></tr>
+      <tr><td>今日最新</td><td class="good">1.52頁</td><td class="good">31%</td><td>匯集型・列表頁</td></tr>
     </table>
     <div class="fact-box">
       <span class="box-title">✅ 直接觀察（GA4 數據）</span>
       <li>高黏著 vs 低黏著頁面的參與時間幾乎相同（55秒 vs 53秒），差距完全在頁深（1.98 vs 1.04）</li>
       <li>4 個高黏著頁面都屬於「匯集型」或「攻略型」，頁面內有多個可點擊的延伸連結</li>
-      <li>低黏著頁面共 34 頁（瀏覽 ≥5萬），用戶花了時間讀，但讀完就離開</li>
     </div>
     <div class="infer-box">
       <span class="box-title">💭 推測（尚未有數據驗證）</span>
-      <li>用戶不是因為「沒興趣」而離開，而是讀完後沒有明確的下一步，因此離開——這支持文章引導優化的價值</li>
-      <li>若文章底部加入攻略型的「相關閱讀」區塊，有機會提升頁深，但實際效果需 A/B 測試驗證</li>
+      <li>用戶不是沒興趣而離開，而是讀完後沒有明確下一步——這支持文章引導優化的價值</li>
+      <li>若文章底部加入攻略型「相關閱讀」區塊，有機會提升頁深，但效果需 A/B 測試驗證</li>
     </div>
   </div>
 
@@ -823,65 +929,69 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 </div><!-- end main -->
 
 <script>
-// ── 狀態 ──
 let activeHotspot = null;
 let activeProject = null;
 
-const hotspotToProject = { h404:['b','st'], hnv:['nv'], harticle:['c'], hdirect:['dir'], hdesktop:['dsk'], highlight:[], device:[], source:[], retention:[], trend:[], sticky:[] };
-const projectToHotspot = { b:'h404', st:'h404', c:'harticle', nv:'hnv', dir:'hdirect', dsk:'hdesktop', a:'h404' };
+const hotspotToProject = {
+  h404:['b','st'], hnv:['nv'], harticle:['c'], hdirect:['dir'],
+  hdesktop:['dsk'], highlight:[], device:[], source:[], retention:[],
+  trend:[], sticky:[]
+};
+const projectToHotspot = {
+  b:'h404', st:'h404', c:'harticle', nv:'hnv',
+  dir:'hdirect', dsk:'hdesktop', a:'h404'
+};
+
+// Tab 切換
+function switchTab(tab) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.currentTarget.classList.add('active');
+  // 切換 tab 時清除高亮
+  document.querySelectorAll('.hotspot,.rank-item').forEach(el => {
+    el.classList.remove('active','dimmed');
+  });
+}
 
 function showDetail(id) {
-  document.getElementById('placeholder').style.display = 'none';
   document.querySelectorAll('.detail-section').forEach(el => el.classList.remove('show'));
   const el = document.getElementById('detail-' + id);
   if (el) el.classList.add('show');
 }
 
 function selectHotspot(id) {
-  activeHotspot = id;
-  activeProject = null;
-
-  // 熱點高亮
+  activeHotspot = id; activeProject = null;
   document.querySelectorAll('.hotspot').forEach(el => {
     el.classList.toggle('active', el.dataset.hotspot === id);
     el.classList.toggle('dimmed', el.dataset.hotspot !== id);
   });
-
-  // 子項目高亮
-  const relProjects = hotspotToProject[id] || [];
+  const rel = hotspotToProject[id] || [];
   document.querySelectorAll('.rank-item').forEach(el => {
-    const match = relProjects.includes(el.dataset.id);
-    el.classList.toggle('active', match);
-    el.classList.toggle('dimmed', relProjects.length > 0 && !match);
+    const m = rel.includes(el.dataset.id);
+    el.classList.toggle('active', m);
+    el.classList.toggle('dimmed', rel.length > 0 && !m);
   });
-
-  // 右側顯示（若有對應子項目，優先顯示第一個；否則顯示 highlight）
-  showDetail(relProjects.length > 0 ? relProjects[0] : id);
+  showDetail(rel.length > 0 ? rel[0] : id);
   renderCharts();
 }
 
 function selectProject(id) {
-  activeProject = id;
-  activeHotspot = null;
-
-  // 子項目高亮
+  activeProject = id; activeHotspot = null;
   document.querySelectorAll('.rank-item').forEach(el => {
     el.classList.toggle('active', el.dataset.id === id);
     el.classList.toggle('dimmed', el.dataset.id !== id);
   });
-
-  // 熱點高亮
-  const relHotspot = projectToHotspot[id];
+  const rel = projectToHotspot[id];
   document.querySelectorAll('.hotspot').forEach(el => {
-    el.classList.toggle('active', el.dataset.hotspot === relHotspot);
-    el.classList.toggle('dimmed', el.dataset.hotspot !== relHotspot);
+    el.classList.toggle('active', el.dataset.hotspot === rel);
+    el.classList.toggle('dimmed', el.dataset.hotspot !== rel);
   });
-
   showDetail(id);
   renderCharts();
 }
 
-// ── 圖表 ──
+// 圖表
 let charts = {};
 function destroyChart(id) { if (charts[id]) { charts[id].destroy(); delete charts[id]; } }
 
@@ -893,52 +1003,38 @@ function renderCharts() {
   if (id === 'b') {
     destroyChart('b');
     charts['b'] = new Chart(document.getElementById('chart-b'), {
-      type: 'bar',
-      data: {
-        labels: ['404錯誤頁', '搜尋頁', '全站平均', '首頁'],
-        datasets: [{ label: '平均參與時間（秒）', data: [5, 6, 15, 48],
-          backgroundColor: ['#fc8181','#fc8181','#f6ad55','#68d391'], borderRadius: 6 }]
-      },
-      options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-        scales:{ y:{beginAtZero:true, title:{display:true,text:'秒'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}} } }
+      type:'bar', data:{ labels:['404頁','搜尋頁','全站平均','首頁'],
+        datasets:[{label:'參與時間（秒）', data:[5,6,15,48],
+          backgroundColor:['#fc8181','#fc8181','#f6ad55','#68d391'], borderRadius:6}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+        scales:{y:{beginAtZero:true,title:{display:true,text:'秒'},grid:{color:'#f7fafc'}},x:{grid:{display:false}}}}
     });
   }
-
   if (id === 'a') {
     destroyChart('a');
     charts['a'] = new Chart(document.getElementById('chart-a'), {
-      type: 'bar',
-      data: {
-        labels: ['搜尋頁（現況）', '全站平均', '首頁', '高黏著頁'],
-        datasets: [{ label: '平均參與時間（秒）', data: [6, 15, 48, 63],
-          backgroundColor: ['#fc8181','#f6ad55','#68d391','#4299e1'], borderRadius: 6 }]
-      },
-      options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-        scales:{ y:{beginAtZero:true, title:{display:true,text:'秒'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}} } }
+      type:'bar', data:{labels:['搜尋頁','全站平均','首頁','高黏著頁'],
+        datasets:[{label:'參與時間（秒）', data:[6,15,48,63],
+          backgroundColor:['#fc8181','#f6ad55','#68d391','#4299e1'], borderRadius:6}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+        scales:{y:{beginAtZero:true,title:{display:true,text:'秒'},grid:{color:'#f7fafc'}},x:{grid:{display:false}}}}
     });
   }
-
   if (id === 'c') {
     destroyChart('c');
-    const labels = ['大樂透','演唱會攻略','WBC賽程','WBC哪裡看','勞保薪資表','新北燈會','WBC 3/8','刮刮樂'];
-    const depths = [1.12,1.09,1.03,1.07,0.99,1.06,1.09,1.06];
     charts['c'] = new Chart(document.getElementById('chart-c'), {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [
-          { label: '實際頁深（頁/session）', data: depths, backgroundColor: '#fc8181', borderRadius:4 },
-          { label: '目標參考（首頁 2.5頁）', data: Array(8).fill(2.5), type:'line',
-            borderColor:'#48bb78', borderDash:[5,4], pointRadius:0, borderWidth:2, fill:false }
-        ]
-      },
-      options: { responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ position:'bottom', labels:{boxWidth:12,font:{size:11}} } },
-        scales:{ y:{beginAtZero:true, max:3, title:{display:true,text:'頁/session'}, grid:{color:'#f7fafc'}},
-          x:{grid:{display:false}, ticks:{maxRotation:30,font:{size:10}}} } }
+      type:'bar', data:{
+        labels:['大樂透','演唱會攻略','WBC賽程','WBC哪裡看','勞保薪資表','新北燈會','WBC 3/8','刮刮樂'],
+        datasets:[
+          {label:'實際頁深', data:[1.12,1.09,1.03,1.07,0.99,1.06,1.09,1.06], backgroundColor:'#fc8181', borderRadius:4},
+          {label:'首頁參考（2.5頁）', data:Array(8).fill(2.5), type:'line',
+            borderColor:'#48bb78', borderDash:[5,4], pointRadius:0, borderWidth:2, fill:false}
+        ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}},
+        scales:{y:{beginAtZero:true,max:3,title:{display:true,text:'頁/session'},grid:{color:'#f7fafc'}},
+          x:{grid:{display:false},ticks:{maxRotation:30,font:{size:10}}}}}
     });
-
-    // 文章列表
     const articles = [
       ['2026大樂透春節加碼》開獎號碼揭曉！',552111,1.12,29],
       ['2026演唱會全攻略！（持續更新）',301214,1.09,31],
@@ -949,11 +1045,9 @@ function renderCharts() {
       ['2026過年刮刮樂中獎機率懶人包',124737,1.06,34],
       ['別把貧窮傳給下一代！5句話推開財富',109583,1.06,17],
     ];
-    const el = document.getElementById('article-list-panel');
-    el.innerHTML = articles.map((a,i) => `
+    document.getElementById('article-list-panel').innerHTML = articles.map((a,i) => `
       <div class="article-row">
-        <span class="ar-rank">${i+1}</span>
-        <span class="ar-title">${a[0]}</span>
+        <span class="ar-rank">${i+1}</span><span class="ar-title">${a[0]}</span>
         <div class="ar-chips">
           <span class="stat blue">${(a[1]/10000).toFixed(1)}萬</span>
           <span class="stat red">${a[2]}頁/s</span>
@@ -961,124 +1055,77 @@ function renderCharts() {
         </div>
       </div>`).join('');
   }
-
-  if (id === 'd') {
-    destroyChart('d');
-    charts['d'] = new Chart(document.getElementById('chart-d'), {
-      type: 'radar',
-      data: {
-        labels: ['跳出率低','參與時間','瀏覽深度','使用者規模','流量規模'],
-        datasets: [
-          { label: '每日來商周', data:[5,10,20,8,60],
-            backgroundColor:'rgba(252,129,129,0.2)', borderColor:'#fc8181', pointBackgroundColor:'#fc8181' },
-          { label: '首頁（目標參考）', data:[75,80,90,85,100],
-            backgroundColor:'rgba(72,187,120,0.1)', borderColor:'#48bb78', pointBackgroundColor:'#48bb78' }
-        ]
-      },
-      options: { responsive:true, maintainAspectRatio:false,
-        scales:{ r:{ beginAtZero:true, max:100, grid:{color:'#edf2f7'}, ticks:{display:false},
-          pointLabels:{font:{size:11}} } },
-        plugins:{ legend:{ position:'bottom', labels:{boxWidth:12,font:{size:11}} } } }
-    });
-  }
-
   if (id === 'highlight') {
     destroyChart('highlight');
     charts['highlight'] = new Chart(document.getElementById('chart-highlight'), {
-      type: 'bar',
-      data: {
-        labels: ['首頁','全站平均','搜尋頁','404頁'],
-        datasets: [
-          { label: '參與時間（秒）', data:[48,15,6,5],
-            backgroundColor:['#68d391','#f6ad55','#fc8181','#fc8181'], borderRadius:6 }
-        ]
-      },
-      options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-        scales:{ y:{beginAtZero:true, title:{display:true,text:'秒'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}} } }
+      type:'bar', data:{labels:['首頁','全站平均','搜尋頁','404頁'],
+        datasets:[{label:'參與時間（秒）', data:[48,15,6,5],
+          backgroundColor:['#68d391','#f6ad55','#fc8181','#fc8181'], borderRadius:6}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+        scales:{y:{beginAtZero:true,title:{display:true,text:'秒'},grid:{color:'#f7fafc'}},x:{grid:{display:false}}}}
     });
   }
-
   if (id === 'device') {
     destroyChart('device');
     charts['device'] = new Chart(document.getElementById('chart-device'), {
-      type: 'doughnut',
-      data: {
-        labels: ['手機 65.6%', '電腦 32.3%', '平板 1.4%', '其他 0.7%'],
-        datasets: [{ data: [65.6, 32.3, 1.4, 0.7],
-          backgroundColor: ['#4299e1','#68d391','#f6ad55','#e2e8f0'], borderWidth: 0 }]
-      },
-      options: { responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ position:'bottom', labels:{boxWidth:12,font:{size:11}} } } }
+      type:'doughnut', data:{
+        labels:['手機 65.6%','電腦 32.3%','平板 1.4%','其他 0.7%'],
+        datasets:[{data:[65.6,32.3,1.4,0.7],
+          backgroundColor:['#4299e1','#68d391','#f6ad55','#e2e8f0'], borderWidth:0}]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}}}
     });
   }
-
   if (id === 'source') {
     destroyChart('source');
     charts['source'] = new Chart(document.getElementById('chart-source'), {
-      type: 'bar',
-      data: {
-        labels: ['Google 自然','直接輸入','Line','Yahoo 搜尋','電子報','App Banner'],
-        datasets: [{ label: '跳出率（%）', data: [28.2, 55.2, 30.0, 29.5, 32.8, 82.0],
-          backgroundColor: ['#68d391','#fc8181','#68d391','#68d391','#f6ad55','#fc8181'], borderRadius:5 }]
-      },
-      options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-        scales:{ y:{beginAtZero:true, max:100, title:{display:true,text:'跳出率 %'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}, ticks:{font:{size:10}}} } }
+      type:'bar', data:{
+        labels:['Google 自然','直接輸入','Line','Yahoo 搜尋','電子報','App Banner'],
+        datasets:[{label:'跳出率（%）', data:[28.2,55.2,30.0,29.5,32.8,82.0],
+          backgroundColor:['#68d391','#fc8181','#68d391','#68d391','#f6ad55','#fc8181'], borderRadius:5}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+        scales:{y:{beginAtZero:true,max:100,title:{display:true,text:'跳出率 %'},grid:{color:'#f7fafc'}},
+          x:{grid:{display:false},ticks:{font:{size:10}}}}}
     });
   }
-
   if (id === 'retention') {
     destroyChart('retention');
     charts['retention'] = new Chart(document.getElementById('chart-retention'), {
-      type: 'line',
-      data: {
-        labels: ['造訪當天','第1天','第7天','第30天'],
-        datasets: [
-          { label: '留存率（%）', data: [100, 2.32, 0.75, 0.35],
-            borderColor: '#3182ce', backgroundColor: 'rgba(49,130,206,0.1)',
-            pointBackgroundColor: '#3182ce', borderWidth: 2, fill: true, tension: 0.3 }
-        ]
-      },
-      options: { responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ display:false } },
-        scales:{ y:{ beginAtZero:true, title:{display:true,text:'留存率 %'}, grid:{color:'#f7fafc'},
-          ticks:{ callback: v => v + '%' } }, x:{grid:{display:false}} } }
+      type:'line', data:{labels:['造訪當天','第1天','第7天','第30天'],
+        datasets:[{label:'留存率（%）', data:[100,2.32,0.75,0.35],
+          borderColor:'#3182ce', backgroundColor:'rgba(49,130,206,0.1)',
+          pointBackgroundColor:'#3182ce', borderWidth:2, fill:true, tension:0.3}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+        scales:{y:{beginAtZero:true,title:{display:true,text:'留存率 %'},grid:{color:'#f7fafc'},
+          ticks:{callback:v=>v+'%'}},x:{grid:{display:false}}}}
     });
   }
-}
-
-// 初始：預設顯示第一個子項目
   if (id === 'trend') {
     destroyChart('trend');
     charts['trend'] = new Chart(document.getElementById('chart-trend'), {
-      type: 'bar',
-      data: {
-        labels: ['PV（百萬）', 'UU（百萬）'],
-        datasets: [
-          { label: '前期（11/21–2/18）', data: [20.5, 15.2], backgroundColor: '#90cdf4', borderRadius: 4 },
-          { label: '現期（2/19–5/19）', data: [16.3, 13.8], backgroundColor: '#fc8181', borderRadius: 4 }
-        ]
-      },
-      options: { responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ position:'bottom', labels:{boxWidth:12,font:{size:11}} } },
-        scales:{ y:{beginAtZero:true, title:{display:true,text:'百萬'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}} } }
+      type:'bar', data:{labels:['PV（百萬）','UU（百萬）'],
+        datasets:[
+          {label:'前期（11/21–2/18）', data:[20.5,15.2], backgroundColor:'#90cdf4', borderRadius:4},
+          {label:'現期（2/19–5/19）', data:[16.3,13.8], backgroundColor:'#fc8181', borderRadius:4}
+        ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{position:'bottom',labels:{boxWidth:12,font:{size:11}}}},
+        scales:{y:{beginAtZero:true,title:{display:true,text:'百萬'},grid:{color:'#f7fafc'}},x:{grid:{display:false}}}}
     });
   }
-
   if (id === 'sticky') {
     destroyChart('sticky');
     charts['sticky'] = new Chart(document.getElementById('chart-sticky'), {
-      type: 'bar',
-      data: {
-        labels: ['首頁', '股東會攻略', 'AI年會議程', '今日最新', '全站低黏著均值'],
-        datasets: [{ label: '頁深（頁/session）', data: [2.50, 1.99, 1.93, 1.52, 1.04],
-          backgroundColor: ['#68d391','#68d391','#68d391','#68d391','#fc8181'], borderRadius: 5 }]
-      },
-      options: { responsive:true, maintainAspectRatio:false, plugins:{legend:{display:false}},
-        scales:{ y:{beginAtZero:true, max:3, title:{display:true,text:'頁/session'}, grid:{color:'#f7fafc'}}, x:{grid:{display:false}, ticks:{font:{size:10}}} } }
+      type:'bar', data:{
+        labels:['首頁','股東會攻略','AI年會議程','今日最新','低黏著均值'],
+        datasets:[{label:'頁深（頁/session）', data:[2.50,1.99,1.93,1.52,1.04],
+          backgroundColor:['#68d391','#68d391','#68d391','#68d391','#fc8181'], borderRadius:5}]},
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},
+        scales:{y:{beginAtZero:true,max:3,title:{display:true,text:'頁/session'},grid:{color:'#f7fafc'}},
+          x:{grid:{display:false},ticks:{font:{size:10}}}}}
     });
   }
-
-selectProject('b');
+}
 </script>
 </body>
 </html>
