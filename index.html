@@ -848,13 +848,36 @@ body.present-mode .slide-nav{display:flex;}
       <div style="font-size:11px;color:#718096;">研究題目：何時觸發授權轉換率最高？Push 頻率與內容如何避免用戶關閉授權？</div>
     </div>
 
-    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:14px;background:#fff;">
+    <div style="border:1px solid #d4a843;border-radius:8px;padding:12px 14px;margin-bottom:14px;background:#fffdf0;">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
         <span style="font-size:13px;font-weight:700;color:#1a202c;">D｜首訪主題引導 Banner</span>
-        <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:4px;font-weight:700;">次要考慮</span>
+        <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:4px;font-weight:700;">可行性高・建議推進</span>
       </div>
-      <p style="font-size:12px;color:#4a5568;line-height:1.6;margin-bottom:6px;">偵測新訪客後，展示「商周還有這些內容」引導卡片，讓新訪客了解站內其他內容類型。</p>
-      <div style="font-size:11px;color:#718096;">研究題目：哪些內容類型對新訪客最有吸引力？如何準確識別「新訪客」？</div>
+      <p style="font-size:12px;color:#4a5568;line-height:1.6;margin-bottom:10px;">新訪客讀完文章後，在文章底部自動出現全寬區塊（不干擾閱讀），展示商周主要內容分類，讓用戶知道「原來商周還有這些」，引導點入探索。</p>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px 12px;margin-bottom:10px;">
+        <div style="font-size:11px;font-weight:700;color:#718096;margin-bottom:6px;">建議展示的分類（依現有導覽）</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px;">
+          <span style="font-size:12px;background:#ebf8ff;color:#2b6cb0;padding:3px 10px;border-radius:12px;">📰 焦點</span>
+          <span style="font-size:12px;background:#ebf8ff;color:#2b6cb0;padding:3px 10px;border-radius:12px;">🌏 國際</span>
+          <span style="font-size:12px;background:#ebf8ff;color:#2b6cb0;padding:3px 10px;border-radius:12px;">📈 財經</span>
+          <span style="font-size:12px;background:#ebf8ff;color:#2b6cb0;padding:3px 10px;border-radius:12px;">💼 管理</span>
+          <span style="font-size:12px;background:#ebf8ff;color:#2b6cb0;padding:3px 10px;border-radius:12px;">🎬 Video</span>
+          <span style="font-size:12px;background:#ebf8ff;color:#2b6cb0;padding:3px 10px;border-radius:12px;">🌱 ESG</span>
+        </div>
+      </div>
+
+      <div style="background:#fff;border:1px solid #e2e8f0;border-radius:6px;padding:10px 12px;margin-bottom:8px;">
+        <div style="font-size:11px;font-weight:700;color:#718096;margin-bottom:6px;">設計要點</div>
+        <div style="font-size:12px;color:#4a5568;line-height:1.8;">
+          • 觸發時機：新訪客讀完文章（捲動至底部）後出現<br>
+          • 視覺上需與「延伸閱讀」明顯區隔，不被誤認為廣告<br>
+          • 點擊分類 → 進入該分類列表頁（非特定文章）<br>
+          • 僅對新訪客顯示，回訪客不重複觸發
+        </div>
+      </div>
+
+      <div style="font-size:11px;color:#718096;">研究題目：哪些分類對新訪客點擊率最高（可 A/B 測試分類順序）？「新訪客」用 Cookie 還是 GA4 new_visitor 判斷？Banner 與現有「延伸閱讀」的差異要如何在視覺上表達清楚？</div>
     </div>
 
     <div class="fact-box">
