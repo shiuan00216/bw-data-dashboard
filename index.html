@@ -280,6 +280,56 @@ body.present-mode .slide-nav{display:flex;}
 .overview-card.green .oc-val{color:#38a169;}
 .overview-card.blue .oc-val{color:#2b6cb0;}
 .overview-card .oc-desc{font-size:11px;color:#718096;margin-top:3px;}
+
+/* ── PRD 計劃書樣式 ── */
+.prd-open-btn{background:#1a365d;color:#fff;border:none;padding:11px 18px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;width:100%;letter-spacing:.3px;margin-top:16px;display:block;}
+.prd-open-btn:hover{background:#2c5282;}
+.prd-banner{background:linear-gradient(135deg,#0d1b3e 0%,#1a2d5a 60%,#1b3a6e 100%);border-radius:10px;padding:18px;margin-bottom:14px;}
+.prd-back-btn{background:none;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.8);padding:5px 12px;border-radius:6px;cursor:pointer;font-size:12px;margin-bottom:12px;display:inline-block;}
+.prd-back-btn:hover{background:rgba(255,255,255,.1);}
+.prd-tag{display:inline-block;background:#d4a843;color:#0d1b3e;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:8px;letter-spacing:.05em;}
+.prd-title{font-size:17px;font-weight:600;color:#fff;margin-bottom:4px;line-height:1.3;}
+.prd-sub{font-size:12px;color:#f0c96a;margin-bottom:10px;}
+.prd-meta{display:flex;gap:14px;flex-wrap:wrap;}
+.prd-meta-item{font-size:11px;color:#8a9bb5;}
+.prd-meta-item span{color:#fff;font-weight:500;margin-left:3px;}
+.prd-tabs{display:flex;border-bottom:1.5px solid #e2e8f0;margin-bottom:14px;overflow-x:auto;scrollbar-width:none;}
+.prd-tabs::-webkit-scrollbar{display:none;}
+.prd-tab{flex-shrink:0;padding:7px 13px;font-size:12px;font-weight:500;color:#718096;background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;margin-bottom:-1.5px;}
+.prd-tab.on{color:#1a202c;border-bottom-color:#d4a843;}
+.prd-pane{display:none;}
+.prd-pane.on{display:block;}
+.prd-card{background:#f7fafc;border:1px solid #e2e8f0;border-radius:8px;padding:14px;margin-bottom:10px;}
+.prd-section-label{font-size:10px;font-weight:700;letter-spacing:.07em;color:#718096;text-transform:uppercase;margin-bottom:8px;}
+.prd-pb{background:#fff;border-left:3px solid #d4a843;border-radius:0 6px 6px 0;padding:10px 14px;margin:8px 0;font-size:13px;line-height:1.7;color:#2d3748;}
+.prd-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0;}
+.prd-kpi-cell{background:#fff;border-radius:6px;padding:10px 8px;text-align:center;border:1px solid #e2e8f0;}
+.prd-kpi-bar{height:3px;border-radius:2px;margin-bottom:6px;}
+.prd-kpi-val{font-size:19px;font-weight:700;color:#1a202c;}
+.prd-kpi-unit{font-size:10px;color:#d4a843;font-weight:700;margin-left:1px;}
+.prd-kpi-desc{font-size:10px;color:#718096;margin-top:3px;line-height:1.4;}
+.prd-table{width:100%;border-collapse:collapse;font-size:12px;}
+.prd-table th{text-align:left;padding:6px 8px;background:#edf2f7;font-weight:600;color:#4a5568;border-bottom:1px solid #e2e8f0;font-size:11px;}
+.prd-table td{padding:6px 8px;border-bottom:1px solid #f0f4f8;vertical-align:top;color:#1a202c;line-height:1.5;}
+.prd-table tr:last-child td{border-bottom:none;}
+.prd-table .good{color:#38a169;font-weight:600;}
+.prd-us-item{border:1px solid #e2e8f0;border-radius:8px;margin-bottom:8px;overflow:hidden;}
+.prd-us-head{padding:10px 14px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;}
+.prd-us-head:hover{background:#f7fafc;}
+.prd-us-id{font-size:11px;font-weight:700;color:#718096;flex-shrink:0;}
+.prd-us-text{font-size:12px;color:#1a202c;flex:1;line-height:1.5;}
+.prd-priority{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700;flex-shrink:0;}
+.prd-p0{background:#fee2e2;color:#991b1b;}
+.prd-p1{background:#fef3c7;color:#92400e;}
+.prd-us-body{padding:0 14px 12px;border-top:1px solid #e2e8f0;display:none;}
+.prd-us-body.open{display:block;}
+.prd-gwt{background:#f7fafc;border-radius:6px;padding:10px 12px;font-size:12px;line-height:1.8;margin-top:8px;color:#2d3748;}
+.prd-gwt strong{color:#1a202c;font-weight:600;}
+.prd-check{margin:4px 0 0;font-size:12px;line-height:1.9;padding-left:0;}
+.prd-check li{list-style:none;padding-left:1.2rem;position:relative;color:#4a5568;}
+.prd-check li::before{content:"✓";position:absolute;left:0;color:#38a169;font-weight:700;}
+.prd-oos{background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:10px 12px;font-size:12px;color:#78350f;margin-top:8px;}
+.prd-oos ul{margin-left:16px;margin-top:4px;line-height:1.9;}
 </style>
 </head>
 <body>
@@ -678,6 +728,7 @@ body.present-mode .slide-nav{display:flex;}
       <li>加入搜尋框與推薦內容後能否提升留存，需上線後以 GA4 驗證</li>
     </div>
     <div class="insight"><strong>下一步行動：</strong>PM 撰寫需求規格（含搜尋框位置、推薦模組邏輯）→ IT 評估工時 → 排入開發排程</div>
+    <button class="prd-open-btn" onclick="showDetail('prd-b')">📋 查看計劃書 → 404 頁面引導優化</button>
   </div>
 
   <!-- ── 搜尋追蹤 ── -->
@@ -772,6 +823,7 @@ body.present-mode .slide-nav{display:flex;}
       <li>加入訂閱引導後能否提升回訪率，需上線後追蹤才能驗證</li>
     </div>
     <div class="insight"><strong>下一步行動：</strong>PM 定義策略方向（訂閱引導 or 推薦 or Push）→ 與設計師討論 UX → 提 IT 需求評估</div>
+    <button class="prd-open-btn" onclick="showDetail('prd-nv')">📋 查看計劃書 → 新訪客首訪留存引導</button>
   </div>
 
   <!-- ── 直接流量 ── -->
@@ -1064,6 +1116,301 @@ body.present-mode .slide-nav{display:flex;}
       <li>若文章底部加入攻略型「相關閱讀」區塊，有機會提升頁深，但效果需 A/B 測試驗證</li>
     </div>
   </div>
+
+  <!-- ══════════════════════════════════════
+       PRD #2｜新訪客首訪留存引導
+  ══════════════════════════════════════ -->
+  <div id="detail-prd-nv" class="detail-section">
+    <div class="prd-banner">
+      <button class="prd-back-btn" onclick="showDetail('nv')">← 返回診斷分析</button>
+      <div class="prd-tag">Product Plan</div>
+      <div class="prd-title">子項目 #2｜新訪客首訪留存引導</div>
+      <div class="prd-sub">提升新訪客 30 天回訪率・建立訂閱引導機制</div>
+      <div class="prd-meta">
+        <div class="prd-meta-item">狀態<span>草稿</span></div>
+        <div class="prd-meta-item">日期<span>2026-05-22</span></div>
+        <div class="prd-meta-item">PM<span>Alice</span></div>
+        <div class="prd-meta-item">優先級<span>P2 黏著度影響</span></div>
+      </div>
+    </div>
+
+    <div class="prd-tabs" id="prd-nv-tabs">
+      <button class="prd-tab on" onclick="switchPrdTab('nv','bg',this)">一、背景與問題</button>
+      <button class="prd-tab" onclick="switchPrdTab('nv','kpi',this)">二、目標與指標</button>
+      <button class="prd-tab" onclick="switchPrdTab('nv','us',this)">三、使用者故事</button>
+    </div>
+
+    <!-- 背景與問題 -->
+    <div class="prd-pane on" id="prd-nv-bg">
+      <div class="prd-card">
+        <div class="prd-section-label">1.1 問題陳述</div>
+        <div class="prd-pb">我們發現<strong>透過搜尋或社群進站的新訪客</strong>在<strong>首次閱讀文章後</strong>，因<strong>缺乏留存引導機制</strong>，導致 <strong>30 天回訪率僅 0.35%</strong>，大量一次性流量無法轉化為回訪用戶。</div>
+        <div class="prd-kpi-grid">
+          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#e53e3e"></div><span class="prd-kpi-val">64.4</span><span class="prd-kpi-unit">%</span><div class="prd-kpi-desc">新訪客佔比<br>（共 743 萬人）</div></div>
+          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#e53e3e"></div><span class="prd-kpi-val">0.35</span><span class="prd-kpi-unit">%</span><div class="prd-kpi-desc">30 天回訪率<br>100 人來僅 0.35 人回</div></div>
+          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#38a169"></div><span class="prd-kpi-val">110</span><span class="prd-kpi-unit">秒</span><div class="prd-kpi-desc">電子報用戶參與時間<br>全站來源最高</div></div>
+        </div>
+      </div>
+      <div class="prd-card">
+        <div class="prd-section-label">1.2 目標用戶</div>
+        <table class="prd-table">
+          <thead><tr><th>用戶類型</th><th>描述</th><th>主要痛點</th></tr></thead>
+          <tbody>
+            <tr><td><strong>搜尋進站讀者</strong></td><td>由 Google 搜尋特定主題進入，目標明確</td><td>讀完後不知道還有什麼內容，直接關閉</td></tr>
+            <tr><td><strong>社群導流讀者</strong></td><td>由 LINE / FB 分享連結進站</td><td>對主題有興趣但不熟悉商周其他內容</td></tr>
+            <tr><td><strong>潛在訂閱用戶</strong></td><td>閱讀後有意繼續關注財經資訊</td><td>找不到簡單的方式持續接收商周內容</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prd-card">
+        <div class="prd-section-label">1.3 不在範圍內</div>
+        <div class="prd-oos">本次開發明確不包含：<ul>
+          <li>付費牆或訂閱流程改版</li>
+          <li>App 推播通知（iOS / Android）</li>
+          <li>個人化推薦演算法（Phase 1 使用規則型推薦）</li>
+          <li>電子報內容本身的優化（需內容團隊配合）</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <!-- 目標與指標 -->
+    <div class="prd-pane" id="prd-nv-kpi">
+      <div class="prd-card">
+        <div class="prd-section-label">2.1 產品目標</div>
+        <div class="prd-pb"><strong>主要目標：</strong>讓更多新訪客在首次造訪後，建立與商周的持續連結，使 30 天回訪率從 0.35% 提升至 0.70%（翻倍）。</div>
+        <p style="font-size:12px;color:#718096;margin-top:6px"><strong style="color:#2d3748">次要目標：</strong>透過文章底部電子報訂閱引導，建立穩定的回訪管道，並逐步提升每人平均瀏覽頁數。</p>
+      </div>
+      <div class="prd-card">
+        <div class="prd-section-label">2.2 成功指標（KPI）</div>
+        <table class="prd-table">
+          <thead><tr><th>指標</th><th>目前數值</th><th>目標值</th><th>評估時間</th></tr></thead>
+          <tbody>
+            <tr><td>30 天回訪率</td><td>0.35%</td><td class="good">≥ 0.70%</td><td>上線後 8 週</td></tr>
+            <tr><td>電子報訂閱轉換率（新訪客）</td><td>未追蹤</td><td class="good">建立 baseline</td><td>上線後 4 週</td></tr>
+            <tr><td>每人平均瀏覽頁數</td><td>1.86 頁</td><td class="good">≥ 2.2 頁</td><td>上線後 12 週</td></tr>
+            <tr><td>隔天回訪率</td><td>2.32%</td><td class="good">≥ 3.5%</td><td>上線後 8 週</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:11px;color:#718096;margin-top:8px">※ 回訪率翻倍目標較積極，建議上線後 4 週先看初期數據再決定是否調整。</p>
+      </div>
+    </div>
+
+    <!-- 使用者故事 -->
+    <div class="prd-pane" id="prd-nv-us">
+      <p style="font-size:12px;color:#718096;margin-bottom:12px">點擊每則故事展開驗收條件（Given／When／Then）</p>
+
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-01</span>
+          <span class="prd-us-text">身為<strong>讀完文章的首訪用戶</strong>，我希望<strong>在文章底部看到推薦的相關文章</strong>，以便繼續閱讀感興趣的內容。</span>
+          <span class="prd-priority prd-p0">P0</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>用戶首次進站，閱讀完一篇文章<br>
+            <strong>When：</strong>捲動至文章 80% 以下區域<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>文章底部出現「你可能也想看」推薦區塊，顯示 3 篇相關文章</li>
+              <li>每篇顯示：標題、分類標籤、發布日期</li>
+              <li>推薦文章依文章標籤相似度 + 近 7 日熱門度排序</li>
+              <li>點擊後成功導向目標文章頁面</li>
+              <li>觸發 GA4 事件：article_rec_click（article_id, position）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-02</span>
+          <span class="prd-us-text">身為<strong>希望定期收到商周財經內容的讀者</strong>，我希望<strong>在文章頁面能快速完成電子報訂閱</strong>，不需要跳轉到其他頁面。</span>
+          <span class="prd-priority prd-p0">P0</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>用戶在文章頁閱讀中，尚未訂閱電子報<br>
+            <strong>When：</strong>捲動至文章結尾<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>出現電子報訂閱入口（Email 輸入框 + 訂閱按鈕），不需跳轉頁面</li>
+              <li>訂閱流程最多 2 步：輸入 Email → 點擊確認</li>
+              <li>手機版版面不因此產生遮擋或排版問題</li>
+              <li>訂閱成功後顯示確認提示，觸發 GA4 事件：newsletter_subscribe</li>
+              <li>已訂閱用戶不再看到此入口</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-03</span>
+          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤推薦區塊與訂閱入口的互動數據</strong>，以便評估成效並優化。</span>
+          <span class="prd-priority prd-p1">P1</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>功能上線，GA4 已串接<br>
+            <strong>When：</strong>用戶與推薦文章或訂閱入口互動<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>GA4 可查看推薦文章點擊率（article_rec_click / article_rec_impression）</li>
+              <li>GA4 可查看電子報訂閱轉換率（newsletter_subscribe）</li>
+              <li>可依新訪客 vs 回訪客分群查看數據</li>
+              <li>數據延遲 ≤ 2 小時</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end detail-prd-nv -->
+
+  <!-- ══════════════════════════════════════
+       PRD #3｜404 頁面引導優化
+  ══════════════════════════════════════ -->
+  <div id="detail-prd-b" class="detail-section">
+    <div class="prd-banner">
+      <button class="prd-back-btn" onclick="showDetail('b')">← 返回診斷分析</button>
+      <div class="prd-tag">Product Plan</div>
+      <div class="prd-title">子項目 #3｜404 頁面引導優化</div>
+      <div class="prd-sub">修補流失入口・每月回收 6,000+ sessions</div>
+      <div class="prd-meta">
+        <div class="prd-meta-item">狀態<span>草稿</span></div>
+        <div class="prd-meta-item">日期<span>2026-05-22</span></div>
+        <div class="prd-meta-item">PM<span>Alice</span></div>
+        <div class="prd-meta-item">優先級<span>P3 難度低・快交付</span></div>
+      </div>
+    </div>
+
+    <div class="prd-tabs" id="prd-b-tabs">
+      <button class="prd-tab on" onclick="switchPrdTab('b','bg',this)">一、背景與問題</button>
+      <button class="prd-tab" onclick="switchPrdTab('b','kpi',this)">二、目標與指標</button>
+      <button class="prd-tab" onclick="switchPrdTab('b','us',this)">三、使用者故事</button>
+    </div>
+
+    <!-- 背景與問題 -->
+    <div class="prd-pane on" id="prd-b-bg">
+      <div class="prd-card">
+        <div class="prd-section-label">1.1 問題陳述</div>
+        <div class="prd-pb">我們發現<strong>進入 404 錯誤頁面的用戶</strong>在<strong>現有靜態頁面</strong>上，因<strong>引導機制薄弱</strong>，導致<strong>平均停留僅 5 秒便離開</strong>，每月約 30,613 個 sessions 白白流失。</div>
+        <div class="prd-kpi-grid">
+          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#e53e3e"></div><span class="prd-kpi-val">91,839</span><div class="prd-kpi-desc">90 天進入 404 的<br>sessions 總數</div></div>
+          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#e53e3e"></div><span class="prd-kpi-val">5</span><span class="prd-kpi-unit">秒</span><div class="prd-kpi-desc">現況平均停留時間<br>幾乎全部直接離開</div></div>
+          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#d4a843"></div><span class="prd-kpi-val">30,613</span><div class="prd-kpi-desc">月均流失 sessions<br>可回收機會</div></div>
+        </div>
+      </div>
+      <div class="prd-card">
+        <div class="prd-section-label">1.2 現況 vs 目標對比</div>
+        <table class="prd-table">
+          <thead><tr><th>項目</th><th>現況（404 頁）</th><th>參考值（首頁）</th></tr></thead>
+          <tbody>
+            <tr><td>平均停留時間</td><td style="color:#e53e3e;font-weight:600">5 秒</td><td style="color:#38a169">48 秒</td></tr>
+            <tr><td>每 session 瀏覽頁數</td><td style="color:#e53e3e;font-weight:600">~1 頁</td><td style="color:#38a169">2.5 頁</td></tr>
+            <tr><td>推薦文章</td><td>4 篇靜態熱門文章（不更新）</td><td>完整動態導覽</td></tr>
+            <tr><td>搜尋入口</td><td>僅 header 右上角放大鏡圖示</td><td>明顯搜尋框</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prd-card">
+        <div class="prd-section-label">1.3 不在範圍內</div>
+        <div class="prd-oos">本次開發明確不包含：<ul>
+          <li>404 成因根本修復（過期文章 URL 重定向）—— 屬於另一項 SEO 維護工作</li>
+          <li>個人化推薦（Phase 1 使用熱門文章規則型推薦）</li>
+          <li>404 發生原因監控告警系統</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <!-- 目標與指標 -->
+    <div class="prd-pane" id="prd-b-kpi">
+      <div class="prd-card">
+        <div class="prd-section-label">2.1 產品目標</div>
+        <div class="prd-pb"><strong>主要目標：</strong>讓進入 404 頁面的用戶有更高比例選擇繼續瀏覽站內內容，將每月流失的 30,613 個 sessions 至少回收 20%（約 6,000 次）。</div>
+        <p style="font-size:12px;color:#718096;margin-top:6px"><strong style="color:#2d3748">次要目標：</strong>透過加入明顯搜尋框與動態推薦文章，提升用戶在錯誤頁面上的探索意願，為整體 PV 作出貢獻。</p>
+      </div>
+      <div class="prd-card">
+        <div class="prd-section-label">2.2 成功指標（KPI）</div>
+        <table class="prd-table">
+          <thead><tr><th>指標</th><th>目前數值</th><th>目標值</th><th>評估時間</th></tr></thead>
+          <tbody>
+            <tr><td>404 頁平均停留時間</td><td>5 秒</td><td class="good">≥ 20 秒</td><td>上線後 4 週</td></tr>
+            <tr><td>404 頁後續點擊率</td><td>未追蹤（近 0%）</td><td class="good">≥ 15%</td><td>上線後 4 週</td></tr>
+            <tr><td>月流失 sessions 減少量</td><td>30,613 sessions</td><td class="good">減少 ≥ 20%（約 6,000）</td><td>上線後 8 週</td></tr>
+          </tbody>
+        </table>
+        <p style="font-size:11px;color:#718096;margin-top:8px">※ 後續點擊率目前無歷史數據，上線後前 2 週的數字即為 baseline。</p>
+      </div>
+    </div>
+
+    <!-- 使用者故事 -->
+    <div class="prd-pane" id="prd-b-us">
+      <p style="font-size:12px;color:#718096;margin-bottom:12px">點擊每則故事展開驗收條件（Given／When／Then）</p>
+
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-01</span>
+          <span class="prd-us-text">身為<strong>點到失效連結的用戶</strong>，我希望<strong>在 404 頁面看到推薦的相關文章</strong>，以便選擇繼續閱讀站內內容。</span>
+          <span class="prd-priority prd-p0">P0</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>用戶進入 404 頁面<br>
+            <strong>When：</strong>頁面載入完成<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>頁面顯示動態推薦文章區塊（非靜態），至少 6 篇，依近 7 日熱門度排序</li>
+              <li>每篇顯示：縮圖、標題、分類標籤</li>
+              <li>手機版與桌機版皆正常顯示，版面不破版</li>
+              <li>觸發 GA4 事件：404_rec_click（article_id, position）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-02</span>
+          <span class="prd-us-text">身為<strong>想繼續找相關內容的用戶</strong>，我希望<strong>在 404 頁面看到明顯的搜尋框</strong>，以便直接輸入關鍵字找到想看的文章。</span>
+          <span class="prd-priority prd-p0">P0</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>用戶進入 404 頁面，想繼續尋找內容<br>
+            <strong>When：</strong>看到頁面主要內容區<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>頁面視覺中心區域（header 以下第一區塊）顯示搜尋框，並有提示文字</li>
+              <li>搜尋框不只是右上角的放大鏡圖示，而是明顯的輸入欄位</li>
+              <li>搜尋後正確跳轉至搜尋結果頁</li>
+              <li>觸發 GA4 事件：404_search（search_term）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-03</span>
+          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤 404 頁面的用戶行為數據</strong>，以便評估改版效果。</span>
+          <span class="prd-priority prd-p1">P1</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>改版上線，GA4 已串接<br>
+            <strong>When：</strong>用戶在 404 頁面互動<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>GA4 可查看 404 頁面後續點擊率（404_rec_click / session）</li>
+              <li>GA4 可查看搜尋框使用率（404_search）</li>
+              <li>可對比改版前後的 404 平均停留時間與後續頁面數</li>
+              <li>數據延遲 ≤ 2 小時</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end detail-prd-b -->
 
   <button class="back-btn" id="back-btn" onclick="scrollToTop()">↑ 回到列表</button>
 
@@ -1525,6 +1872,25 @@ document.addEventListener('keydown', e => {
 });
 
 initDots();
+
+// ── PRD 計劃書 Tab 切換 ──
+function switchPrdTab(prdId, tabId, btn) {
+  const prefix = 'prd-' + prdId + '-';
+  document.querySelectorAll('#' + prefix + 'tabs .prd-tab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('[id^="' + prefix + '"]').forEach(p => {
+    if (p.classList.contains('prd-pane')) p.classList.remove('on');
+  });
+  btn.classList.add('on');
+  const pane = document.getElementById(prefix + tabId);
+  if (pane) pane.classList.add('on');
+}
+
+// ── PRD 使用者故事 展開/收合 ──
+function togglePrdUS(head) {
+  const body = head.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  body.classList.toggle('open', !isOpen);
+}
 </script>
 </body>
 </html>
