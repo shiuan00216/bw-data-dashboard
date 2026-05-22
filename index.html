@@ -1354,19 +1354,44 @@ body.present-mode .slide-nav{display:flex;}
       <div class="prd-us-item">
         <div class="prd-us-head" onclick="togglePrdUS(this)">
           <span class="prd-us-id">US-03</span>
-          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤推薦區塊與訂閱入口的互動數據</strong>，以便評估成效並優化。</span>
+          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤推薦區塊、訂閱入口與主題 Banner 的互動數據</strong>，以便評估成效並優化。</span>
           <span class="prd-priority prd-p1">P1</span>
         </div>
         <div class="prd-us-body">
           <div class="prd-gwt">
             <strong>Given：</strong>功能上線，GA4 已串接<br>
-            <strong>When：</strong>用戶與推薦文章或訂閱入口互動<br>
+            <strong>When：</strong>用戶與任一模組互動<br>
             <strong>Then：</strong>
             <ul class="prd-check">
               <li>GA4 可查看推薦文章點擊率（article_rec_click / article_rec_impression）</li>
               <li>GA4 可查看電子報訂閱轉換率（newsletter_subscribe）</li>
+              <li>GA4 可查看主題 Banner 各分類點擊率（topic_banner_click / category）</li>
               <li>可依新訪客 vs 回訪客分群查看數據</li>
               <li>數據延遲 ≤ 2 小時</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-04</span>
+          <span class="prd-us-text">身為<strong>首次進站的新訪客</strong>，我希望<strong>讀完文章後能看到商周有哪些主題內容</strong>，以便找到感興趣的分類繼續探索。</span>
+          <span class="prd-priority prd-p0">P0</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>用戶為新訪客，首次進站並閱讀一篇文章<br>
+            <strong>When：</strong>捲動至文章最底部（完讀觸發）<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>文章底部出現「商周還有這些主題」全寬 Banner 區塊</li>
+              <li>展示主要分類：焦點、國際、財經、管理、Video、ESG（含圖示與名稱）</li>
+              <li>點擊任一分類後，導向該分類的文章列表頁</li>
+              <li>Banner 視覺風格與「延伸閱讀」明顯區隔，不被誤認為廣告</li>
+              <li>回訪客不顯示此 Banner（僅新訪客首次造訪時觸發）</li>
+              <li>手機版與桌機版皆正常顯示，版面不破版</li>
+              <li>觸發 GA4 事件：topic_banner_show、topic_banner_click（category）</li>
             </ul>
           </div>
         </div>
