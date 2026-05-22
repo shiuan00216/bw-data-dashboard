@@ -805,12 +805,44 @@ body.present-mode .slide-nav{display:flex;}
       <div class="panel-kpi red"><div class="pv">0.35%</div><div class="pl">30天留存率</div></div>
       <div class="panel-kpi blue"><div class="pv">7,435,243</div><div class="pl">90天新訪客總數</div></div>
     </div>
-    <table class="compare-table">
-      <tr><th>可能的改善方向</th><th>說明</th><th>難度</th></tr>
-      <tr><td>文章底部訂閱電子報引導</td><td>電子報用戶參與時間達 110 秒，最高黏著來源</td><td class="mid">中</td></tr>
-      <tr><td>首訪推薦個人化</td><td>根據進站文章類型推薦相關內容</td><td class="bad">高</td></tr>
-      <tr><td>Push 通知訂閱提示</td><td>首訪時邀請訂閱，建立回訪管道</td><td class="mid">中</td></tr>
-    </table>
+    <div style="margin:14px 0 6px;font-size:11px;font-weight:700;color:#4a5568;letter-spacing:.05em;text-transform:uppercase;">執行方向參考</div>
+
+    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:8px;background:#fff;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:700;color:#1a202c;">A｜文章底部推薦文章模組</span>
+        <span style="font-size:10px;background:#fee2e2;color:#991b1b;padding:2px 7px;border-radius:4px;font-weight:700;">優先推薦</span>
+      </div>
+      <p style="font-size:12px;color:#4a5568;line-height:1.6;margin-bottom:6px;">讀者讀完文章後，底部推薦 3–5 篇相關文章（依標籤相似度 + 近期熱門），引導繼續閱讀。</p>
+      <div style="font-size:11px;color:#718096;">研究題目：推薦邏輯規則型 vs 算法型？工具型文章推薦效益？篇數 3 vs 5？</div>
+    </div>
+
+    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:8px;background:#fff;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:700;color:#1a202c;">B｜電子報訂閱 inline 引導</span>
+        <span style="font-size:10px;background:#fee2e2;color:#991b1b;padding:2px 7px;border-radius:4px;font-weight:700;">優先推薦</span>
+      </div>
+      <p style="font-size:12px;color:#4a5568;line-height:1.6;margin-bottom:6px;">文章底部放置 Email 訂閱框，不需跳轉頁面即可完成。電子報用戶參與時間 110 秒為全站最高，是建立回訪的最佳管道。</p>
+      <div style="font-size:11px;color:#718096;">研究題目：文案訴求差異？訂閱框位置（中段 vs 末尾）？電子報內容是否同步優化？</div>
+    </div>
+
+    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:8px;background:#fff;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:700;color:#1a202c;">C｜Push 通知訂閱提示</span>
+        <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:4px;font-weight:700;">次要考慮</span>
+      </div>
+      <p style="font-size:12px;color:#4a5568;line-height:1.6;margin-bottom:6px;">讀者讀完文章一定比例後才觸發通知授權邀請（非一進站就彈），建立不依賴 Email 的回訪管道。</p>
+      <div style="font-size:11px;color:#718096;">研究題目：何時觸發授權轉換率最高？Push 頻率與內容如何避免用戶關閉授權？</div>
+    </div>
+
+    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:14px;background:#fff;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:700;color:#1a202c;">D｜首訪主題引導 Banner</span>
+        <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:4px;font-weight:700;">次要考慮</span>
+      </div>
+      <p style="font-size:12px;color:#4a5568;line-height:1.6;margin-bottom:6px;">偵測新訪客後，展示「商周還有這些內容」引導卡片，讓新訪客了解站內其他內容類型。</p>
+      <div style="font-size:11px;color:#718096;">研究題目：哪些內容類型對新訪客最有吸引力？如何準確識別「新訪客」？</div>
+    </div>
+
     <div class="fact-box">
       <span class="box-title">✅ 直接觀察（GA4 數據）</span>
       <li>新訪客 7,435,243（64.4%），回訪客 4,112,730（35.6%）</li>
@@ -882,6 +914,44 @@ body.present-mode .slide-nav{display:flex;}
       <tr><td>搜尋後點擊率</td><td class="bad">❌ 無資料</td><td>追蹤 search 後的 page_view 事件</td></tr>
       <tr><td>零結果搜尋比例</td><td class="bad">❌ 無資料</td><td>後端回傳空結果事件</td></tr>
     </table>
+    <div style="margin:14px 0 6px;font-size:11px;font-weight:700;color:#4a5568;letter-spacing:.05em;text-transform:uppercase;">執行方向參考（#4 完成後啟動）</div>
+
+    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:8px;background:#fff;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:700;color:#1a202c;">A｜搜尋建議詞（Autocomplete）</span>
+        <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:4px;font-weight:700;">待數據定序</span>
+      </div>
+      <p style="font-size:12px;color:#4a5568;line-height:1.6;margin-bottom:6px;">輸入時自動顯示建議詞，降低搜尋門檻、提高成功率。</p>
+      <div style="font-size:11px;color:#718096;">研究題目：建議詞來源（熱門詞 vs 標籤）？手機版鍵盤彈出時版面問題？</div>
+    </div>
+
+    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:8px;background:#fff;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:700;color:#1a202c;">B｜零結果頁面改善</span>
+        <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:4px;font-weight:700;">待數據定序</span>
+      </div>
+      <p style="font-size:12px;color:#4a5568;line-height:1.6;margin-bottom:6px;">搜尋無結果時，提供近似建議詞 + 相關熱門文章，讓用戶不空手離開。</p>
+      <div style="font-size:11px;color:#718096;">研究題目：零結果比例有多高？最常出現的零結果關鍵字是什麼？</div>
+    </div>
+
+    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:8px;background:#fff;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:700;color:#1a202c;">C｜搜尋結果排序與篩選</span>
+        <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:4px;font-weight:700;">待數據定序</span>
+      </div>
+      <p style="font-size:12px;color:#4a5568;line-height:1.6;margin-bottom:6px;">加入時間篩選（近 1 週 / 1 個月 / 全部），讓有目的的用戶更快找到結果。</p>
+      <div style="font-size:11px;color:#718096;">研究題目：用戶找的是時事還是常青內容？篩選功能使用率是否值得開發成本？</div>
+    </div>
+
+    <div style="border:1px solid #e2e8f0;border-radius:8px;padding:12px 14px;margin-bottom:14px;background:#fff;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:700;color:#1a202c;">D｜搜尋框位置與視覺強化</span>
+        <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 7px;border-radius:4px;font-weight:700;">待數據定序</span>
+      </div>
+      <p style="font-size:12px;color:#4a5568;line-height:1.6;margin-bottom:6px;">研究搜尋入口是否夠明顯，考慮在文章頁與首頁強化搜尋框的存在感（404 頁已在 #3 處理）。</p>
+      <div style="font-size:11px;color:#718096;">研究題目：用戶是否知道商周有搜尋？在哪些頁面強化搜尋入口效益最大？</div>
+    </div>
+
     <div class="insight"><strong>下一步行動：</strong>等 #4 搜尋追蹤完成並累積 4 週數據後，用真實搜尋行為數據決定本項目的改版方向</div>
     <button class="prd-open-btn" onclick="showDetail('prd-a')">📋 查看計劃書 → 搜尋頁體驗優化</button>
   </div>
@@ -1139,7 +1209,6 @@ body.present-mode .slide-nav{display:flex;}
       <button class="prd-tab on" onclick="switchPrdTab('nv','bg',this)">一、背景與問題</button>
       <button class="prd-tab" onclick="switchPrdTab('nv','kpi',this)">二、目標與指標</button>
       <button class="prd-tab" onclick="switchPrdTab('nv','us',this)">三、使用者故事</button>
-      <button class="prd-tab" onclick="switchPrdTab('nv','dir',this)">四、執行方向參考</button>
     </div>
 
     <!-- 背景與問題 -->
@@ -1266,73 +1335,6 @@ body.present-mode .slide-nav{display:flex;}
         </div>
       </div>
     </div>
-    <!-- 執行方向參考 -->
-    <div class="prd-pane" id="prd-nv-dir">
-      <p style="font-size:12px;color:#718096;margin-bottom:12px">以下為可能的執行方向，供討論與選題參考，不代表全部都要做。</p>
-
-      <div class="prd-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div class="prd-section-label" style="margin-bottom:0">方向 A｜文章底部推薦文章模組</div>
-          <span style="font-size:10px;background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:4px;font-weight:700">優先推薦</span>
-        </div>
-        <p style="font-size:13px;color:#2d3748;line-height:1.7;margin-bottom:8px">讀者讀完一篇文章後，底部出現 3–5 篇相關文章推薦，依標籤相似度與近期熱門度排序，引導繼續閱讀。</p>
-        <table class="prd-table">
-          <thead><tr><th>研究題目</th><th>說明</th></tr></thead>
-          <tbody>
-            <tr><td>推薦邏輯要用規則型還是算法型？</td><td>規則型（標籤比對）開發快，算法型效果好但複雜度高</td></tr>
-            <tr><td>推薦幾篇最適合？</td><td>3 篇 vs 5 篇的點擊率差異，需 A/B 測試驗證</td></tr>
-            <tr><td>工具型文章是否需要特殊處理？</td><td>攻略/查詢類文章讀者找到答案後本來就會離開，推薦效益可能有限</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="prd-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div class="prd-section-label" style="margin-bottom:0">方向 B｜電子報訂閱 inline 引導</div>
-          <span style="font-size:10px;background:#fee2e2;color:#991b1b;padding:2px 8px;border-radius:4px;font-weight:700">優先推薦</span>
-        </div>
-        <p style="font-size:13px;color:#2d3748;line-height:1.7;margin-bottom:8px">文章底部放置 Email 訂閱框，讓讀者在不離開頁面的情況下完成訂閱，後續透過電子報建立回訪習慣（電子報用戶參與時間 110 秒，為全站最高）。</p>
-        <table class="prd-table">
-          <thead><tr><th>研究題目</th><th>說明</th></tr></thead>
-          <tbody>
-            <tr><td>文案要訴求什麼才會讓人訂閱？</td><td>「每週精選財經洞察」vs「不錯過商周最新報導」訴求差異</td></tr>
-            <tr><td>訂閱框放在文章末尾還是中段？</td><td>中段可觸及更多用戶，末尾用戶意願較高</td></tr>
-            <tr><td>電子報內容是否需要同步優化？</td><td>訂閱率提升後，電子報開信率與點擊率才是真正的留存指標</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="prd-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div class="prd-section-label" style="margin-bottom:0">方向 C｜Push 通知訂閱提示</div>
-          <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;font-weight:700">次要考慮</span>
-        </div>
-        <p style="font-size:13px;color:#2d3748;line-height:1.7;margin-bottom:8px">讀者讀完文章後出現瀏覽器 Push 通知授權邀請，允許後可主動推送新文章通知，建立不依賴 Email 的回訪管道。</p>
-        <table class="prd-table">
-          <thead><tr><th>研究題目</th><th>說明</th></tr></thead>
-          <tbody>
-            <tr><td>何時觸發授權邀請最合適？</td><td>一進站就彈跳出率高，建議讀完文章 80% 後才觸發</td></tr>
-            <tr><td>Push 通知的內容與頻率如何設計？</td><td>頻率過高會被用戶關閉授權，需謹慎設定</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="prd-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div class="prd-section-label" style="margin-bottom:0">方向 D｜首訪主題引導 Banner</div>
-          <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;font-weight:700">次要考慮</span>
-        </div>
-        <p style="font-size:13px;color:#2d3748;line-height:1.7;margin-bottom:8px">偵測新訪客後，在文章頁底部或側邊顯示「商周還有這些內容」引導卡片，展示財經、科技、職場等主要內容類型，幫助新訪客建立對站內的整體認識。</p>
-        <table class="prd-table">
-          <thead><tr><th>研究題目</th><th>說明</th></tr></thead>
-          <tbody>
-            <tr><td>哪些內容類型對新訪客最有吸引力？</td><td>需交叉分析新訪客的文章類別偏好</td></tr>
-            <tr><td>如何判斷「新訪客」？</td><td>GA4 new_visitor 標記 vs Cookie 判斷，各有準確度差異</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
   </div><!-- end detail-prd-nv -->
 
   <!-- ══════════════════════════════════════
@@ -1502,7 +1504,6 @@ body.present-mode .slide-nav{display:flex;}
       <button class="prd-tab on" onclick="switchPrdTab('a','bg',this)">一、背景與問題</button>
       <button class="prd-tab" onclick="switchPrdTab('a','kpi',this)">二、目標與指標</button>
       <button class="prd-tab" onclick="switchPrdTab('a','us',this)">三、使用者故事</button>
-      <button class="prd-tab" onclick="switchPrdTab('a','dir',this)">四、執行方向參考</button>
     </div>
 
     <!-- 背景與問題 -->
@@ -1631,73 +1632,6 @@ body.present-mode .slide-nav{display:flex;}
       </div>
     </div>
 
-    <!-- 執行方向參考 -->
-    <div class="prd-pane" id="prd-a-dir">
-      <p style="font-size:12px;color:#718096;margin-bottom:12px">以下方向需在 #4 搜尋追蹤上線、數據累積 4 週後，依實際問題選擇優先推進。</p>
-
-      <div class="prd-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div class="prd-section-label" style="margin-bottom:0">方向 A｜搜尋建議詞（Autocomplete）</div>
-          <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;font-weight:700">待數據決定優先序</span>
-        </div>
-        <p style="font-size:13px;color:#2d3748;line-height:1.7;margin-bottom:8px">用戶輸入搜尋詞時，自動顯示建議詞，降低輸入門檻、提高搜尋成功率。</p>
-        <table class="prd-table">
-          <thead><tr><th>研究題目</th><th>說明</th></tr></thead>
-          <tbody>
-            <tr><td>建議詞的來源是什麼？</td><td>站內熱門搜尋詞 vs 文章標籤 vs 兩者混合</td></tr>
-            <tr><td>顯示幾個建議詞最合適？</td><td>太多佔版面，太少沒幫助，3–5 個為常見設計</td></tr>
-            <tr><td>行動版鍵盤彈出時版面是否會破？</td><td>需特別測試手機版的 UX</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="prd-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div class="prd-section-label" style="margin-bottom:0">方向 B｜零結果頁面改善</div>
-          <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;font-weight:700">待數據決定優先序</span>
-        </div>
-        <p style="font-size:13px;color:#2d3748;line-height:1.7;margin-bottom:8px">當搜尋無結果時，目前頁面可能只顯示「找不到」。改為提供熱門文章與近似建議詞，讓用戶有地方繼續探索。</p>
-        <table class="prd-table">
-          <thead><tr><th>研究題目</th><th>說明</th></tr></thead>
-          <tbody>
-            <tr><td>零結果的比例有多高？</td><td>#4 上線後才能知道，比例決定此項目的優先程度</td></tr>
-            <tr><td>零結果最常出現的關鍵字是什麼？</td><td>可能是拼字錯誤、用詞不同，或是站內確實缺乏該內容</td></tr>
-            <tr><td>推薦什麼樣的替代文章？</td><td>分類熱門 vs 全站熱門，哪個更能留住用戶</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="prd-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div class="prd-section-label" style="margin-bottom:0">方向 C｜搜尋結果排序與篩選優化</div>
-          <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;font-weight:700">待數據決定優先序</span>
-        </div>
-        <p style="font-size:13px;color:#2d3748;line-height:1.7;margin-bottom:8px">讓搜尋結果更符合用戶預期，加入時間篩選、分類篩選，讓有目的性的用戶更快找到想要的文章。</p>
-        <table class="prd-table">
-          <thead><tr><th>研究題目</th><th>說明</th></tr></thead>
-          <tbody>
-            <tr><td>用戶最常搜尋的是時事還是常青內容？</td><td>#4 上線後可從 search_term 分析，決定排序邏輯</td></tr>
-            <tr><td>篩選功能的使用率是否值得開發成本？</td><td>若用戶大多直接點擊前幾筆，篩選器優先級應降低</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="prd-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-          <div class="prd-section-label" style="margin-bottom:0">方向 D｜搜尋框位置與視覺強化</div>
-          <span style="font-size:10px;background:#fef3c7;color:#92400e;padding:2px 8px;border-radius:4px;font-weight:700">待數據決定優先序</span>
-        </div>
-        <p style="font-size:13px;color:#2d3748;line-height:1.7;margin-bottom:8px">目前搜尋入口僅是 header 右上角的放大鏡圖示，不夠顯眼。研究是否需要在文章頁或首頁強化搜尋入口的存在感。</p>
-        <table class="prd-table">
-          <thead><tr><th>研究題目</th><th>說明</th></tr></thead>
-          <tbody>
-            <tr><td>用戶是否知道商周有搜尋功能？</td><td>可透過用戶訪談或點擊熱圖驗證</td></tr>
-            <tr><td>加大搜尋框後，使用率是否提升？</td><td>改版前後對比 search_trigger 事件數量</td></tr>
-            <tr><td>在哪些頁面強化搜尋入口效益最大？</td><td>404 頁面（已在 #3 處理）、文章頁、首頁</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
   </div><!-- end detail-prd-a -->
 
   <button class="back-btn" id="back-btn" onclick="scrollToTop()">↑ 回到列表</button>
