@@ -1246,13 +1246,13 @@ body.present-mode .slide-nav{display:flex;}
     <div class="prd-banner">
       <button class="prd-back-btn" onclick="showDetail('nv')">← 返回診斷分析</button>
       <div class="prd-tag">Product Plan</div>
-      <div class="prd-title">子項目 #2｜新訪客首訪留存引導</div>
-      <div class="prd-sub">提升新訪客 30 天回訪率・建立訂閱引導機制</div>
+      <div class="prd-title">題目一｜首訪主題引導 Banner</div>
+      <div class="prd-sub">新訪客完讀文章後展示主題分類，讓用戶知道「商周還有這些」・對應子項目 #2 執行方向 D</div>
       <div class="prd-meta">
         <div class="prd-meta-item">狀態<span>草稿</span></div>
         <div class="prd-meta-item">日期<span>2026-05-22</span></div>
         <div class="prd-meta-item">PM<span>Alice</span></div>
-        <div class="prd-meta-item">優先級<span>P2 黏著度影響</span></div>
+        <div class="prd-meta-item">下一步<span>找設計師討論視覺草圖</span></div>
       </div>
     </div>
 
@@ -1266,31 +1266,42 @@ body.present-mode .slide-nav{display:flex;}
     <div class="prd-pane on" id="prd-nv-bg">
       <div class="prd-card">
         <div class="prd-section-label">1.1 問題陳述</div>
-        <div class="prd-pb">我們發現<strong>透過搜尋或社群進站的新訪客</strong>在<strong>首次閱讀文章後</strong>，因<strong>缺乏留存引導機制</strong>，導致 <strong>30 天回訪率僅 0.35%</strong>，大量一次性流量無法轉化為回訪用戶。</div>
+        <div class="prd-pb">我們發現<strong>透過搜尋或社群進站的新訪客</strong>在<strong>讀完一篇文章後</strong>，因<strong>不知道商周還有哪些主題內容</strong>，往往直接關閉頁面離開，而非繼續探索站內其他分類。</div>
         <div class="prd-kpi-grid">
           <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#e53e3e"></div><span class="prd-kpi-val">64.4</span><span class="prd-kpi-unit">%</span><div class="prd-kpi-desc">新訪客佔比<br>（共 743 萬人）</div></div>
+          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#e53e3e"></div><span class="prd-kpi-val">1.86</span><span class="prd-kpi-unit">頁</span><div class="prd-kpi-desc">每人平均瀏覽頁數<br>目標 ≥ 3 頁</div></div>
           <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#e53e3e"></div><span class="prd-kpi-val">0.35</span><span class="prd-kpi-unit">%</span><div class="prd-kpi-desc">30 天回訪率<br>100 人來僅 0.35 人回</div></div>
-          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#38a169"></div><span class="prd-kpi-val">110</span><span class="prd-kpi-unit">秒</span><div class="prd-kpi-desc">電子報用戶參與時間<br>全站來源最高</div></div>
         </div>
       </div>
       <div class="prd-card">
-        <div class="prd-section-label">1.2 目標用戶</div>
+        <div class="prd-section-label">1.2 為什麼需要 Banner，而不是更多推薦文章？</div>
         <table class="prd-table">
-          <thead><tr><th>用戶類型</th><th>描述</th><th>主要痛點</th></tr></thead>
+          <thead><tr><th>現有機制</th><th>功能</th><th>缺口</th></tr></thead>
           <tbody>
-            <tr><td><strong>搜尋進站讀者</strong></td><td>由 Google 搜尋特定主題進入，目標明確</td><td>讀完後不知道還有什麼內容，直接關閉</td></tr>
-            <tr><td><strong>社群導流讀者</strong></td><td>由 LINE / FB 分享連結進站</td><td>對主題有興趣但不熟悉商周其他內容</td></tr>
-            <tr><td><strong>潛在訂閱用戶</strong></td><td>閱讀後有意繼續關注財經資訊</td><td>找不到簡單的方式持續接收商周內容</td></tr>
+            <tr><td>延伸閱讀（5篇）</td><td>推薦與本篇相似的文章</td><td>只能在同類型內循環，無法讓用戶發現其他主題</td></tr>
+            <tr><td>相關文章（4篇）</td><td>依標籤推薦文章</td><td>同上，仍是文章層級的推薦</td></tr>
+            <tr><td>大家都在看</td><td>全站熱門文章</td><td>非個人化，且文章頁版面已十分擁擠</td></tr>
+            <tr><td style="color:#d4a843;font-weight:600;">主題引導 Banner（本次）</td><td style="color:#d4a843;">展示站內所有主題分類</td><td style="color:#38a169;">✅ 填補缺口：讓新訪客看見商周的全貌</td></tr>
           </tbody>
         </table>
       </div>
       <div class="prd-card">
-        <div class="prd-section-label">1.3 不在範圍內</div>
+        <div class="prd-section-label">1.3 目標用戶</div>
+        <table class="prd-table">
+          <thead><tr><th>用戶類型</th><th>進站方式</th><th>痛點</th></tr></thead>
+          <tbody>
+            <tr><td><strong>搜尋進站讀者</strong></td><td>Google 搜尋特定主題（如「台積電」、「AI 趨勢」）</td><td>讀完這篇後不知道商周還有財經、管理、ESG 等主題</td></tr>
+            <tr><td><strong>社群導流讀者</strong></td><td>LINE / FB 分享連結進站</td><td>對這篇文章有興趣，但不知道商周的整體定位</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prd-card">
+        <div class="prd-section-label">1.4 不在範圍內</div>
         <div class="prd-oos">本次開發明確不包含：<ul>
-          <li>付費牆或訂閱流程改版</li>
-          <li>App 推播通知（iOS / Android）</li>
-          <li>個人化推薦演算法（Phase 1 使用規則型推薦）</li>
-          <li>電子報內容本身的優化（需內容團隊配合）</li>
+          <li>電子報訂閱功能（另立規劃，位置待評估）</li>
+          <li>Push 通知（iOS 限制問題，暫不推進）</li>
+          <li>個人化推薦（Phase 1 為靜態分類展示，不依用戶行為）</li>
+          <li>文章推薦邏輯優化（現有延伸閱讀已上線，不納入本次）</li>
         </ul></div>
       </div>
     </div>
@@ -1299,21 +1310,20 @@ body.present-mode .slide-nav{display:flex;}
     <div class="prd-pane" id="prd-nv-kpi">
       <div class="prd-card">
         <div class="prd-section-label">2.1 產品目標</div>
-        <div class="prd-pb"><strong>主要目標：</strong>讓更多新訪客在首次造訪後，建立與商周的持續連結，使 30 天回訪率從 0.35% 提升至 0.70%（翻倍）。</div>
-        <p style="font-size:12px;color:#718096;margin-top:6px"><strong style="color:#2d3748">次要目標：</strong>透過文章底部電子報訂閱引導，建立穩定的回訪管道，並逐步提升每人平均瀏覽頁數。</p>
+        <div class="prd-pb"><strong>主要目標：</strong>讓新訪客在讀完文章後，透過主題分類 Banner 發現站內其他內容，提升每人平均瀏覽頁數，進而帶動後續回訪率成長。</div>
+        <p style="font-size:12px;color:#718096;margin-top:6px"><strong style="color:#2d3748">次要目標：</strong>透過 Banner 點擊數據，了解新訪客對哪些主題最有興趣，作為後續內容策略與個人化推薦的參考依據。</p>
       </div>
       <div class="prd-card">
         <div class="prd-section-label">2.2 成功指標（KPI）</div>
         <table class="prd-table">
           <thead><tr><th>指標</th><th>目前數值</th><th>目標值</th><th>評估時間</th></tr></thead>
           <tbody>
-            <tr><td>30 天回訪率</td><td>0.35%</td><td class="good">≥ 0.70%</td><td>上線後 8 週</td></tr>
-            <tr><td>電子報訂閱轉換率（新訪客）</td><td>未追蹤</td><td class="good">建立 baseline</td><td>上線後 4 週</td></tr>
-            <tr><td>每人平均瀏覽頁數</td><td>1.86 頁</td><td class="good">≥ 2.2 頁</td><td>上線後 12 週</td></tr>
-            <tr><td>隔天回訪率</td><td>2.32%</td><td class="good">≥ 3.5%</td><td>上線後 8 週</td></tr>
+            <tr><td>Banner 點擊率（新訪客）</td><td>無（新功能）</td><td class="good">建立 baseline → 目標 ≥ 15%</td><td>上線後 4 週</td></tr>
+            <tr><td>每人平均瀏覽頁數（新訪客）</td><td>1.86 頁</td><td class="good">≥ 2.2 頁</td><td>上線後 8 週</td></tr>
+            <tr><td>分類列表頁流量（來自 Banner）</td><td>無</td><td class="good">建立 baseline</td><td>上線後 4 週</td></tr>
           </tbody>
         </table>
-        <p style="font-size:11px;color:#718096;margin-top:8px">※ 回訪率翻倍目標較積極，建議上線後 4 週先看初期數據再決定是否調整。</p>
+        <p style="font-size:11px;color:#718096;margin-top:8px">※ 上線前 4 週為觀察期，依 baseline 決定後續目標值是否調整。</p>
       </div>
     </div>
 
@@ -1321,7 +1331,6 @@ body.present-mode .slide-nav{display:flex;}
     <div class="prd-pane" id="prd-nv-us">
       <p style="font-size:12px;color:#718096;margin-bottom:12px">點擊每則故事展開驗收條件（Given／When／Then）</p>
 
-      <!-- US-01：主題引導 Banner（最可行・優先推進）-->
       <div class="prd-us-item">
         <div class="prd-us-head" onclick="togglePrdUS(this)">
           <span class="prd-us-id">US-01</span>
@@ -1330,15 +1339,15 @@ body.present-mode .slide-nav{display:flex;}
         </div>
         <div class="prd-us-body">
           <div class="prd-gwt">
-            <strong>Given：</strong>用戶為新訪客，首次進站並閱讀一篇文章<br>
+            <strong>Given：</strong>用戶為新訪客，首次進站閱讀一篇文章<br>
             <strong>When：</strong>捲動至文章最底部（完讀觸發）<br>
             <strong>Then：</strong>
             <ul class="prd-check">
               <li>文章底部出現「商周還有這些主題」全寬 Banner 區塊</li>
-              <li>展示主要分類：焦點、國際、財經、管理、Video、ESG（含圖示與名稱）</li>
+              <li>展示 6 個主要分類：焦點、國際、財經、管理、Video、ESG（含圖示與名稱）</li>
               <li>點擊任一分類後，導向該分類的文章列表頁</li>
-              <li>Banner 視覺風格與「延伸閱讀」明顯區隔，不被誤認為廣告</li>
-              <li>回訪客不顯示此 Banner（僅新訪客首次造訪時觸發）</li>
+              <li>Banner 視覺風格與現有「延伸閱讀」明顯區隔，不被誤認為廣告</li>
+              <li>回訪客不顯示此 Banner（僅新訪客首次造訪時觸發一次）</li>
               <li>手機版與桌機版皆正常顯示，版面不破版</li>
               <li>觸發 GA4 事件：topic_banner_show、topic_banner_click（category）</li>
             </ul>
@@ -1346,63 +1355,24 @@ body.present-mode .slide-nav{display:flex;}
         </div>
       </div>
 
-      <!-- US-02：電子報訂閱（次要・位置待評估）-->
       <div class="prd-us-item">
         <div class="prd-us-head" onclick="togglePrdUS(this)">
           <span class="prd-us-id">US-02</span>
-          <span class="prd-us-text">身為<strong>希望定期收到商周內容的讀者</strong>，我希望<strong>在不干擾閱讀的情況下完成電子報訂閱</strong>，建立持續回訪的管道。</span>
+          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤 Banner 的曝光與各分類點擊數據</strong>，以便了解新訪客對哪些主題最有興趣。</span>
           <span class="prd-priority prd-p1">P1</span>
         </div>
         <div class="prd-us-body">
           <div class="prd-gwt">
-            <strong>Given：</strong>用戶尚未訂閱電子報<br>
-            <strong>When：</strong>於完讀後 Banner、首頁或搜尋結果頁等非文章閱讀中的位置看到訂閱入口<br>
+            <strong>Given：</strong>Banner 上線，GA4 已串接<br>
+            <strong>When：</strong>新訪客與 Banner 互動<br>
             <strong>Then：</strong>
             <ul class="prd-check">
-              <li>訂閱流程最多 2 步：輸入 Email → 點擊確認，不需跳轉頁面</li>
-              <li>手機版版面不產生遮擋或排版問題</li>
-              <li>訂閱成功後顯示確認提示，觸發 GA4 事件：newsletter_subscribe</li>
-              <li>已訂閱用戶不再看到此入口</li>
-            </ul>
-          </div>
-          <p style="font-size:11px;color:#c05621;margin-top:8px;">⚠ 訂閱入口位置需另行評估：文章頁版面已擁擠，建議優先考慮完讀後 overlay、首頁或搜尋頁等替代位置。</p>
-        </div>
-      </div>
-
-      <!-- US-03：數據追蹤-->
-      <div class="prd-us-item">
-        <div class="prd-us-head" onclick="togglePrdUS(this)">
-          <span class="prd-us-id">US-03</span>
-          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤主題 Banner 與訂閱入口的互動數據</strong>，以便評估成效並優化。</span>
-          <span class="prd-priority prd-p1">P1</span>
-        </div>
-        <div class="prd-us-body">
-          <div class="prd-gwt">
-            <strong>Given：</strong>功能上線，GA4 已串接<br>
-            <strong>When：</strong>用戶與任一模組互動<br>
-            <strong>Then：</strong>
-            <ul class="prd-check">
-              <li>GA4 可查看主題 Banner 各分類點擊率（topic_banner_click / category）</li>
-              <li>GA4 可查看主題 Banner 曝光次數（topic_banner_show）</li>
-              <li>GA4 可查看電子報訂閱轉換率（newsletter_subscribe）</li>
-              <li>可依新訪客 vs 回訪客分群查看數據</li>
+              <li>GA4 可查看 Banner 曝光次數（topic_banner_show）</li>
+              <li>GA4 可查看各分類點擊率（topic_banner_click / category）</li>
+              <li>GA4 可計算 Banner CTR（click / show）</li>
+              <li>可追蹤點擊 Banner 後的後續瀏覽頁數（page_view after banner_click）</li>
               <li>數據延遲 ≤ 2 小時</li>
             </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- US-04：推薦相關文章（已存在功能）-->
-      <div class="prd-us-item" style="opacity:.7;">
-        <div class="prd-us-head" onclick="togglePrdUS(this)">
-          <span class="prd-us-id">US-04</span>
-          <span class="prd-us-text">身為<strong>讀完文章的用戶</strong>，我希望<strong>在文章底部看到推薦的相關文章</strong>，以便繼續閱讀感興趣的內容。</span>
-          <span class="prd-priority prd-p2" style="background:#dcfce7;color:#166534;">已存在</span>
-        </div>
-        <div class="prd-us-body">
-          <p style="font-size:12px;color:#718096;margin-bottom:8px;">此功能目前已上線（延伸閱讀、相關文章、大家都在看），本次不重複開發。若未來需優化推薦邏輯，可另立子項目。</p>
-          <div class="prd-gwt">
-            <strong>現況：</strong>文章底部已有「延伸閱讀（5篇）」、「相關文章（4篇）」、「大家都在看」三個推薦區塊
           </div>
         </div>
       </div>
@@ -1562,13 +1532,13 @@ body.present-mode .slide-nav{display:flex;}
     <div class="prd-banner">
       <button class="prd-back-btn" onclick="showDetail('a')">← 返回診斷分析</button>
       <div class="prd-tag">Product Plan</div>
-      <div class="prd-title">子項目 #6｜搜尋頁體驗優化</div>
-      <div class="prd-sub">⚠ 前置條件：需等 #4 搜尋追蹤上線並累積 4 週數據後啟動</div>
+      <div class="prd-title">題目二｜搜尋結果排序與篩選</div>
+      <div class="prd-sub">⚠ 前置條件：需等 #4 搜尋追蹤上線並累積 4 週數據後啟動・對應子項目 #6 執行方向 C</div>
       <div class="prd-meta">
         <div class="prd-meta-item">狀態<span>草稿（待前置條件）</span></div>
         <div class="prd-meta-item">日期<span>2026-05-22</span></div>
         <div class="prd-meta-item">PM<span>Alice</span></div>
-        <div class="prd-meta-item">優先級<span>P6 需等數據</span></div>
+        <div class="prd-meta-item">下一步<span>先完成 #4 搜尋追蹤</span></div>
       </div>
     </div>
 
@@ -1581,35 +1551,45 @@ body.present-mode .slide-nav{display:flex;}
     <!-- 背景與問題 -->
     <div class="prd-pane on" id="prd-a-bg">
       <div style="background:#fffbeb;border:1px solid #f59e0b;border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:13px;color:#78350f;">
-        <strong>⚠ 前置條件尚未完成</strong><br>
-        GA4 目前沒有搜尋事件追蹤（無 search / view_search_results 事件），無法判斷搜尋頁的真實問題。需先完成子項目 #4（搜尋追蹤建置）並累積 4 週數據後，才能用真實數據驅動本項目的改版決策。
+        <strong>⚠ 前置條件：子項目 #4 尚未完成</strong><br>
+        GA4 目前無搜尋事件追蹤，無法取得「用戶在搜什麼」「搜完有沒有點文章」等數據。需先完成 #4（搜尋追蹤建置）並累積 4 週數據，才能確認時間排序的效益與優化方向。計劃書設計可先行，但開發需等數據就緒。
       </div>
       <div class="prd-card">
         <div class="prd-section-label">1.1 問題陳述</div>
-        <div class="prd-pb">我們發現<strong>進入搜尋頁的用戶</strong>平均停留僅 <strong>6 秒</strong>，但因<strong>缺乏搜尋事件追蹤</strong>，目前無法判斷這是「搜尋成功後點進文章」還是「搜尋失敗後離開」，改版決策缺乏數據支撐。</div>
+        <div class="prd-pb">搜尋頁目前已有<strong>分類篩選</strong>（焦點、國際、財經、管理…），但<strong>缺乏時間維度的排序與篩選</strong>。用戶想找最新財經時事或特定時期報導，無法快速定位，只能瀏覽預設結果。</div>
         <div class="prd-kpi-grid">
           <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#dd6b20"></div><span class="prd-kpi-val">109,849</span><div class="prd-kpi-desc">搜尋頁落地 sessions<br>（90 天）</div></div>
-          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#e53e3e"></div><span class="prd-kpi-val">6</span><span class="prd-kpi-unit">秒</span><div class="prd-kpi-desc">平均停留時間<br>行為原因不明</div></div>
-          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#718096"></div><span class="prd-kpi-val">❌</span><div class="prd-kpi-desc">搜尋關鍵字 / 點擊率<br>等資料目前皆無</div></div>
+          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#e53e3e"></div><span class="prd-kpi-val">6</span><span class="prd-kpi-unit">秒</span><div class="prd-kpi-desc">平均停留時間<br>行為原因待 #4 確認</div></div>
+          <div class="prd-kpi-cell"><div class="prd-kpi-bar" style="background:#38a169"></div><span class="prd-kpi-val">✅</span><div class="prd-kpi-desc">分類篩選已有<br>缺的是時間排序</div></div>
         </div>
       </div>
       <div class="prd-card">
-        <div class="prd-section-label">1.2 目前資料缺口</div>
+        <div class="prd-section-label">1.2 現況 vs 目標</div>
         <table class="prd-table">
-          <thead><tr><th>需要的資料</th><th>現況</th><th>補齊方式</th></tr></thead>
+          <thead><tr><th>功能</th><th>現況</th><th>本次目標</th></tr></thead>
           <tbody>
-            <tr><td>搜尋關鍵字分布</td><td style="color:#e53e3e">❌ 無</td><td>子項目 #4：GA4 設定 search_term 參數</td></tr>
-            <tr><td>搜尋後文章點擊率</td><td style="color:#e53e3e">❌ 無</td><td>子項目 #4：追蹤 search 後的 page_view</td></tr>
-            <tr><td>零結果搜尋比例</td><td style="color:#e53e3e">❌ 無</td><td>子項目 #4：後端回傳空結果事件</td></tr>
-            <tr><td>搜尋使用裝置分布</td><td style="color:#e53e3e">❌ 無</td><td>同上，#4 上線後自動收集</td></tr>
+            <tr><td>分類篩選</td><td style="color:#38a169">✅ 已有（焦點/國際/財經/管理）</td><td style="color:#718096">維持現狀，不動</td></tr>
+            <tr><td>時間篩選</td><td style="color:#e53e3e">❌ 無</td><td style="color:#38a169">新增：近 1 週 / 近 1 個月 / 全部</td></tr>
+            <tr><td>排序方式</td><td style="color:#e53e3e">❌ 僅預設排序，無法切換</td><td style="color:#38a169">新增：最新 / 最相關 切換</td></tr>
           </tbody>
         </table>
       </div>
       <div class="prd-card">
-        <div class="prd-section-label">1.3 不在範圍內</div>
+        <div class="prd-section-label">1.3 目標用戶</div>
+        <table class="prd-table">
+          <thead><tr><th>用戶類型</th><th>需求</th><th>現在的困境</th></tr></thead>
+          <tbody>
+            <tr><td><strong>找時事的用戶</strong></td><td>想看「最近 1 週」關於某主題的最新報導</td><td>搜尋結果夾雜舊文，無法快速找到最新</td></tr>
+            <tr><td><strong>找深度的用戶</strong></td><td>想找某主題過去完整的報導脈絡</td><td>無法依時間範圍縮小或擴大搜尋結果</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="prd-card">
+        <div class="prd-section-label">1.4 不在範圍內</div>
         <div class="prd-oos">本次開發明確不包含：<ul>
-          <li>搜尋引擎本體（後端搜尋算法）的重建</li>
-          <li>站外 SEO 搜尋流量優化</li>
+          <li>搜尋引擎本體（後端算法）重建</li>
+          <li>搜尋建議詞 Autocomplete（另立規劃）</li>
+          <li>零結果頁面改善（另立規劃）</li>
           <li>搜尋追蹤建置（那是子項目 #4 的工作）</li>
         </ul></div>
       </div>
@@ -1619,18 +1599,18 @@ body.present-mode .slide-nav{display:flex;}
     <div class="prd-pane" id="prd-a-kpi">
       <div class="prd-card">
         <div class="prd-section-label">2.1 產品目標</div>
-        <div class="prd-pb"><strong>主要目標：</strong>讓使用搜尋功能的用戶更容易找到想要的文章，提升搜尋頁的後續點擊率，減少「搜尋失敗後直接離開」的流失。</div>
-        <p style="font-size:12px;color:#718096;margin-top:6px"><strong style="color:#2d3748">次要目標：</strong>透過搜尋行為分析，了解用戶在找什麼、哪些需求目前站內無法滿足，作為內容策略的輸入。</p>
+        <div class="prd-pb"><strong>主要目標：</strong>讓有明確時間意圖的搜尋用戶，能透過時間篩選與排序快速找到想要的文章，提升搜尋後的文章點擊率。</div>
+        <p style="font-size:12px;color:#718096;margin-top:6px"><strong style="color:#2d3748">次要目標：</strong>透過時間篩選的使用數據，了解商周用戶更偏好找時事還是常青內容，作為後續內容策略依據。</p>
       </div>
       <div class="prd-card">
         <div class="prd-section-label">2.2 成功指標（KPI）</div>
-        <p style="font-size:11px;color:#718096;margin-bottom:8px">⚠ 以下目標值待 #4 上線後，依實際 baseline 調整。</p>
+        <p style="font-size:11px;color:#718096;margin-bottom:8px">⚠ 目標值需在 #4 上線後，依實際搜尋行為 baseline 調整。</p>
         <table class="prd-table">
           <thead><tr><th>指標</th><th>目前數值</th><th>目標值</th><th>評估時間</th></tr></thead>
           <tbody>
-            <tr><td>搜尋頁後續文章點擊率</td><td>未追蹤</td><td class="good">≥ 40%（#4 上線後設 baseline）</td><td>#4 上線 8 週後</td></tr>
-            <tr><td>搜尋頁平均停留時間</td><td>6 秒</td><td class="good">≥ 20 秒</td><td>#4 上線 8 週後</td></tr>
-            <tr><td>零結果搜尋比例</td><td>未追蹤</td><td class="good">≤ 10%</td><td>#4 上線 4 週後</td></tr>
+            <tr><td>時間篩選 / 排序使用率</td><td>無（新功能）</td><td class="good">建立 baseline → 目標 ≥ 20%</td><td>#4 上線後 4 週</td></tr>
+            <tr><td>搜尋頁後續文章點擊率</td><td>未追蹤</td><td class="good">≥ 40%（依 baseline 調整）</td><td>#4 上線後 8 週</td></tr>
+            <tr><td>搜尋頁平均停留時間</td><td>6 秒</td><td class="good">≥ 20 秒</td><td>#4 上線後 8 週</td></tr>
           </tbody>
         </table>
       </div>
@@ -1640,82 +1620,67 @@ body.present-mode .slide-nav{display:flex;}
     <div class="prd-pane" id="prd-a-us">
       <p style="font-size:12px;color:#718096;margin-bottom:12px">點擊每則故事展開驗收條件（Given／When／Then）</p>
 
-      <!-- US-01：時間排序（方向C，已確認，優先推進）-->
       <div class="prd-us-item">
         <div class="prd-us-head" onclick="togglePrdUS(this)">
           <span class="prd-us-id">US-01</span>
-          <span class="prd-us-text">身為<strong>想找特定時間報導的用戶</strong>，我希望<strong>能對搜尋結果切換排序方式</strong>，以便快速找到最新或最相關的文章。</span>
+          <span class="prd-us-text">身為<strong>想找近期時事報導的用戶</strong>，我希望<strong>能篩選近 1 週或近 1 個月的搜尋結果</strong>，以便快速找到最新的相關報導。</span>
           <span class="prd-priority prd-p0">P0</span>
         </div>
         <div class="prd-us-body">
           <div class="prd-gwt">
             <strong>Given：</strong>用戶輸入關鍵字完成搜尋，看到結果列表<br>
-            <strong>When：</strong>用戶想依時間或相關度調整結果順序<br>
+            <strong>When：</strong>用戶想縮小到特定時間範圍<br>
             <strong>Then：</strong>
             <ul class="prd-check">
-              <li>搜尋結果頁提供排序切換：最新 / 最相關 / 最熱門</li>
-              <li>預設排序為「最相關」，切換後結果即時更新，不需重整頁面</li>
-              <li>手機版排序切換 UI 不佔用結果列表空間（建議用下拉選單或小標籤）</li>
-              <li>分類篩選（現有功能）與時間排序可同時作用</li>
+              <li>搜尋結果頁提供時間篩選：近 1 週 / 近 1 個月 / 全部</li>
+              <li>預設為「全部」，切換後結果即時更新，不需重新整理頁面</li>
+              <li>時間篩選與現有分類篩選可同時作用（如：財經 × 近 1 週）</li>
+              <li>手機版篩選 UI 不佔用結果列表空間，不破版</li>
+              <li>觸發 GA4 事件：search_filter（filter_type: time_range, value）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-02</span>
+          <span class="prd-us-text">身為<strong>想找最新或最相關文章的用戶</strong>，我希望<strong>能切換搜尋結果的排序方式</strong>，以便依自己的需求決定要看哪類結果。</span>
+          <span class="prd-priority prd-p0">P0</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>用戶完成搜尋，看到預設結果列表<br>
+            <strong>When：</strong>用戶想調整結果呈現順序<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>搜尋結果頁提供排序切換：最新 / 最相關</li>
+              <li>預設排序為「最相關」，切換後結果即時更新</li>
+              <li>排序可與時間篩選、分類篩選同時作用</li>
               <li>觸發 GA4 事件：search_sort（sort_type）</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <!-- US-02：搜尋建議詞（方向A，次要）-->
-      <div class="prd-us-item">
-        <div class="prd-us-head" onclick="togglePrdUS(this)">
-          <span class="prd-us-id">US-02</span>
-          <span class="prd-us-text">身為<strong>使用搜尋功能找文章的用戶</strong>，我希望<strong>輸入時自動出現建議詞</strong>，以便更快找到想看的內容。</span>
-          <span class="prd-priority prd-p1">P1</span>
-        </div>
-        <div class="prd-us-body">
-          <div class="prd-gwt">
-            <strong>Given：</strong>用戶點擊搜尋框並開始輸入<br>
-            <strong>When：</strong>輸入 2 個字以上<br>
-            <strong>Then：</strong>
-            <ul class="prd-check">
-              <li>搜尋框下方出現最多 5 個建議詞</li>
-              <li>建議詞依站內熱門搜尋與相關度排序</li>
-              <li>點擊建議詞直接執行搜尋</li>
-              <li>觸發 GA4 事件：search_suggest_click（term）</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- US-03：數據追蹤-->
       <div class="prd-us-item">
         <div class="prd-us-head" onclick="togglePrdUS(this)">
           <span class="prd-us-id">US-03</span>
-          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤搜尋排序與建議詞的使用數據</strong>，以便持續評估功能是否有效。</span>
+          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤時間篩選與排序的使用數據</strong>，以便了解用戶偏好時事還是常青內容。</span>
           <span class="prd-priority prd-p1">P1</span>
         </div>
         <div class="prd-us-body">
           <div class="prd-gwt">
             <strong>Given：</strong>功能上線，GA4 已串接（需先完成子項目 #4）<br>
-            <strong>When：</strong>用戶在搜尋頁互動<br>
+            <strong>When：</strong>用戶在搜尋頁使用篩選或排序功能<br>
             <strong>Then：</strong>
             <ul class="prd-check">
+              <li>GA4 可查看時間篩選使用率（search_filter / time_range）</li>
               <li>GA4 可查看排序切換使用率（search_sort / sort_type）</li>
-              <li>GA4 可查看搜尋建議詞點擊率（search_suggest_click）</li>
-              <li>GA4 可查看搜尋後文章點擊率（需 #4 完成後才有）</li>
-              <li>可分析各排序方式下的後續點擊行為差異</li>
+              <li>GA4 可比較：使用篩選後 vs 未使用的後續點擊率差異</li>
+              <li>數據延遲 ≤ 2 小時</li>
             </ul>
           </div>
-        </div>
-      </div>
-
-      <!-- US-04：零結果改善（另立項目）-->
-      <div class="prd-us-item" style="opacity:.7;">
-        <div class="prd-us-head" onclick="togglePrdUS(this)">
-          <span class="prd-us-id">US-04</span>
-          <span class="prd-us-text">身為<strong>搜尋後找不到結果的用戶</strong>，我希望<strong>零結果頁面提供有用的替代建議</strong>，以便不要空手離開。</span>
-          <span class="prd-priority prd-p2" style="background:#e2e8f0;color:#4a5568;">另立項目</span>
-        </div>
-        <div class="prd-us-body">
-          <p style="font-size:12px;color:#718096;">此需求已確認為獨立問題，不納入本次時間排序的開發範圍，待後續另立子項目規劃。</p>
         </div>
       </div>
     </div>
