@@ -86,10 +86,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;backgrou
 .rank-item.dimmed{opacity:.35;}
 .rank-row{display:grid;grid-template-columns:36px 1fr auto;align-items:center;gap:10px;}
 .rank-num{font-size:22px;font-weight:800;text-align:center;}
-.rank-item[data-id="b"] .rank-num{color:#e53e3e;}
-.rank-item[data-id="st"] .rank-num{color:#e53e3e;}
-.rank-item[data-id="c"] .rank-num{color:#dd6b20;}
-.rank-item[data-id="nv"] .rank-num{color:#38a169;}
+.rank-item[data-id="c"] .rank-num{color:#e53e3e;}
+.rank-item[data-id="nv"] .rank-num{color:#dd6b20;}
+.rank-item[data-id="b"] .rank-num{color:#38a169;}
+.rank-item[data-id="st"] .rank-num{color:#718096;}
 .rank-item[data-id="dir"] .rank-num{color:#718096;}
 .rank-item[data-id="a"] .rank-num{color:#718096;}
 .rank-name{font-size:13px;font-weight:700;margin-bottom:2px;}
@@ -307,15 +307,19 @@ body.present-mode .slide-nav{display:flex;}
 
 <!-- 執行摘要 -->
 <div class="summary-bar">
-  <span class="s-title">執行摘要</span>
-  <div class="summary-item">
-    <span class="s-val red">▼20.3%</span>
-    <span class="s-desc">PV 季度下滑<br>1,630萬（前期 2,046萬）</span>
+  <div class="summary-item" style="border-left:2px solid #4299e1;padding-left:12px;">
+    <span class="s-val" style="color:#63b3ed;font-size:12px;letter-spacing:.5px;">分析主軸</span>
+    <span class="s-desc" style="color:rgba(255,255,255,.9);font-size:13px;font-weight:600;">找出「看一頁就走」的流失熱點<br>挽救低迷的站內黏著度</span>
   </div>
   <div class="summary-divider"></div>
   <div class="summary-item">
     <span class="s-val red">1.18頁</span>
-    <span class="s-desc">每人平均瀏覽頁數<br>目標值應 ≥ 3 頁</span>
+    <span class="s-desc">每人平均瀏覽頁數<br>核心指標・目標 ≥ 3 頁</span>
+  </div>
+  <div class="summary-divider"></div>
+  <div class="summary-item">
+    <span class="s-val red">▼20.3%</span>
+    <span class="s-desc">PV 季度下滑<br>1,630萬（前期 2,046萬）</span>
   </div>
   <div class="summary-divider"></div>
   <div class="summary-item">
@@ -325,7 +329,7 @@ body.present-mode .slide-nav{display:flex;}
   <div class="summary-divider"></div>
   <div class="summary-item">
     <span class="s-val green">6 個</span>
-    <span class="s-desc">改善子項目已排序<br>#2 搜尋追蹤為最緊急前置</span>
+    <span class="s-desc">改善子項目已排序<br>依黏著度影響程度排列</span>
   </div>
 </div>
 
@@ -535,54 +539,54 @@ body.present-mode .slide-nav{display:flex;}
   <!-- ══ Tab 3：子項目 ══ -->
   <div id="tab-projects" class="tab-panel">
 
-    <div class="sec-title">子項目優先排序 <span class="hint">點擊查看數據佐證</span></div>
+    <div class="sec-title">子項目優先排序 <span class="hint">依黏著度影響程度排列</span></div>
     <div class="rank-list">
-
-      <div class="rank-item" data-id="b" onclick="selectProject('b')">
-        <div class="rank-row">
-          <div class="rank-num">1</div>
-          <div>
-            <div class="rank-name">404 頁面引導優化</div>
-            <div class="rank-reason">數據明確・難度低・9.2萬 sessions 可回收</div>
-            <div class="action-next"><span class="a-label">下一步：</span>PM 撰寫需求規格 → IT 排入開發</div>
-          </div>
-          <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">92分</div></div>
-        </div>
-      </div>
-
-      <div class="rank-item" data-id="st" onclick="selectProject('st')">
-        <div class="rank-row">
-          <div class="rank-num">2</div>
-          <div>
-            <div class="rank-name">搜尋事件追蹤補設定</div>
-            <div class="rank-reason">IT 設定工時低・是 #6 搜尋優化的前置需求</div>
-            <div class="action-next"><span class="a-label">下一步：</span>PM 向 IT 提需求，預估 1–2 天完成設定</div>
-          </div>
-          <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">85分</div></div>
-        </div>
-      </div>
 
       <div class="rank-item" data-id="c" onclick="selectProject('c')">
         <div class="rank-row">
-          <div class="rank-num">3</div>
+          <div class="rank-num">1</div>
           <div>
             <div class="rank-name">文章頁閱讀後引導優化</div>
-            <div class="rank-reason">影響規模最大（600萬/季）・需演算法或規則支援</div>
+            <div class="rank-reason">最直接拉高頁深・600萬瀏覽/季受影響・黏著度核心解法</div>
             <div class="action-next"><span class="a-label">下一步：</span>確認推薦邏輯（規則 or 算法）→ IT 評估工時</div>
           </div>
-          <div class="rank-badges"><span class="diff high">難度 高</span><div class="score-mini">72分</div></div>
+          <div class="rank-badges"><span class="diff high">難度 高</span><div class="score-mini">黏著度 ★★★</div></div>
         </div>
       </div>
 
       <div class="rank-item" data-id="nv" onclick="selectProject('nv')">
         <div class="rank-row">
-          <div class="rank-num">4</div>
+          <div class="rank-num">2</div>
           <div>
             <div class="rank-name">新訪客首訪留存引導</div>
-            <div class="rank-reason">64% 為新訪客・留存率僅 0.35%・策略方向需定義</div>
+            <div class="rank-reason">64% 新訪客・30天留存 0.35%・提升回訪直接改善長期 PV</div>
             <div class="action-next"><span class="a-label">下一步：</span>PM 定義策略方向 → 與設計師討論</div>
           </div>
-          <div class="rank-badges"><span class="diff mid">難度 中</span><div class="score-mini">60分</div></div>
+          <div class="rank-badges"><span class="diff mid">難度 中</span><div class="score-mini">黏著度 ★★☆</div></div>
+        </div>
+      </div>
+
+      <div class="rank-item" data-id="b" onclick="selectProject('b')">
+        <div class="rank-row">
+          <div class="rank-num">3</div>
+          <div>
+            <div class="rank-name">404 頁面引導優化</div>
+            <div class="rank-reason">修補流失入口・難度低・9.2萬 sessions 可回收・最快交付</div>
+            <div class="action-next"><span class="a-label">下一步：</span>PM 撰寫需求規格 → IT 排入開發</div>
+          </div>
+          <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">黏著度 ★☆☆</div></div>
+        </div>
+      </div>
+
+      <div class="rank-item" data-id="st" onclick="selectProject('st')">
+        <div class="rank-row">
+          <div class="rank-num">4</div>
+          <div>
+            <div class="rank-name">搜尋事件追蹤補設定</div>
+            <div class="rank-reason">前置需求・不直接改善黏著度・但是後續分析的基礎</div>
+            <div class="action-next"><span class="a-label">下一步：</span>PM 向 IT 提需求，預估 1–2 天完成設定</div>
+          </div>
+          <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">前置需求</div></div>
         </div>
       </div>
 
@@ -591,10 +595,10 @@ body.present-mode .slide-nav{display:flex;}
           <div class="rank-num">5</div>
           <div>
             <div class="rank-name">直接流量根因調查</div>
-            <div class="rank-reason">393萬瀏覽・55% 跳出・需交叉分析確認原因</div>
+            <div class="rank-reason">393萬瀏覽・55% 跳出・需先查明原因再決定行動</div>
             <div class="action-next"><span class="a-label">下一步：</span>GA4 探索交叉分析（PM 可自行操作）</div>
           </div>
-          <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">45分</div></div>
+          <div class="rank-badges"><span class="diff low">難度 低</span><div class="score-mini">先調查</div></div>
         </div>
       </div>
 
@@ -602,9 +606,9 @@ body.present-mode .slide-nav{display:flex;}
         <div class="rank-row">
           <div class="rank-num">6</div>
           <div>
-            <div class="rank-name">搜尋頁體驗優化 <span class="gap-badge">⚠ 須先完成 #2</span></div>
+            <div class="rank-name">搜尋頁體驗優化 <span class="gap-badge">⚠ 須先完成 #4</span></div>
             <div class="rank-reason">需等搜尋追蹤上線 4 週後再啟動，才有數據支撐</div>
-            <div class="action-next"><span class="a-label">下一步：</span>等 #2 完成並累積 4 週數據後啟動</div>
+            <div class="action-next"><span class="a-label">下一步：</span>等 #4 完成並累積 4 週數據後啟動</div>
           </div>
           <div class="rank-badges"><span class="diff mid">難度 中</span><div class="score-mini">待補數據</div></div>
         </div>
@@ -1071,8 +1075,8 @@ body.present-mode .slide-nav{display:flex;}
   <!-- Slide 1：現況 -->
   <div class="slide active" id="slide-1">
     <div class="slide-num">01 / 05 · 現況警訊</div>
-    <h2>流量在縮減，<br>留下來的人也不深入瀏覽</h2>
-    <div class="slide-sub">商周.COM｜2026/02/19–05/19（近 90 天）・資料來源：GA4</div>
+    <h2>找出「看一頁就走」的流失熱點<br><span style="color:#63b3ed;font-size:28px;">挽救低迷的站內黏著度</span></h2>
+    <div class="slide-sub">商周.COM｜2026/02/19–05/19（近 90 天）・資料來源：GA4｜核心指標：PV/UU（每人平均瀏覽頁數）</div>
     <div class="slide-kpi-row">
       <div class="slide-kpi red">
         <div class="sk-v">▼20.3%</div>
@@ -1168,51 +1172,51 @@ body.present-mode .slide-nav{display:flex;}
   <!-- Slide 4：子項目排序 -->
   <div class="slide" id="slide-4">
     <div class="slide-num">04 / 05 · 改善計畫</div>
-    <h2>6 個改善子項目<br>依優先順序排列</h2>
-    <div class="slide-sub">評分依據：數據明確度・開發難度・影響規模・交付速度</div>
+    <h2>6 個改善子項目<br>依黏著度影響程度排列</h2>
+    <div class="slide-sub">主軸：挽救站內黏著度（PV/UU）・優先推動最直接拉高頁深的項目</div>
     <table class="slide-project-table">
-      <tr><th width="32">#</th><th>子項目</th><th>難度</th><th>影響規模</th><th>下一步行動</th></tr>
+      <tr><th width="32">#</th><th>子項目</th><th>難度</th><th>黏著度影響</th><th>下一步行動</th></tr>
       <tr>
         <td class="sp-num">1</td>
+        <td><strong style="color:#fff;">文章頁閱讀後引導優化</strong><div class="action-row">確認推薦邏輯（規則 or 算法）→ IT 評估工時</div></td>
+        <td><span class="diff-s high">高</span></td>
+        <td style="color:#fc8181;">★★★ 最直接</td>
+        <td style="color:#a0aec0;font-size:12px;">月均 200 萬瀏覽</td>
+      </tr>
+      <tr>
+        <td class="sp-num" style="color:#f6ad55;">2</td>
+        <td><strong style="color:#fff;">新訪客首訪留存引導</strong><div class="action-row">PM 定義策略方向 → 與設計師討論</div></td>
+        <td><span class="diff-s mid">中</span></td>
+        <td style="color:#f6ad55;">★★☆ 提升回訪</td>
+        <td style="color:#a0aec0;font-size:12px;">64% 新訪客</td>
+      </tr>
+      <tr>
+        <td class="sp-num" style="color:#68d391;">3</td>
         <td><strong style="color:#fff;">404 頁面引導優化</strong><div class="action-row">PM 撰寫需求規格 → IT 排入開發</div></td>
         <td><span class="diff-s low">低</span></td>
-        <td style="color:#a0aec0;">月均 3.1 萬 sessions</td>
+        <td style="color:#68d391;">★☆☆ 修補流失</td>
         <td style="color:#a0aec0;font-size:12px;">最快可交付</td>
       </tr>
       <tr>
-        <td class="sp-num">2</td>
+        <td class="sp-num" style="color:#718096;">4</td>
         <td><strong style="color:#fff;">搜尋事件追蹤補設定</strong><div class="action-row">PM 向 IT 提需求，預估 1–2 天完成</div></td>
         <td><span class="diff-s low">低</span></td>
-        <td style="color:#a0aec0;">11 萬 sessions 待釐清</td>
-        <td style="color:#a0aec0;font-size:12px;">前置需求</td>
-      </tr>
-      <tr>
-        <td class="sp-num" style="color:#f6ad55;">3</td>
-        <td><strong style="color:#fff;">文章頁閱讀後引導優化</strong><div class="action-row">確認推薦邏輯 → IT 評估工時</div></td>
-        <td><span class="diff-s high">高</span></td>
-        <td style="color:#a0aec0;">月均 200 萬瀏覽</td>
-        <td style="color:#a0aec0;font-size:12px;">長期效益</td>
-      </tr>
-      <tr>
-        <td class="sp-num" style="color:#68d391;">4</td>
-        <td><strong style="color:#fff;">新訪客首訪留存引導</strong><div class="action-row">PM 定義策略方向 → 與設計師討論</div></td>
-        <td><span class="diff-s mid">中</span></td>
-        <td style="color:#a0aec0;">64% 新訪客</td>
-        <td style="color:#a0aec0;font-size:12px;">策略待定義</td>
+        <td style="color:#718096;">前置需求</td>
+        <td style="color:#a0aec0;font-size:12px;">11 萬 sessions</td>
       </tr>
       <tr>
         <td class="sp-num" style="color:#718096;">5</td>
         <td><strong style="color:#fff;">直接流量根因調查</strong><div class="action-row">GA4 探索交叉分析</div></td>
         <td><span class="diff-s low">低</span></td>
-        <td style="color:#a0aec0;">393 萬瀏覽</td>
-        <td style="color:#a0aec0;font-size:12px;">先調查再行動</td>
+        <td style="color:#718096;">先調查</td>
+        <td style="color:#a0aec0;font-size:12px;">393 萬瀏覽</td>
       </tr>
       <tr>
         <td class="sp-num" style="color:#718096;">6</td>
-        <td><strong style="color:#fff;">搜尋頁體驗優化</strong><div class="action-row">等 #2 上線 4 週後啟動</div></td>
+        <td><strong style="color:#fff;">搜尋頁體驗優化</strong><div class="action-row">等 #4 上線 4 週後啟動</div></td>
         <td><span class="diff-s mid">中</span></td>
-        <td style="color:#a0aec0;">待補數據</td>
-        <td style="color:#a0aec0;font-size:12px;">依賴 #2</td>
+        <td style="color:#718096;">待補數據</td>
+        <td style="color:#a0aec0;font-size:12px;">依賴 #4</td>
       </tr>
     </table>
   </div>
