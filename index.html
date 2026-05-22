@@ -1640,11 +1640,35 @@ body.present-mode .slide-nav{display:flex;}
     <div class="prd-pane" id="prd-a-us">
       <p style="font-size:12px;color:#718096;margin-bottom:12px">點擊每則故事展開驗收條件（Given／When／Then）</p>
 
+      <!-- US-01：時間排序（方向C，已確認，優先推進）-->
       <div class="prd-us-item">
         <div class="prd-us-head" onclick="togglePrdUS(this)">
           <span class="prd-us-id">US-01</span>
-          <span class="prd-us-text">身為<strong>使用搜尋功能找文章的用戶</strong>，我希望<strong>輸入時自動出現建議詞</strong>，以便更快找到想看的內容。</span>
+          <span class="prd-us-text">身為<strong>想找特定時間報導的用戶</strong>，我希望<strong>能對搜尋結果切換排序方式</strong>，以便快速找到最新或最相關的文章。</span>
           <span class="prd-priority prd-p0">P0</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>用戶輸入關鍵字完成搜尋，看到結果列表<br>
+            <strong>When：</strong>用戶想依時間或相關度調整結果順序<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>搜尋結果頁提供排序切換：最新 / 最相關 / 最熱門</li>
+              <li>預設排序為「最相關」，切換後結果即時更新，不需重整頁面</li>
+              <li>手機版排序切換 UI 不佔用結果列表空間（建議用下拉選單或小標籤）</li>
+              <li>分類篩選（現有功能）與時間排序可同時作用</li>
+              <li>觸發 GA4 事件：search_sort（sort_type）</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- US-02：搜尋建議詞（方向A，次要）-->
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-02</span>
+          <span class="prd-us-text">身為<strong>使用搜尋功能找文章的用戶</strong>，我希望<strong>輸入時自動出現建議詞</strong>，以便更快找到想看的內容。</span>
+          <span class="prd-priority prd-p1">P1</span>
         </div>
         <div class="prd-us-body">
           <div class="prd-gwt">
@@ -1661,45 +1685,37 @@ body.present-mode .slide-nav{display:flex;}
         </div>
       </div>
 
+      <!-- US-03：數據追蹤-->
       <div class="prd-us-item">
         <div class="prd-us-head" onclick="togglePrdUS(this)">
-          <span class="prd-us-id">US-02</span>
-          <span class="prd-us-text">身為<strong>搜尋後找不到結果的用戶</strong>，我希望<strong>零結果頁面提供有用的替代建議</strong>，以便不要空手離開。</span>
-          <span class="prd-priority prd-p0">P0</span>
+          <span class="prd-us-id">US-03</span>
+          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤搜尋排序與建議詞的使用數據</strong>，以便持續評估功能是否有效。</span>
+          <span class="prd-priority prd-p1">P1</span>
         </div>
         <div class="prd-us-body">
           <div class="prd-gwt">
-            <strong>Given：</strong>用戶搜尋某關鍵字，系統回傳零結果<br>
-            <strong>When：</strong>頁面顯示「找不到結果」<br>
+            <strong>Given：</strong>功能上線，GA4 已串接（需先完成子項目 #4）<br>
+            <strong>When：</strong>用戶在搜尋頁互動<br>
             <strong>Then：</strong>
             <ul class="prd-check">
-              <li>頁面同時顯示：近似關鍵字建議 + 相關熱門文章（≥3 篇）</li>
-              <li>顯示「試試這些搜尋詞」建議列表</li>
-              <li>不顯示空白頁面，不讓用戶無路可走</li>
-              <li>觸發 GA4 事件：search_zero_result（term）</li>
+              <li>GA4 可查看排序切換使用率（search_sort / sort_type）</li>
+              <li>GA4 可查看搜尋建議詞點擊率（search_suggest_click）</li>
+              <li>GA4 可查看搜尋後文章點擊率（需 #4 完成後才有）</li>
+              <li>可分析各排序方式下的後續點擊行為差異</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div class="prd-us-item">
+      <!-- US-04：零結果改善（另立項目）-->
+      <div class="prd-us-item" style="opacity:.7;">
         <div class="prd-us-head" onclick="togglePrdUS(this)">
-          <span class="prd-us-id">US-03</span>
-          <span class="prd-us-text">身為<strong>希望找到特定時間範圍文章的用戶</strong>，我希望<strong>能篩選搜尋結果的時間範圍</strong>，以便找到最新或特定時期的報導。</span>
-          <span class="prd-priority prd-p1">P1</span>
+          <span class="prd-us-id">US-04</span>
+          <span class="prd-us-text">身為<strong>搜尋後找不到結果的用戶</strong>，我希望<strong>零結果頁面提供有用的替代建議</strong>，以便不要空手離開。</span>
+          <span class="prd-priority prd-p2" style="background:#e2e8f0;color:#4a5568;">另立項目</span>
         </div>
         <div class="prd-us-body">
-          <div class="prd-gwt">
-            <strong>Given：</strong>用戶完成搜尋，看到結果列表<br>
-            <strong>When：</strong>用戶想縮小結果範圍<br>
-            <strong>Then：</strong>
-            <ul class="prd-check">
-              <li>搜尋結果頁頂部提供時間篩選器（最近 1 週 / 1 個月 / 1 年 / 全部）</li>
-              <li>篩選後結果即時更新，不需重新整理頁面</li>
-              <li>手機版篩選器不破版</li>
-              <li>觸發 GA4 事件：search_filter（filter_type）</li>
-            </ul>
-          </div>
+          <p style="font-size:12px;color:#718096;">此需求已確認為獨立問題，不納入本次時間排序的開發範圍，待後續另立子項目規劃。</p>
         </div>
       </div>
     </div>
