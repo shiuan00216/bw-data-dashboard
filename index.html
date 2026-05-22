@@ -1307,75 +1307,10 @@ body.present-mode .slide-nav{display:flex;}
     <div class="prd-pane" id="prd-nv-us">
       <p style="font-size:12px;color:#718096;margin-bottom:12px">點擊每則故事展開驗收條件（Given／When／Then）</p>
 
+      <!-- US-01：主題引導 Banner（最可行・優先推進）-->
       <div class="prd-us-item">
         <div class="prd-us-head" onclick="togglePrdUS(this)">
           <span class="prd-us-id">US-01</span>
-          <span class="prd-us-text">身為<strong>讀完文章的首訪用戶</strong>，我希望<strong>在文章底部看到推薦的相關文章</strong>，以便繼續閱讀感興趣的內容。</span>
-          <span class="prd-priority prd-p0">P0</span>
-        </div>
-        <div class="prd-us-body">
-          <div class="prd-gwt">
-            <strong>Given：</strong>用戶首次進站，閱讀完一篇文章<br>
-            <strong>When：</strong>捲動至文章 80% 以下區域<br>
-            <strong>Then：</strong>
-            <ul class="prd-check">
-              <li>文章底部出現「你可能也想看」推薦區塊，顯示 3 篇相關文章</li>
-              <li>每篇顯示：標題、分類標籤、發布日期</li>
-              <li>推薦文章依文章標籤相似度 + 近 7 日熱門度排序</li>
-              <li>點擊後成功導向目標文章頁面</li>
-              <li>觸發 GA4 事件：article_rec_click（article_id, position）</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="prd-us-item">
-        <div class="prd-us-head" onclick="togglePrdUS(this)">
-          <span class="prd-us-id">US-02</span>
-          <span class="prd-us-text">身為<strong>希望定期收到商周財經內容的讀者</strong>，我希望<strong>在文章頁面能快速完成電子報訂閱</strong>，不需要跳轉到其他頁面。</span>
-          <span class="prd-priority prd-p0">P0</span>
-        </div>
-        <div class="prd-us-body">
-          <div class="prd-gwt">
-            <strong>Given：</strong>用戶在文章頁閱讀中，尚未訂閱電子報<br>
-            <strong>When：</strong>捲動至文章結尾<br>
-            <strong>Then：</strong>
-            <ul class="prd-check">
-              <li>出現電子報訂閱入口（Email 輸入框 + 訂閱按鈕），不需跳轉頁面</li>
-              <li>訂閱流程最多 2 步：輸入 Email → 點擊確認</li>
-              <li>手機版版面不因此產生遮擋或排版問題</li>
-              <li>訂閱成功後顯示確認提示，觸發 GA4 事件：newsletter_subscribe</li>
-              <li>已訂閱用戶不再看到此入口</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="prd-us-item">
-        <div class="prd-us-head" onclick="togglePrdUS(this)">
-          <span class="prd-us-id">US-03</span>
-          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤推薦區塊、訂閱入口與主題 Banner 的互動數據</strong>，以便評估成效並優化。</span>
-          <span class="prd-priority prd-p1">P1</span>
-        </div>
-        <div class="prd-us-body">
-          <div class="prd-gwt">
-            <strong>Given：</strong>功能上線，GA4 已串接<br>
-            <strong>When：</strong>用戶與任一模組互動<br>
-            <strong>Then：</strong>
-            <ul class="prd-check">
-              <li>GA4 可查看推薦文章點擊率（article_rec_click / article_rec_impression）</li>
-              <li>GA4 可查看電子報訂閱轉換率（newsletter_subscribe）</li>
-              <li>GA4 可查看主題 Banner 各分類點擊率（topic_banner_click / category）</li>
-              <li>可依新訪客 vs 回訪客分群查看數據</li>
-              <li>數據延遲 ≤ 2 小時</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div class="prd-us-item">
-        <div class="prd-us-head" onclick="togglePrdUS(this)">
-          <span class="prd-us-id">US-04</span>
           <span class="prd-us-text">身為<strong>首次進站的新訪客</strong>，我希望<strong>讀完文章後能看到商周有哪些主題內容</strong>，以便找到感興趣的分類繼續探索。</span>
           <span class="prd-priority prd-p0">P0</span>
         </div>
@@ -1393,6 +1328,67 @@ body.present-mode .slide-nav{display:flex;}
               <li>手機版與桌機版皆正常顯示，版面不破版</li>
               <li>觸發 GA4 事件：topic_banner_show、topic_banner_click（category）</li>
             </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- US-02：電子報訂閱（次要・位置待評估）-->
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-02</span>
+          <span class="prd-us-text">身為<strong>希望定期收到商周內容的讀者</strong>，我希望<strong>在不干擾閱讀的情況下完成電子報訂閱</strong>，建立持續回訪的管道。</span>
+          <span class="prd-priority prd-p1">P1</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>用戶尚未訂閱電子報<br>
+            <strong>When：</strong>於完讀後 Banner、首頁或搜尋結果頁等非文章閱讀中的位置看到訂閱入口<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>訂閱流程最多 2 步：輸入 Email → 點擊確認，不需跳轉頁面</li>
+              <li>手機版版面不產生遮擋或排版問題</li>
+              <li>訂閱成功後顯示確認提示，觸發 GA4 事件：newsletter_subscribe</li>
+              <li>已訂閱用戶不再看到此入口</li>
+            </ul>
+          </div>
+          <p style="font-size:11px;color:#c05621;margin-top:8px;">⚠ 訂閱入口位置需另行評估：文章頁版面已擁擠，建議優先考慮完讀後 overlay、首頁或搜尋頁等替代位置。</p>
+        </div>
+      </div>
+
+      <!-- US-03：數據追蹤-->
+      <div class="prd-us-item">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-03</span>
+          <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤主題 Banner 與訂閱入口的互動數據</strong>，以便評估成效並優化。</span>
+          <span class="prd-priority prd-p1">P1</span>
+        </div>
+        <div class="prd-us-body">
+          <div class="prd-gwt">
+            <strong>Given：</strong>功能上線，GA4 已串接<br>
+            <strong>When：</strong>用戶與任一模組互動<br>
+            <strong>Then：</strong>
+            <ul class="prd-check">
+              <li>GA4 可查看主題 Banner 各分類點擊率（topic_banner_click / category）</li>
+              <li>GA4 可查看主題 Banner 曝光次數（topic_banner_show）</li>
+              <li>GA4 可查看電子報訂閱轉換率（newsletter_subscribe）</li>
+              <li>可依新訪客 vs 回訪客分群查看數據</li>
+              <li>數據延遲 ≤ 2 小時</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- US-04：推薦相關文章（已存在功能）-->
+      <div class="prd-us-item" style="opacity:.7;">
+        <div class="prd-us-head" onclick="togglePrdUS(this)">
+          <span class="prd-us-id">US-04</span>
+          <span class="prd-us-text">身為<strong>讀完文章的用戶</strong>，我希望<strong>在文章底部看到推薦的相關文章</strong>，以便繼續閱讀感興趣的內容。</span>
+          <span class="prd-priority prd-p2" style="background:#dcfce7;color:#166534;">已存在</span>
+        </div>
+        <div class="prd-us-body">
+          <p style="font-size:12px;color:#718096;margin-bottom:8px;">此功能目前已上線（延伸閱讀、相關文章、大家都在看），本次不重複開發。若未來需優化推薦邏輯，可另立子項目。</p>
+          <div class="prd-gwt">
+            <strong>現況：</strong>文章底部已有「延伸閱讀（5篇）」、「相關文章（4篇）」、「大家都在看」三個推薦區塊
           </div>
         </div>
       </div>
