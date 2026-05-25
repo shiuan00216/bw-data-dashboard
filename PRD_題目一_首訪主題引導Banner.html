@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>題目一｜首訪主題引導 Banner｜商周.COM 計劃書</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:#f0f4f8;color:#2d3748;font-size:14px;padding:20px;}
+  .wrap{max-width:720px;margin:0 auto;}
+
+  /* Banner Header */
+  .prd-banner{background:linear-gradient(135deg,#0d1b3e 0%,#1a2d5a 60%,#1b3a6e 100%);border-radius:10px;padding:20px;margin-bottom:16px;}
+  .prd-tag{display:inline-block;background:#d4a843;color:#0d1b3e;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:8px;letter-spacing:.05em;}
+  .prd-title{font-size:19px;font-weight:600;color:#fff;margin-bottom:6px;line-height:1.3;}
+  .prd-sub{font-size:12px;color:#f0c96a;margin-bottom:12px;}
+  .prd-meta{display:flex;gap:14px;flex-wrap:wrap;}
+  .prd-meta-item{font-size:11px;color:#8a9bb5;}
+  .prd-meta-item span{color:#fff;font-weight:500;margin-left:3px;}
+
+  /* Tabs */
+  .prd-tabs{display:flex;border-bottom:1.5px solid #e2e8f0;margin-bottom:16px;overflow-x:auto;scrollbar-width:none;}
+  .prd-tabs::-webkit-scrollbar{display:none;}
+  .prd-tab{flex-shrink:0;padding:8px 16px;font-size:13px;font-weight:500;color:#718096;background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;margin-bottom:-1.5px;}
+  .prd-tab.on{color:#1a202c;border-bottom-color:#d4a843;}
+  .prd-pane{display:none;}
+  .prd-pane.on{display:block;}
+
+  /* Cards */
+  .prd-card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-bottom:12px;}
+  .prd-section-label{font-size:10px;font-weight:700;letter-spacing:.07em;color:#718096;text-transform:uppercase;margin-bottom:10px;}
+  .prd-pb{background:#f7fafc;border-left:3px solid #d4a843;border-radius:0 6px 6px 0;padding:10px 14px;margin:8px 0;font-size:13px;line-height:1.7;color:#2d3748;}
+
+  /* KPI Grid */
+  .prd-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0;}
+  .prd-kpi-cell{background:#f7fafc;border-radius:6px;padding:12px 8px;text-align:center;border:1px solid #e2e8f0;}
+  .prd-kpi-bar{height:3px;border-radius:2px;margin-bottom:8px;}
+  .prd-kpi-val{font-size:20px;font-weight:700;color:#1a202c;}
+  .prd-kpi-unit{font-size:10px;color:#d4a843;font-weight:700;margin-left:1px;}
+  .prd-kpi-desc{font-size:10px;color:#718096;margin-top:4px;line-height:1.4;}
+
+  /* Table */
+  .prd-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .prd-table th{text-align:left;padding:7px 9px;background:#edf2f7;font-weight:600;color:#4a5568;border-bottom:1px solid #e2e8f0;font-size:11px;}
+  .prd-table td{padding:7px 9px;border-bottom:1px solid #f0f4f8;vertical-align:top;color:#1a202c;line-height:1.6;}
+  .prd-table tr:last-child td{border-bottom:none;}
+  .good{color:#38a169;font-weight:600;}
+
+  /* Out of Scope */
+  .prd-oos{background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 14px;font-size:12px;color:#78350f;margin-top:8px;}
+  .prd-oos ul{margin-left:18px;margin-top:6px;line-height:1.9;}
+
+  /* User Stories */
+  .prd-us-item{border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px;overflow:hidden;}
+  .prd-us-head{padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;background:#fff;}
+  .prd-us-head:hover{background:#f7fafc;}
+  .prd-us-id{font-size:11px;font-weight:700;color:#718096;flex-shrink:0;}
+  .prd-us-text{font-size:12px;color:#1a202c;flex:1;line-height:1.5;}
+  .prd-priority{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700;flex-shrink:0;}
+  .prd-p0{background:#fee2e2;color:#991b1b;}
+  .prd-p1{background:#fef3c7;color:#92400e;}
+  .prd-us-body{padding:0 16px 14px;border-top:1px solid #e2e8f0;display:none;background:#fff;}
+  .prd-us-body.open{display:block;}
+  .prd-gwt{background:#f7fafc;border-radius:6px;padding:12px 14px;font-size:12px;line-height:1.9;margin-top:10px;color:#2d3748;}
+  .prd-gwt strong{color:#1a202c;font-weight:600;}
+  .prd-check{margin:6px 0 0;font-size:12px;line-height:1.9;padding-left:0;}
+  .prd-check li{list-style:none;padding-left:1.3rem;position:relative;color:#4a5568;}
+  .prd-check li::before{content:"✓";position:absolute;left:0;color:#38a169;font-weight:700;}
+
+  /* Helper text */
+  .hint{font-size:12px;color:#718096;margin-bottom:12px;}
+  .note{font-size:11px;color:#718096;margin-top:8px;}
+
+  @media(max-width:480px){
+    body{padding:12px;}
+    .prd-kpi-grid{grid-template-columns:repeat(3,1fr);}
+    .prd-kpi-val{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="prd-banner">
+    <div class="prd-tag">Product Plan</div>
+    <div class="prd-title">題目一｜首訪主題引導 Banner</div>
+    <div class="prd-sub">新訪客完讀文章後展示主題分類，讓用戶知道「商周還有這些」・對應子項目 #2 執行方向 D</div>
+    <div class="prd-meta">
+      <div class="prd-meta-item">狀態<span>草稿</span></div>
+      <div class="prd-meta-item">日期<span>2026-05-22</span></div>
+      <div class="prd-meta-item">PM<span>Alice</span></div>
+      <div class="prd-meta-item">下一步<span>找設計師討論視覺草圖</span></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="prd-tabs" id="tabs">
+    <button class="prd-tab on" onclick="switchTab('bg', this)">一、背景與問題</button>
+    <button class="prd-tab" onclick="switchTab('kpi', this)">二、目標與指標</button>
+    <button class="prd-tab" onclick="switchTab('us', this)">三、使用者故事</button>
+  </div>
+
+  <!-- ── 一、背景與問題 ── -->
+  <div class="prd-pane on" id="pane-bg">
+
+    <div class="prd-card">
+      <div class="prd-section-label">1.1 問題陳述</div>
+      <div class="prd-pb">我們發現<strong>透過搜尋或社群進站的新訪客</strong>在<strong>讀完一篇文章後</strong>，因<strong>不知道商周還有哪些主題內容</strong>，往往直接關閉頁面離開，而非繼續探索站內其他分類。</div>
+      <div class="prd-kpi-grid">
+        <div class="prd-kpi-cell">
+          <div class="prd-kpi-bar" style="background:#e53e3e"></div>
+          <span class="prd-kpi-val">64.4</span><span class="prd-kpi-unit">%</span>
+          <div class="prd-kpi-desc">新訪客佔比<br>（共 743 萬人）</div>
+        </div>
+        <div class="prd-kpi-cell">
+          <div class="prd-kpi-bar" style="background:#e53e3e"></div>
+          <span class="prd-kpi-val">1.86</span><span class="prd-kpi-unit">頁</span>
+          <div class="prd-kpi-desc">每人平均瀏覽頁數<br>目標 ≥ 3 頁</div>
+        </div>
+        <div class="prd-kpi-cell">
+          <div class="prd-kpi-bar" style="background:#e53e3e"></div>
+          <span class="prd-kpi-val">0.35</span><span class="prd-kpi-unit">%</span>
+          <div class="prd-kpi-desc">30 天回訪率<br>100 人來僅 0.35 人回</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prd-card">
+      <div class="prd-section-label">1.2 為什麼需要 Banner，而不是更多推薦文章？</div>
+      <table class="prd-table">
+        <thead><tr><th>現有機制</th><th>功能</th><th>缺口</th></tr></thead>
+        <tbody>
+          <tr><td>延伸閱讀（5篇）</td><td>推薦與本篇相似的文章</td><td>只能在同類型內循環，無法讓用戶發現其他主題</td></tr>
+          <tr><td>相關文章（4篇）</td><td>依標籤推薦文章</td><td>同上，仍是文章層級的推薦</td></tr>
+          <tr><td>大家都在看</td><td>全站熱門文章</td><td>非個人化，且文章頁版面已十分擁擠</td></tr>
+          <tr><td style="color:#d4a843;font-weight:600;">主題引導 Banner（本次）</td><td style="color:#d4a843;">展示站內所有主題分類</td><td style="color:#38a169;">✅ 填補缺口：讓新訪客看見商周的全貌</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prd-card">
+      <div class="prd-section-label">1.3 目標用戶</div>
+      <table class="prd-table">
+        <thead><tr><th>用戶類型</th><th>進站方式</th><th>痛點</th></tr></thead>
+        <tbody>
+          <tr><td><strong>搜尋進站讀者</strong></td><td>Google 搜尋特定主題（如「台積電」、「AI 趨勢」）</td><td>讀完這篇後不知道商周還有財經、管理、ESG 等主題</td></tr>
+          <tr><td><strong>社群導流讀者</strong></td><td>LINE / FB 分享連結進站</td><td>對這篇文章有興趣，但不知道商周的整體定位</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prd-card">
+      <div class="prd-section-label">1.4 不在範圍內</div>
+      <div class="prd-oos">本次開發明確不包含：
+        <ul>
+          <li>電子報訂閱功能（另立規劃，位置待評估）</li>
+          <li>Push 通知（iOS 限制問題，暫不推進）</li>
+          <li>個人化推薦（Phase 1 為靜態分類展示，不依用戶行為）</li>
+          <li>文章推薦邏輯優化（現有延伸閱讀已上線，不納入本次）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- end pane-bg -->
+
+  <!-- ── 二、目標與指標 ── -->
+  <div class="prd-pane" id="pane-kpi">
+
+    <div class="prd-card">
+      <div class="prd-section-label">2.1 產品目標</div>
+      <div class="prd-pb"><strong>主要目標：</strong>讓新訪客在讀完文章後，透過主題分類 Banner 發現站內其他內容，提升每人平均瀏覽頁數，進而帶動後續回訪率成長。</div>
+      <p style="font-size:12px;color:#718096;margin-top:8px"><strong style="color:#2d3748">次要目標：</strong>透過 Banner 點擊數據，了解新訪客對哪些主題最有興趣，作為後續內容策略與個人化推薦的參考依據。</p>
+    </div>
+
+    <div class="prd-card">
+      <div class="prd-section-label">2.2 成功指標（KPI）</div>
+      <table class="prd-table">
+        <thead><tr><th>指標</th><th>目前數值</th><th>目標值</th><th>評估時間</th></tr></thead>
+        <tbody>
+          <tr><td>Banner 點擊率（新訪客）</td><td>無（新功能）</td><td class="good">建立 baseline → 目標 ≥ 15%</td><td>上線後 4 週</td></tr>
+          <tr><td>每人平均瀏覽頁數（新訪客）</td><td>1.86 頁</td><td class="good">≥ 2.2 頁</td><td>上線後 8 週</td></tr>
+          <tr><td>分類列表頁流量（來自 Banner）</td><td>無</td><td class="good">建立 baseline</td><td>上線後 4 週</td></tr>
+        </tbody>
+      </table>
+      <p class="note">※ 上線前 4 週為觀察期，依 baseline 決定後續目標值是否調整。</p>
+    </div>
+
+  </div><!-- end pane-kpi -->
+
+  <!-- ── 三、使用者故事 ── -->
+  <div class="prd-pane" id="pane-us">
+    <p class="hint">點擊每則故事展開驗收條件（Given／When／Then）</p>
+
+    <div class="prd-us-item">
+      <div class="prd-us-head" onclick="toggleUS(this)">
+        <span class="prd-us-id">US-01</span>
+        <span class="prd-us-text">身為<strong>首次進站的新訪客</strong>，我希望<strong>讀完文章後能看到商周有哪些主題內容</strong>，以便找到感興趣的分類繼續探索。</span>
+        <span class="prd-priority prd-p0">P0</span>
+      </div>
+      <div class="prd-us-body">
+        <div class="prd-gwt">
+          <strong>Given：</strong>用戶為新訪客，首次進站閱讀一篇文章<br>
+          <strong>When：</strong>捲動至文章最底部（完讀觸發）<br>
+          <strong>Then：</strong>
+          <ul class="prd-check">
+            <li>文章底部出現「商周還有這些主題」全寬 Banner 區塊</li>
+            <li>展示 6 個主要分類：焦點、國際、財經、管理、Video、ESG（含圖示與名稱）</li>
+            <li>點擊任一分類後，導向該分類的文章列表頁</li>
+            <li>Banner 視覺風格與現有「延伸閱讀」明顯區隔，不被誤認為廣告</li>
+            <li>回訪客不顯示此 Banner（僅新訪客首次造訪時觸發一次）</li>
+            <li>手機版與桌機版皆正常顯示，版面不破版</li>
+            <li>觸發 GA4 事件：topic_banner_show、topic_banner_click（category）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="prd-us-item">
+      <div class="prd-us-head" onclick="toggleUS(this)">
+        <span class="prd-us-id">US-02</span>
+        <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤 Banner 的曝光與各分類點擊數據</strong>，以便了解新訪客對哪些主題最有興趣。</span>
+        <span class="prd-priority prd-p1">P1</span>
+      </div>
+      <div class="prd-us-body">
+        <div class="prd-gwt">
+          <strong>Given：</strong>Banner 上線，GA4 已串接<br>
+          <strong>When：</strong>新訪客與 Banner 互動<br>
+          <strong>Then：</strong>
+          <ul class="prd-check">
+            <li>GA4 可查看 Banner 曝光次數（topic_banner_show）</li>
+            <li>GA4 可查看各分類點擊率（topic_banner_click / category）</li>
+            <li>GA4 可計算 Banner CTR（click / show）</li>
+            <li>可追蹤點擊 Banner 後的後續瀏覽頁數（page_view after banner_click）</li>
+            <li>數據延遲 ≤ 2 小時</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end pane-us -->
+
+</div><!-- end wrap -->
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('#tabs .prd-tab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.prd-pane').forEach(p => p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('pane-' + id).classList.add('on');
+}
+function toggleUS(head) {
+  const body = head.nextElementSibling;
+  body.classList.toggle('open');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>題目二｜搜尋結果排序與篩選｜商周.COM 計劃書</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",sans-serif;background:#f0f4f8;color:#2d3748;font-size:14px;padding:20px;}
+  .wrap{max-width:720px;margin:0 auto;}
+
+  .prd-banner{background:linear-gradient(135deg,#0d1b3e 0%,#1a2d5a 60%,#1b3a6e 100%);border-radius:10px;padding:20px;margin-bottom:16px;}
+  .prd-tag{display:inline-block;background:#d4a843;color:#0d1b3e;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;margin-bottom:8px;letter-spacing:.05em;}
+  .prd-title{font-size:19px;font-weight:600;color:#fff;margin-bottom:6px;line-height:1.3;}
+  .prd-sub{font-size:12px;color:#f0c96a;margin-bottom:12px;}
+  .prd-meta{display:flex;gap:14px;flex-wrap:wrap;}
+  .prd-meta-item{font-size:11px;color:#8a9bb5;}
+  .prd-meta-item span{color:#fff;font-weight:500;margin-left:3px;}
+
+  .prd-tabs{display:flex;border-bottom:1.5px solid #e2e8f0;margin-bottom:16px;overflow-x:auto;scrollbar-width:none;}
+  .prd-tabs::-webkit-scrollbar{display:none;}
+  .prd-tab{flex-shrink:0;padding:8px 16px;font-size:13px;font-weight:500;color:#718096;background:none;border:none;border-bottom:2.5px solid transparent;cursor:pointer;margin-bottom:-1.5px;}
+  .prd-tab.on{color:#1a202c;border-bottom-color:#d4a843;}
+  .prd-pane{display:none;}
+  .prd-pane.on{display:block;}
+
+  .prd-card{background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:16px;margin-bottom:12px;}
+  .prd-section-label{font-size:10px;font-weight:700;letter-spacing:.07em;color:#718096;text-transform:uppercase;margin-bottom:10px;}
+  .prd-pb{background:#f7fafc;border-left:3px solid #d4a843;border-radius:0 6px 6px 0;padding:10px 14px;margin:8px 0;font-size:13px;line-height:1.7;color:#2d3748;}
+
+  .prd-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0;}
+  .prd-kpi-cell{background:#f7fafc;border-radius:6px;padding:12px 8px;text-align:center;border:1px solid #e2e8f0;}
+  .prd-kpi-bar{height:3px;border-radius:2px;margin-bottom:8px;}
+  .prd-kpi-val{font-size:20px;font-weight:700;color:#1a202c;}
+  .prd-kpi-unit{font-size:10px;color:#d4a843;font-weight:700;margin-left:1px;}
+  .prd-kpi-desc{font-size:10px;color:#718096;margin-top:4px;line-height:1.4;}
+
+  .prd-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .prd-table th{text-align:left;padding:7px 9px;background:#edf2f7;font-weight:600;color:#4a5568;border-bottom:1px solid #e2e8f0;font-size:11px;}
+  .prd-table td{padding:7px 9px;border-bottom:1px solid #f0f4f8;vertical-align:top;color:#1a202c;line-height:1.6;}
+  .prd-table tr:last-child td{border-bottom:none;}
+  .good{color:#38a169;font-weight:600;}
+
+  .prd-oos{background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:12px 14px;font-size:12px;color:#78350f;margin-top:8px;}
+  .prd-oos ul{margin-left:18px;margin-top:6px;line-height:1.9;}
+
+  .warn-box{background:#fffbeb;border:1px solid #f59e0b;border-radius:8px;padding:14px 16px;margin-bottom:14px;font-size:13px;color:#78350f;}
+
+  .prd-us-item{border:1px solid #e2e8f0;border-radius:8px;margin-bottom:10px;overflow:hidden;}
+  .prd-us-head{padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:pointer;user-select:none;background:#fff;}
+  .prd-us-head:hover{background:#f7fafc;}
+  .prd-us-id{font-size:11px;font-weight:700;color:#718096;flex-shrink:0;}
+  .prd-us-text{font-size:12px;color:#1a202c;flex:1;line-height:1.5;}
+  .prd-priority{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:700;flex-shrink:0;}
+  .prd-p0{background:#fee2e2;color:#991b1b;}
+  .prd-p1{background:#fef3c7;color:#92400e;}
+  .prd-us-body{padding:0 16px 14px;border-top:1px solid #e2e8f0;display:none;background:#fff;}
+  .prd-us-body.open{display:block;}
+  .prd-gwt{background:#f7fafc;border-radius:6px;padding:12px 14px;font-size:12px;line-height:1.9;margin-top:10px;color:#2d3748;}
+  .prd-gwt strong{color:#1a202c;font-weight:600;}
+  .prd-check{margin:6px 0 0;font-size:12px;line-height:1.9;padding-left:0;}
+  .prd-check li{list-style:none;padding-left:1.3rem;position:relative;color:#4a5568;}
+  .prd-check li::before{content:"✓";position:absolute;left:0;color:#38a169;font-weight:700;}
+
+  .hint{font-size:12px;color:#718096;margin-bottom:12px;}
+  .note{font-size:11px;color:#718096;margin-top:8px;}
+
+  @media(max-width:480px){
+    body{padding:12px;}
+    .prd-kpi-val{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header -->
+  <div class="prd-banner">
+    <div class="prd-tag">Product Plan</div>
+    <div class="prd-title">題目二｜搜尋結果排序與篩選</div>
+    <div class="prd-sub">⚠ 前置條件：需等 #4 搜尋追蹤上線並累積 4 週數據後啟動・對應子項目 #6 執行方向 C</div>
+    <div class="prd-meta">
+      <div class="prd-meta-item">狀態<span>草稿（待前置條件）</span></div>
+      <div class="prd-meta-item">日期<span>2026-05-22</span></div>
+      <div class="prd-meta-item">PM<span>Alice</span></div>
+      <div class="prd-meta-item">下一步<span>先完成 #4 搜尋追蹤</span></div>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="prd-tabs" id="tabs">
+    <button class="prd-tab on" onclick="switchTab('bg', this)">一、背景與問題</button>
+    <button class="prd-tab" onclick="switchTab('kpi', this)">二、目標與指標</button>
+    <button class="prd-tab" onclick="switchTab('us', this)">三、使用者故事</button>
+  </div>
+
+  <!-- ── 一、背景與問題 ── -->
+  <div class="prd-pane on" id="pane-bg">
+
+    <div class="warn-box">
+      <strong>⚠ 前置條件：子項目 #4 尚未完成</strong><br>
+      GA4 目前無搜尋事件追蹤，無法取得「用戶在搜什麼」「搜完有沒有點文章」等數據。需先完成 #4（搜尋追蹤建置）並累積 4 週數據，才能確認時間排序的效益與優化方向。計劃書設計可先行，但開發需等數據就緒。
+    </div>
+
+    <div class="prd-card">
+      <div class="prd-section-label">1.1 問題陳述</div>
+      <div class="prd-pb">搜尋頁目前已有<strong>分類篩選</strong>（焦點、國際、財經、管理…），但<strong>缺乏時間維度的排序與篩選</strong>。用戶想找最新財經時事或特定時期報導，無法快速定位，只能瀏覽預設結果。</div>
+      <div class="prd-kpi-grid">
+        <div class="prd-kpi-cell">
+          <div class="prd-kpi-bar" style="background:#dd6b20"></div>
+          <span class="prd-kpi-val">109,849</span>
+          <div class="prd-kpi-desc">搜尋頁落地 sessions<br>（90 天）</div>
+        </div>
+        <div class="prd-kpi-cell">
+          <div class="prd-kpi-bar" style="background:#e53e3e"></div>
+          <span class="prd-kpi-val">6</span><span class="prd-kpi-unit">秒</span>
+          <div class="prd-kpi-desc">平均停留時間<br>行為原因待 #4 確認</div>
+        </div>
+        <div class="prd-kpi-cell">
+          <div class="prd-kpi-bar" style="background:#38a169"></div>
+          <span class="prd-kpi-val">✅</span>
+          <div class="prd-kpi-desc">分類篩選已有<br>缺的是時間排序</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="prd-card">
+      <div class="prd-section-label">1.2 現況 vs 目標</div>
+      <table class="prd-table">
+        <thead><tr><th>功能</th><th>現況</th><th>本次目標</th></tr></thead>
+        <tbody>
+          <tr><td>分類篩選</td><td style="color:#38a169">✅ 已有（焦點/國際/財經/管理）</td><td style="color:#718096">維持現狀，不動</td></tr>
+          <tr><td>時間篩選</td><td style="color:#e53e3e">❌ 無</td><td style="color:#38a169">新增：近 1 週 / 近 1 個月 / 全部</td></tr>
+          <tr><td>排序方式</td><td style="color:#e53e3e">❌ 僅預設排序，無法切換</td><td style="color:#38a169">新增：最新 / 最相關 切換</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prd-card">
+      <div class="prd-section-label">1.3 目標用戶</div>
+      <table class="prd-table">
+        <thead><tr><th>用戶類型</th><th>需求</th><th>現在的困境</th></tr></thead>
+        <tbody>
+          <tr><td><strong>找時事的用戶</strong></td><td>想看「最近 1 週」關於某主題的最新報導</td><td>搜尋結果夾雜舊文，無法快速找到最新</td></tr>
+          <tr><td><strong>找深度的用戶</strong></td><td>想找某主題過去完整的報導脈絡</td><td>無法依時間範圍縮小或擴大搜尋結果</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="prd-card">
+      <div class="prd-section-label">1.4 不在範圍內</div>
+      <div class="prd-oos">本次開發明確不包含：
+        <ul>
+          <li>搜尋引擎本體（後端算法）重建</li>
+          <li>搜尋建議詞 Autocomplete（另立規劃）</li>
+          <li>零結果頁面改善（另立規劃）</li>
+          <li>搜尋追蹤建置（那是子項目 #4 的工作）</li>
+        </ul>
+      </div>
+    </div>
+
+  </div><!-- end pane-bg -->
+
+  <!-- ── 二、目標與指標 ── -->
+  <div class="prd-pane" id="pane-kpi">
+
+    <div class="prd-card">
+      <div class="prd-section-label">2.1 產品目標</div>
+      <div class="prd-pb"><strong>主要目標：</strong>讓有明確時間意圖的搜尋用戶，能透過時間篩選與排序快速找到想要的文章，提升搜尋後的文章點擊率。</div>
+      <p style="font-size:12px;color:#718096;margin-top:8px"><strong style="color:#2d3748">次要目標：</strong>透過時間篩選的使用數據，了解商周用戶更偏好找時事還是常青內容，作為後續內容策略依據。</p>
+    </div>
+
+    <div class="prd-card">
+      <div class="prd-section-label">2.2 成功指標（KPI）</div>
+      <p class="note" style="margin-bottom:10px">⚠ 目標值需在 #4 上線後，依實際搜尋行為 baseline 調整。</p>
+      <table class="prd-table">
+        <thead><tr><th>指標</th><th>目前數值</th><th>目標值</th><th>評估時間</th></tr></thead>
+        <tbody>
+          <tr><td>時間篩選 / 排序使用率</td><td>無（新功能）</td><td class="good">建立 baseline → 目標 ≥ 20%</td><td>#4 上線後 4 週</td></tr>
+          <tr><td>搜尋頁後續文章點擊率</td><td>未追蹤</td><td class="good">≥ 40%（依 baseline 調整）</td><td>#4 上線後 8 週</td></tr>
+          <tr><td>搜尋頁平均停留時間</td><td>6 秒</td><td class="good">≥ 20 秒</td><td>#4 上線後 8 週</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- end pane-kpi -->
+
+  <!-- ── 三、使用者故事 ── -->
+  <div class="prd-pane" id="pane-us">
+    <p class="hint">點擊每則故事展開驗收條件（Given／When／Then）</p>
+
+    <div class="prd-us-item">
+      <div class="prd-us-head" onclick="toggleUS(this)">
+        <span class="prd-us-id">US-01</span>
+        <span class="prd-us-text">身為<strong>想找近期時事報導的用戶</strong>，我希望<strong>能篩選近 1 週或近 1 個月的搜尋結果</strong>，以便快速找到最新的相關報導。</span>
+        <span class="prd-priority prd-p0">P0</span>
+      </div>
+      <div class="prd-us-body">
+        <div class="prd-gwt">
+          <strong>Given：</strong>用戶輸入關鍵字完成搜尋，看到結果列表<br>
+          <strong>When：</strong>用戶想縮小到特定時間範圍<br>
+          <strong>Then：</strong>
+          <ul class="prd-check">
+            <li>搜尋結果頁提供時間篩選：近 1 週 / 近 1 個月 / 全部</li>
+            <li>預設為「全部」，切換後結果即時更新，不需重新整理頁面</li>
+            <li>時間篩選與現有分類篩選可同時作用（如：財經 × 近 1 週）</li>
+            <li>手機版篩選 UI 不佔用結果列表空間，不破版</li>
+            <li>觸發 GA4 事件：search_filter（filter_type: time_range, value）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="prd-us-item">
+      <div class="prd-us-head" onclick="toggleUS(this)">
+        <span class="prd-us-id">US-02</span>
+        <span class="prd-us-text">身為<strong>想找最新或最相關文章的用戶</strong>，我希望<strong>能切換搜尋結果的排序方式</strong>，以便依自己的需求決定要看哪類結果。</span>
+        <span class="prd-priority prd-p0">P0</span>
+      </div>
+      <div class="prd-us-body">
+        <div class="prd-gwt">
+          <strong>Given：</strong>用戶完成搜尋，看到預設結果列表<br>
+          <strong>When：</strong>用戶想調整結果呈現順序<br>
+          <strong>Then：</strong>
+          <ul class="prd-check">
+            <li>搜尋結果頁提供排序切換：最新 / 最相關</li>
+            <li>預設排序為「最相關」，切換後結果即時更新</li>
+            <li>排序可與時間篩選、分類篩選同時作用</li>
+            <li>觸發 GA4 事件：search_sort（sort_type）</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="prd-us-item">
+      <div class="prd-us-head" onclick="toggleUS(this)">
+        <span class="prd-us-id">US-03</span>
+        <span class="prd-us-text">身為<strong>數據分析團隊</strong>，我希望<strong>能追蹤時間篩選與排序的使用數據</strong>，以便了解用戶偏好時事還是常青內容。</span>
+        <span class="prd-priority prd-p1">P1</span>
+      </div>
+      <div class="prd-us-body">
+        <div class="prd-gwt">
+          <strong>Given：</strong>功能上線，GA4 已串接（需先完成子項目 #4）<br>
+          <strong>When：</strong>用戶在搜尋頁使用篩選或排序功能<br>
+          <strong>Then：</strong>
+          <ul class="prd-check">
+            <li>GA4 可查看時間篩選使用率（search_filter / time_range）</li>
+            <li>GA4 可查看排序切換使用率（search_sort / sort_type）</li>
+            <li>GA4 可比較：使用篩選後 vs 未使用的後續點擊率差異</li>
+            <li>數據延遲 ≤ 2 小時</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end pane-us -->
+
+</div><!-- end wrap -->
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('#tabs .prd-tab').forEach(t => t.classList.remove('on'));
+  document.querySelectorAll('.prd-pane').forEach(p => p.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('pane-' + id).classList.add('on');
+}
+function toggleUS(head) {
+  const body = head.nextElementSibling;
+  body.classList.toggle('open');
+}
+</script>
+</body>
+</html>
