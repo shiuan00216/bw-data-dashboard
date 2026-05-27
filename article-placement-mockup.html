@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>文章頁廣編稿置入範例 | 商業周刊 App</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+/* ===== 頁面佈局 ===== */
+.page-header {
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+  color: white;
+  padding: 24px 32px 20px;
+}
+.page-header h1 { font-size: 18px; font-weight: 700; }
+.page-header p { font-size: 12px; color: #8892b0; margin-top: 4px; }
+
+/* ===== 方案切換按鈕 ===== */
+.tab-bar {
+  display: flex;
+  gap: 8px;
+  padding: 20px 24px 0;
+  flex-wrap: wrap;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.option-btn {
+  padding: 8px 18px;
+  border-radius: 99px;
+  border: 2px solid #ddd;
+  background: white;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #555;
+  transition: all 0.2s;
+}
+.option-btn.active {
+  border-color: transparent;
+  color: white;
+}
+.option-btn[data-id="A"].active { background: #6c63ff; border-color: #6c63ff; }
+.option-btn[data-id="B"].active { background: #e17055; border-color: #e17055; }
+.option-btn[data-id="C"].active { background: #00b894; border-color: #00b894; }
+.option-btn[data-id="D"].active { background: #0f3460; border-color: #0f3460; }
+
+/* ===== 主要畫面 ===== */
+.main-layout {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 20px auto;
+  padding: 0 24px 40px;
+  align-items: start;
+}
+
+/* ===== 手機框架 ===== */
+.phone-wrap {
+  position: sticky;
+  top: 20px;
+}
+.phone-frame {
+  width: 360px;
+  background: white;
+  border-radius: 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2), 0 0 0 2px #333, 0 0 0 4px #555;
+  overflow: hidden;
+  position: relative;
+}
+.phone-notch {
+  background: #111;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+}
+.phone-notch::after {
+  content: '';
+  width: 80px;
+  height: 18px;
+  background: #111;
+  border-radius: 0 0 12px 12px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.phone-screen {
+  height: 680px;
+  overflow-y: auto;
+  background: white;
+  scroll-behavior: smooth;
+  position: relative;
+}
+.phone-screen::-webkit-scrollbar { display: none; }
+
+/* ===== App UI - 文章頁 ===== */
+.app-status {
+  background: white;
+  padding: 8px 16px 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.progress-bar {
+  position: absolute;
+  top: 0; left: 0;
+  height: 3px;
+  background: #e8000d;
+  transition: width 0.3s;
+}
+.app-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 14px;
+  background: white;
+  position: sticky;
+  top: 36px;
+  z-index: 99;
+  border-bottom: 1px solid #f0f0f0;
+}
+.app-nav-icon { font-size: 18px; color: #333; }
+
+.article-category {
+  padding: 12px 16px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #e8000d;
+  letter-spacing: 0.5px;
+}
+.article-category span {
+  color: #888;
+  font-weight: 400;
+}
+.article-title {
+  padding: 8px 16px 12px;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.4;
+  color: #111;
+}
+.listen-btn {
+  margin: 0 16px 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #555;
+  background: #fafafa;
+}
+.article-author {
+  padding: 0 16px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.author-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #e8000d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.author-info { font-size: 11px; color: #666; }
+.author-info strong { display: block; font-size: 11px; color: #333; }
+
+.article-cover {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #dfe6e9, #b2bec3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.article-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: linear-gradient(135deg, #636e72, #2d3436);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+}
+.cover-zoom {
+  position: absolute;
+  top: 8px; right: 8px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 14px;
+}
+.cover-caption {
+  padding: 6px 16px 12px;
+  font-size: 11px;
+  color: #888;
+  line-height: 1.5;
+}
+.article-body {
+  padding: 0 16px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #222;
+}
+.article-para { margin-bottom: 16px; }
+.article-h2 {
+  font-size: 17px;
+  font-weight: 800;
+  margin: 20px 0 12px;
+  color: #111;
+}
+.summary-box {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 14px;
+  margin: 16px 0;
+  background: #fafafa;
+}
+.summary-box .summary-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #333;
+}
+.summary-box ol { padding-left: 18px; font-size: 13px; line-height: 1.7; color: #444; }
+.summary-box li { margin-bottom: 8px; }
+
+/* ===== 文末元素 ===== */
+.article-divider {
+  width: 40px;
+  height: 3px;
+  background: #e8000d;
+  margin: 20px auto;
+  border-radius: 99px;
+}
+.book-info {
+  margin: 0 16px 16px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.book-info-header {
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  color: #555;
+}
+.editor-info {
+  padding: 12px 16px;
+  font-size: 12px;
+  color: #888;
+  line-height: 1.8;
+}
+
+.survey-section {
+  margin: 12px 0 0;
+  background: white;
+}
+.survey-header {
+  text-align: center;
+  padding: 16px;
+  border-top: 1px solid #f0f0f0;
+}
+.survey-label {
+  color: #c9922a;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+.survey-img {
+  width: 100%;
+  height: 120px;
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.survey-question {
+  font-size: 12px;
+  color: #555;
+  margin-bottom: 10px;
+}
+.survey-options {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 0 16px 12px;
+}
+.survey-opt {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #333;
+}
+
+.related-section {
+  padding: 12px 16px;
+  background: white;
+}
+.related-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 10px;
+  background: #f5e6c8;
+  padding: 6px 10px;
+  border-radius: 6px;
+  display: inline-flex;
+}
+.related-card {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid #eee;
+  border-radius: 8px;
+}
+.related-thumb {
+  width: 80px;
+  height: 60px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+  flex-shrink: 0;
+}
+.related-title { font-size: 12px; color: #222; line-height: 1.5; }
+
+.next-article {
+  padding: 16px;
+  background: #fafafa;
+  border-top: 4px solid #f0f0f0;
+}
+.next-category { font-size: 11px; color: #e8000d; font-weight: 700; margin-bottom: 6px; }
+.next-title { font-size: 16px; font-weight: 800; line-height: 1.4; color: #111; }
+
+.app-bottom-bar {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  border-top: 1px solid #eee;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 100;
+}
+.bottom-icon { font-size: 18px; text-align: center; color: #666; }
+.bottom-icon span { display: block; font-size: 10px; }
+
+/* ===== 廣編稿置入元素（各方案）===== */
+
+/* 方案 A：捲動觸發推薦卡 */
+.placement-A {
+  margin: 0 16px 16px;
+  border: 2px solid #6c63ff;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  display: none;
+}
+.placement-A.show { display: block; }
+.placement-A-header {
+  background: #6c63ff;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.placement-A-body {
+  background: #f8f7ff;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.placement-A-thumb {
+  width: 64px;
+  height: 48px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+  flex-shrink: 0;
+}
+.placement-A-text { font-size: 12px; }
+.placement-A-text .brand { font-size: 10px; color: #6c63ff; font-weight: 700; }
+.placement-A-text .title { font-size: 12px; font-weight: 600; color: #222; line-height: 1.4; margin: 2px 0; }
+.placement-A-text .meta { font-size: 10px; color: #888; }
+
+/* 方案 B：浮動卡片 */
+.placement-B {
+  position: sticky;
+  bottom: 55px;
+  left: 0; right: 0;
+  margin: 0 12px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  padding: 10px 12px;
+  display: none;
+  z-index: 98;
+  border-left: 4px solid #e17055;
+}
+.placement-B.show { display: flex; gap: 10px; align-items: center; }
+.placement-B-thumb {
+  width: 48px;
+  height: 40px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #fd79a8, #e17055);
+  flex-shrink: 0;
+}
+.placement-B-text { flex: 1; font-size: 11px; }
+.placement-B-text .brand { color: #e17055; font-weight: 700; font-size: 10px; }
+.placement-B-text .title { color: #222; font-weight: 600; line-height: 1.4; margin-top: 2px; }
+.placement-B-close {
+  font-size: 16px;
+  color: #999;
+  flex-shrink: 0;
+  padding: 0 4px;
+}
+
+/* 方案 C：段落內 Native */
+.placement-C {
+  margin: 4px 0 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #e0f7f0;
+  display: none;
+  background: #f0fdf8;
+}
+.placement-C.show { display: block; }
+.placement-C-label {
+  font-size: 10px;
+  color: #00b894;
+  font-weight: 700;
+  padding: 5px 10px;
+  background: #e0f7f0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.placement-C-inner {
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+.placement-C-thumb {
+  width: 72px;
+  height: 54px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #55efc4, #00b894);
+  flex-shrink: 0;
+}
+.placement-C-text .brand { font-size: 10px; color: #00b894; font-weight: 700; }
+.placement-C-text .title { font-size: 12px; font-weight: 600; color: #222; line-height: 1.4; margin: 3px 0; }
+.placement-C-text .cta {
+  font-size: 10px;
+  color: white;
+  background: #00b894;
+  padding: 3px 8px;
+  border-radius: 99px;
+  display: inline-block;
+  margin-top: 4px;
+}
+
+/* 方案 D：文末強化推薦 */
+.placement-D {
+  margin: 12px 16px 16px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid #0f3460;
+  display: none;
+}
+.placement-D.show { display: block; }
+.placement-D-header {
+  background: #0f3460;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.placement-D-body {
+  background: white;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+}
+.placement-D-thumb {
+  width: 80px;
+  height: 60px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #74b9ff, #0f3460);
+  flex-shrink: 0;
+}
+.placement-D-text .brand { font-size: 10px; color: #0f3460; font-weight: 700; }
+.placement-D-text .title { font-size: 13px; font-weight: 700; color: #111; line-height: 1.4; margin: 3px 0; }
+.placement-D-text .tag { font-size: 10px; color: white; background: #0f3460; padding: 2px 7px; border-radius: 99px; }
+.placement-D-footer {
+  background: #f8faff;
+  padding: 8px 12px;
+  font-size: 11px;
+  color: #888;
+  border-top: 1px solid #eee;
+}
+
+/* ===== 說明面板 ===== */
+.info-panel {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.info-panel-title {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.info-panel-sub { font-size: 13px; color: #888; margin-bottom: 20px; }
+
+.info-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  color: white;
+  margin-bottom: 16px;
+}
+
+.info-section { margin-bottom: 20px; }
+.info-section h3 { font-size: 13px; font-weight: 700; color: #555; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+.info-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+.info-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+.info-item p { font-size: 13px; color: #444; line-height: 1.7; }
+.info-item strong { color: #111; }
+
+.info-spec {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 8px;
+}
+.info-spec h4 { font-size: 12px; font-weight: 700; color: #555; margin-bottom: 8px; }
+.spec-row {
+  display: flex;
+  font-size: 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+  gap: 8px;
+}
+.spec-row:last-child { border-bottom: none; }
+.spec-label { color: #888; width: 80px; flex-shrink: 0; }
+.spec-value { color: #222; font-weight: 600; }
+
+.info-warn {
+  background: #fff8e6;
+  border-left: 3px solid #fdcb6e;
+  border-radius: 0 8px 8px 0;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #555;
+  line-height: 1.7;
+  margin-top: 12px;
+}
+.info-warn strong { color: #b7791f; }
+
+.scroll-hint {
+  text-align: center;
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 10px;
+  padding: 8px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.scroll-hint:hover { background: #e9ecef; }
+
+/* 位置標記 */
+.position-marker {
+  background: #fff3cd;
+  border: 1px dashed #ffc107;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 10px;
+  color: #856404;
+  margin: 4px 16px;
+  text-align: center;
+  display: none;
+}
+.position-marker.show { display: block; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>文章頁廣編稿置入範例</h1>
+  <p>根據 App 文章頁實際 UI 模擬四種廣編稿置入位置</p>
+</div>
+
+<!-- 切換按鈕 -->
+<div class="tab-bar">
+  <button class="option-btn active" data-id="C" onclick="showOption('C')">📄 方案 3-C｜段落內嵌入（推薦先做）</button>
+  <button class="option-btn" data-id="A" onclick="showOption('A')">📜 方案 3-A｜捲動觸發推薦卡</button>
+  <button class="option-btn" data-id="B" onclick="showOption('B')">💬 方案 3-B｜浮動卡片</button>
+  <button class="option-btn" data-id="D" onclick="showOption('D')">📚 方案 3-D｜文末關聯推薦</button>
+</div>
+
+<!-- 主畫面 -->
+<div class="main-layout">
+
+  <!-- 手機模擬 -->
+  <div class="phone-wrap">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen" id="phoneScreen">
+
+        <!-- 狀態列 -->
+        <div class="app-status">
+          <div class="progress-bar" id="progressBar" style="width:38%"></div>
+          <span>4:30</span>
+          <span>📶 🔋</span>
+        </div>
+
+        <!-- 導航列 -->
+        <div class="app-nav">
+          <span class="app-nav-icon">←</span>
+          <div style="display:flex;gap:16px">
+            <span class="app-nav-icon">🎧</span>
+            <span class="app-nav-icon">✕</span>
+          </div>
+        </div>
+
+        <!-- 文章標題區 -->
+        <div class="article-category">管理 <span>｜ 領導馭人</span></div>
+        <div class="article-title">想說服固執的人，講事實反而沒用？哲學博士教你3個提問技巧</div>
+
+        <div class="listen-btn">
+          <span>🎧</span>
+          <span style="font-size:13px;color:#555">聽全文</span>
+        </div>
+
+        <div class="article-author">
+          <div class="author-avatar">書</div>
+          <div class="author-info">
+            <strong>撰文者：精選書摘｜彼得・博格西安、詹姆斯・林賽</strong>
+            <span>2026/05/20</span>
+          </div>
+        </div>
+
+        <!-- 封面圖 -->
+        <div class="article-cover">
+          <div class="article-cover-img" style="background:linear-gradient(135deg,#636e72,#2d3436);width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:white;font-size:12px">
+            封面圖片
+          </div>
+          <div class="cover-zoom">⊕</div>
+        </div>
+        <div class="cover-caption">遇到固執的溝通對象，狂丟證據只會帶來反效果。（來源：Dreamstime/典匠影像）</div>
+
+        <!-- 文章內文 -->
+        <div class="article-body">
+
+          <p class="article-para">在跟漢姆這種人交談時，你必須避免列舉事實。話雖如此，這當然不代表，你應該無視證據，或鼓勵其他人這麼做。</p>
+
+          <div class="summary-box">
+            <div class="summary-title">摘要</div>
+            <ol>
+              <li>面對立場堅定、固執己見的人，直接搬出事實與證據往往會適得其反。</li>
+              <li>多數人並非依據「證據」來建構想法，而是先決定了立場，再去尋找支持自己的論點。</li>
+              <li>哲學博士建議，想改變對方的想法不應急著說服，而應透過「詢問矛盾點」、「探究背後原因」與「問出改變條件」3個提問技巧，引導對方主動反思。</li>
+            </ol>
+          </div>
+
+          <p class="article-para">對那些努力根據證據來建構想法的人而言，最難接受的事就是，並非所有人都用這樣的方式來形塑他們的看法。</p>
+
+          <!-- ===== 方案 C 置入位置（第 3 段後）===== -->
+          <div class="position-marker show" id="markerC">▼ 方案 3-C 置入位置（第 3–5 段後）</div>
+          <div class="placement-C show" id="optionC">
+            <div class="placement-C-label">📌 贊助內容</div>
+            <div class="placement-C-inner">
+              <div class="placement-C-thumb"></div>
+              <div class="placement-C-text">
+                <div class="brand">台灣大哥大 × 商周</div>
+                <div class="title">數位轉型時代，企業主管如何做出更好決策？</div>
+                <span class="cta">閱讀全文 →</span>
+              </div>
+            </div>
+          </div>
+          <!-- ===== 方案 A 置入位置（捲動 50-70%）===== -->
+          <div class="position-marker" id="markerA">▼ 方案 3-A 置入位置（捲動 50–70% 時出現）</div>
+          <div class="placement-A" id="optionA">
+            <div class="placement-A-header">📌 你可能也有興趣</div>
+            <div class="placement-A-body">
+              <div class="placement-A-thumb"></div>
+              <div class="placement-A-text">
+                <div class="brand">台灣大哥大 × 商周</div>
+                <div class="title">數位轉型時代，企業主管如何做出更好決策？</div>
+                <div class="meta">贊助內容 · 預計閱讀 3 分鐘</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="article-h2">為什麼證據越多，對方反而越堅持？</div>
+
+          <p class="article-para">這種人很容易犯這樣的錯誤：認為他們的談話對象只要了解某項證據，就會捨棄目前的想法。很多人之所以相信這些看法與推斷方式，正是因為他們沒有根據證據來建構自己的想法，而不是因為他們缺乏證據。</p>
+
+          <p class="article-para">我們多數人都不擅長根據證據來建構自身的想法，因為我們往往會著眼於驗證我們相信的事，而不是針對它們提出反證。</p>
+
+          <p class="article-para">這不僅僅是證據來源有限的問題，因為我們通常會依據自身想法來選擇性地篩選資訊，只接受支持我們想法的證據。</p>
+
+          <div class="article-h2">3 個提問技巧，引導對方主動反思</div>
+
+          <p class="article-para">你必須在適當的時機、謹慎的在對話裡舉出事實，否則很有可能會適得其反。</p>
+
+          <p class="article-para">第一步是詢問矛盾點，讓對方自己發現想法中的不一致之處，而非你直接指出來。第二步是探究背後原因，問對方「是什麼讓你有這樣的想法？」而非「你的依據是什麼？」</p>
+
+        </div><!-- /article-body -->
+
+        <!-- 文末 -->
+        <div class="article-divider"></div>
+        <div class="editor-info">
+          <div>本文摘自遠流出版《別害怕衝突》</div>
+        </div>
+        <div class="book-info">
+          <div class="book-info-header">
+            <span>📋 書籍簡介</span>
+            <span>∨</span>
+          </div>
+        </div>
+        <div class="editor-info">
+          責任編輯：徐惠琬<br>核稿編輯：陳芋吟
+        </div>
+
+        <!-- ===== 方案 D 置入位置（文末相關文章前）===== -->
+        <div class="position-marker" id="markerD">▼ 方案 3-D 置入位置（加強版相關文章）</div>
+        <div class="placement-D" id="optionD">
+          <div class="placement-D-header">🔖 你讀完「管理」主題，可能也想看</div>
+          <div class="placement-D-body">
+            <div class="placement-D-thumb"></div>
+            <div class="placement-D-text">
+              <div class="brand">台灣大哥大 × 商周｜贊助內容</div>
+              <div class="title">數位轉型時代，企業主管如何做出更好決策？</div>
+              <span class="tag">管理</span>
+            </div>
+          </div>
+          <div class="placement-D-footer">依據你的閱讀偏好推薦</div>
+        </div>
+
+        <!-- 商周大調查 -->
+        <div class="survey-section">
+          <div class="survey-header">
+            <div class="survey-label">商周大調查</div>
+            <div class="survey-img">影響你工作滿意度的關鍵是？<br><span style="font-size:12px;font-weight:400;margin-top:6px;display:block">→ 完成投票送商周鑽</span></div>
+            <div class="survey-question">影響您目前工作滿意度，最關鍵的因素是？</div>
+          </div>
+          <div class="survey-options">
+            <div class="survey-opt">1. 有決定權與明確的任務目標</div>
+            <div class="survey-opt">2. 工作能幫助他人或回饋社會</div>
+            <div class="survey-opt">3. 能持續累積自身專業技能</div>
+            <div class="survey-opt">4. 主管與同事在工作上提供支持</div>
+          </div>
+        </div>
+
+        <!-- 相關文章 -->
+        <div class="related-section">
+          <div class="related-label">📖 相關文章</div>
+          <div class="related-card" style="margin-top:8px">
+            <div class="related-thumb"></div>
+            <div class="related-title">上班滿意度竟然無關薪水？5萬人調查：獲得意義感的關鍵是「這一點」</div>
+          </div>
+        </div>
+
+        <!-- 下一篇 -->
+        <div class="next-article">
+          <div class="next-category">管理</div>
+          <div class="next-title">CEO最難察覺的決策盲區：你以為在做理性決策，當心是大腦騙了你！</div>
+        </div>
+
+        <!-- 浮動卡片（方案 B）-->
+        <div class="placement-B" id="optionB">
+          <div class="placement-B-thumb"></div>
+          <div class="placement-B-text">
+            <div class="brand">📌 台灣大哥大 · 贊助內容</div>
+            <div class="title">數位轉型，企業主管如何做更好決策？</div>
+          </div>
+          <div class="placement-B-close">✕</div>
+        </div>
+
+        <!-- 底部工具列 -->
+        <div class="app-bottom-bar">
+          <div class="bottom-icon">Aᴬ</div>
+          <div class="bottom-icon">⬆</div>
+          <div class="bottom-icon">🔖</div>
+          <div class="bottom-icon">☰</div>
+        </div>
+
+      </div><!-- /phone-screen -->
+    </div><!-- /phone-frame -->
+
+    <!-- 捲動提示 -->
+    <div class="scroll-hint" onclick="scrollToPlacement()">↕ 點此捲動到置入位置</div>
+  </div>
+
+  <!-- 說明面板 -->
+  <div class="info-panel" id="infoPanel">
+    <!-- 動態填入 -->
+  </div>
+
+</div>
+
+<script>
+const options = {
+  C: {
+    color: '#00b894',
+    label: '方案 3-C',
+    title: '段落內 Native 推薦',
+    subtitle: '在文章第 3–5 段落之後嵌入廣編稿推薦卡，融入內文排版',
+    why: [
+      { text: '<strong>幾乎所有讀者都會看到：</strong>嵌入在文章開頭段落後，只要用戶打開文章就會看到，不需要捲動很深。' },
+      { text: '<strong>干擾感低：</strong>「贊助內容」標籤透明揭露，Native 格式不像橫幅廣告突兀。' },
+      { text: '<strong>比文末早 3–4 個螢幕：</strong>文末到達率很低，段落內位置效益高出許多。' },
+    ],
+    position: '文章正文第 3–5 段落後（用戶不需捲動過半即可看到）',
+    trigger: '頁面渲染時自動注入，無需任何用戶行為觸發',
+    style: '融入內文、有明確「贊助內容」標籤，含品牌名、標題、縮圖、CTA 按鈕',
+    it: 'WebView 渲染時在特定段落後注入廣編區塊 HTML；需與後端廣編稿 API 串接',
+    priority: 'P2｜建議優先開發，覆蓋率最高',
+    warn: '需確保標籤明確標示「贊助內容」，避免讀者誤以為是編輯內容。'
+  },
+  A: {
+    color: '#6c63ff',
+    label: '方案 3-A',
+    title: '捲動深度觸發推薦卡',
+    subtitle: '用戶捲動到文章 50–70% 位置時，在段落間插入推薦卡',
+    why: [
+      { text: '<strong>捲過 50% 代表有興趣：</strong>已讀一半還沒離開的用戶，是最有閱讀意願的群體，廣編稿點擊意願更高。' },
+      { text: '<strong>比文末到達率高得多：</strong>能讀到文末的用戶是少數，50% 位置覆蓋更多用戶。' },
+      { text: '<strong>精準投放：</strong>只對真實閱讀中的用戶顯示，不浪費在快速滑過的用戶身上。' },
+    ],
+    position: '文章捲動進度 50–70% 的段落後（動態插入）',
+    trigger: '監聽頁面捲動事件，當捲動比例達閾值時觸發顯示',
+    style: '「你可能也有興趣」標籤 + 縮圖 + 品牌標題 + 預計閱讀時間',
+    it: 'WebView 內注入 JavaScript 監聽 scroll 事件；達到 scrollPercentage >= 0.5 時插入 DOM 節點',
+    priority: 'P2｜與 3-C 互斥，建議兩者擇一先做',
+    warn: '若同時有 3-C，可能造成同一篇文章出現兩張廣編推薦，建議只選其一。'
+  },
+  B: {
+    color: '#e17055',
+    label: '方案 3-B',
+    title: '停留時間觸發浮動卡片',
+    subtitle: '用戶在文章頁停留超過 60 秒後，頁面底部出現一張小浮動卡',
+    why: [
+      { text: '<strong>不打斷閱讀流程：</strong>浮動卡出現在底部角落，不遮擋內文，用戶可繼續閱讀或選擇忽略。' },
+      { text: '<strong>停留 60 秒 = 真實讀者：</strong>用計時器過濾掉快速進出的用戶，只對真正在閱讀的人顯示。' },
+      { text: '<strong>可手動關閉：</strong>右上角有 ✕，減少干擾感，體驗較友善。' },
+    ],
+    position: '頁面底部懸浮，位於底部工具列上方',
+    trigger: '計時器：進入文章頁 60 秒後觸發顯示；點擊 ✕ 關閉後不再出現（session 內）',
+    style: '小型浮動卡：品牌標籤 + 縮圖 + 短標題 + 關閉按鈕，高度約 60px',
+    it: '計時器 setTimeout(60000) 觸發浮動元件顯示；需儲存 session flag 避免重複顯示',
+    priority: 'P3｜干擾最低，但視覺面積也最小，點擊率可能較低',
+    warn: '若用戶已點擊過其他廣編推薦（3-C 或 3-A），建議不要再觸發，避免重複曝光同一則廣編稿。'
+  },
+  D: {
+    color: '#0f3460',
+    label: '方案 3-D',
+    title: '同主題廣編文關聯推薦（文末）',
+    subtitle: '文章結束後，依文章主題標籤推薦相關廣編稿，放在現有「相關文章」上方',
+    why: [
+      { text: '<strong>主題精準匹配：</strong>用戶剛讀完「管理」主題文章，此時推薦同主題廣編稿，興趣最高。' },
+      { text: '<strong>強化現有功能：</strong>App 已有「相關文章」機制，廣編稿可作為加強版推薦，技術改動相對少。' },
+      { text: '<strong>讀完文章的用戶品質最高：</strong>願意讀到文末的用戶黏著度高，是廣編稿最有價值的受眾。' },
+    ],
+    position: '文章結尾後、「相關文章」區塊的上方或融入其中',
+    trigger: '頁面載入時即準備好，用戶捲到文末時自然看到',
+    style: '「你讀完 X 主題，可能也想看」標題 + 廣編稿縮圖 + 品牌標籤 + 文章標題 + 主題標籤',
+    it: '需建立廣編稿主題標籤資料庫；推薦引擎依當前文章標籤比對廣編稿標籤，動態回傳推薦內容',
+    priority: 'P3｜需要標籤系統建立，技術複雜度最高，但精準度也最高',
+    warn: '需要廣編稿預先建立完整主題標籤，初期可由編輯手動標記，後期再考慮自動化。'
+  }
+};
+
+function showOption(id) {
+  // 更新按鈕
+  document.querySelectorAll('.option-btn').forEach(b => {
+    b.classList.remove('active');
+    if (b.dataset.id === id) b.classList.add('active');
+  });
+
+  // 顯示/隱藏置入元素
+  ['A','B','C','D'].forEach(opt => {
+    const el = document.getElementById('option' + opt);
+    const marker = document.getElementById('marker' + opt);
+    if (el) el.classList.toggle('show', opt === id);
+    if (marker) marker.classList.toggle('show', opt === id);
+  });
+
+  // 更新說明面板
+  const o = options[id];
+  document.getElementById('infoPanel').innerHTML = `
+    <div class="info-panel-title">
+      <span style="background:${o.color};color:white;font-size:12px;font-weight:700;padding:4px 12px;border-radius:99px">${o.label}</span>
+      ${o.title}
+    </div>
+    <div class="info-panel-sub">${o.subtitle}</div>
+
+    <div class="info-section">
+      <h3>為什麼這個位置有效</h3>
+      ${o.why.map(w => `
+        <div class="info-item">
+          <div class="info-dot" style="background:${o.color}"></div>
+          <p>${w.text}</p>
+        </div>
+      `).join('')}
+    </div>
+
+    <div class="info-spec">
+      <h4>規格說明</h4>
+      <div class="spec-row"><span class="spec-label">出現位置</span><span class="spec-value">${o.position}</span></div>
+      <div class="spec-row"><span class="spec-label">觸發方式</span><span class="spec-value">${o.trigger}</span></div>
+      <div class="spec-row"><span class="spec-label">視覺樣式</span><span class="spec-value">${o.style}</span></div>
+      <div class="spec-row"><span class="spec-label">IT 需求</span><span class="spec-value">${o.it}</span></div>
+      <div class="spec-row"><span class="spec-label">建議優先級</span><span class="spec-value" style="color:${o.color}">${o.priority}</span></div>
+    </div>
+
+    <div class="info-warn">
+      <strong>⚠️ 注意：</strong>${o.warn}
+    </div>
+  `;
+
+  // 捲動到位置
+  scrollToPlacement();
+}
+
+function scrollToPlacement() {
+  const screen = document.getElementById('phoneScreen');
+  const activeBtn = document.querySelector('.option-btn.active');
+  if (!activeBtn) return;
+  const id = activeBtn.dataset.id;
+  const el = document.getElementById('option' + id);
+  if (el && screen) {
+    const elTop = el.offsetTop;
+    screen.scrollTo({ top: elTop - 100, behavior: 'smooth' });
+  }
+}
+
+// 預設顯示 C
+showOption('C');
+</script>
+</body>
+</html>
