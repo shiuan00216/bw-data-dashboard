@@ -1222,42 +1222,73 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
           <strong>上線後需追蹤：</strong>廣編文第 2 篇的點擊率、停留時間、跳出率。
         </div>
       </div>
-      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07);border:1px dashed #ddd;opacity:0.7">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
-          <span style="background:#6c63ff;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 2-B</span>
-          <span style="font-size:11px;color:#888">中期，需要排程機制</span>
+          <span style="background:#b2bec3;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">參考</span>
+          <span style="font-size:11px;color:#e17055;font-weight:600">⚠️ 執行限制大，降低優先度</span>
         </div>
         <div style="font-size:13px;font-weight:700;margin-bottom:8px">週六優先排廣編文到瀑布流前段</div>
         <div style="font-size:12px;color:#555;line-height:1.7">
-          週六瀑布流佔比最高（37.8%），用戶最願意滑動。週五晚間或週六早上排廣編文上架，搭上瀑布流高峰。<br><br>
-          <strong>數據依據：</strong>週六 vs 週三瀑布佔比差 4.3 個百分點，是全週最高。
+          週六瀑布流佔比最高（37.8%），用戶最願意滑動。<br><br>
+          <strong>限制：</strong>上稿時間受廣告主排程控制，PM 端難以主動執行。週六 DAU 未有顯著高於平日的數據支撐，建議僅做為補充參考，不列入主要策略。
         </div>
       </div>
     </div>
 
     <!-- 節點三建議 -->
     <div class="section-title">節點三：文章頁延伸優化</div>
+    <div class="alert" style="margin-bottom:16px">
+      📊 <strong>數據依據：</strong>文章頁平均停留 33 分鐘，是首頁的 9 倍。用戶到達文章頁時投入度最高，這是置入廣編稿的黃金時機。除文末推薦外，還有三種更早觸及用戶的方式。
+    </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
       <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
           <span style="background:#00b894;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 3-A</span>
-          <span style="font-size:11px;color:#888">中期，需要產品開發</span>
+          <span style="font-size:11px;color:#888">中期，需要 IT 開發</span>
         </div>
-        <div style="font-size:13px;font-weight:700;margin-bottom:8px">文章底部加入廣編文推薦</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">捲動深度觸發推薦卡（50–70% 位置）</div>
         <div style="font-size:12px;color:#555;line-height:1.7">
-          用戶看完文章（停留 33 分鐘）是最投入的時刻，在底部加入「相關品牌觀點」推薦廣編文，趁熱引導點擊。<br><br>
-          <strong>數據依據：</strong>文章頁停留時間是首頁的 9 倍，用戶在此更願意繼續閱讀。
+          用戶捲到文章 <strong>50–70% 位置</strong>時，在段落間插入一張廣編稿推薦卡（樣式類似「你可能有興趣」）。<br><br>
+          <strong>為什麼比文末好：</strong>文末到達率低，許多人讀到一半就關掉。捲過 50% 代表用戶有興趣、還沒離開，是最佳出現時機。<br><br>
+          <strong>IT 需求：</strong>文章 WebView 依捲動百分比注入推薦區塊。
         </div>
       </div>
       <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
           <span style="background:#00b894;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 3-B</span>
+          <span style="font-size:11px;color:#888">中期，需要 IT 開發</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">停留時間觸發浮動卡片（60 秒後）</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">
+          用戶在文章頁停留 <strong>超過 60 秒</strong>後，頁面底部出現一張小浮動卡：「📌 廣告主品牌｜你可能也想看」，用戶可忽略。<br><br>
+          <strong>為什麼有效：</strong>停留 60 秒以上代表不是誤觸，是真實閱讀中的用戶。不打斷閱讀流程，干擾性低。<br><br>
+          <strong>IT 需求：</strong>計時器觸發浮動 UI，點擊開啟廣編稿文章。
+        </div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="background:#00b894;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 3-C</span>
+          <span style="font-size:11px;color:#888">中期，需要 IT 開發</span>
+        </div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">段落內 Native 廣編推薦（第 3–5 段後嵌入）</div>
+        <div style="font-size:12px;color:#555;line-height:1.7">
+          在文章第 3–5 段落之後，插入一張<strong>視覺融入內文的廣編推薦區塊</strong>，標注「贊助內容」，樣式與內文相近。<br><br>
+          <strong>為什麼有效：</strong>位置比文末、比浮動卡更早，幾乎每個打開文章的用戶都會看到。Native 格式點擊意願通常高於橫幅廣告。<br><br>
+          <strong>IT 需求：</strong>WebView 渲染時在特定段落後注入廣編區塊 HTML。
+        </div>
+      </div>
+      <div style="background:white;border-radius:12px;padding:18px;box-shadow:0 1px 4px rgba(0,0,0,0.07)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="background:#00b894;color:white;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px">建議 3-D</span>
           <span style="font-size:11px;color:#888">中期，需要標籤機制</span>
         </div>
-        <div style="font-size:13px;font-weight:700;margin-bottom:8px">同主題廣編文做關聯推薦</div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">同主題廣編文關聯推薦（文末）</div>
         <div style="font-size:12px;color:#555;line-height:1.7">
-          若廣編文有分類標籤，用戶看完「管理」類文章後，自動推薦同主題的廣編文（例如看完 AI 文章 → 推薦 Google 廣編文）。<br><br>
-          <strong>數據依據：</strong>瀑布流用戶人均看 6.5 頁，有持續瀏覽意願，關聯推薦命中率更高。
+          若廣編文有分類標籤，用戶看完「管理」類文章後，自動推薦同主題廣編文（例如看完 AI 文章 → 推薦 Google 廣編文）。<br><br>
+          <strong>數據依據：</strong>瀑布流用戶人均看 6.5 頁，有持續瀏覽意願，關聯推薦命中率更高。<br><br>
+          <strong>IT 需求：</strong>廣編稿需建立主題標籤，推薦引擎依標籤配對。
         </div>
       </div>
     </div>
@@ -1284,32 +1315,46 @@ footer { text-align: center; padding: 20px; font-size: 12px; color: #aaa; }
             <td style="padding:10px;color:#555">編輯排程</td>
           </tr>
           <tr style="border-bottom:1px solid #f6f6f6">
-            <td style="padding:10px"><span style="background:#e17055;color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P1</span></td>
-            <td style="padding:10px;font-weight:600">週六優先排廣編文上架</td>
-            <td style="padding:10px;color:#00b894;font-weight:600">低</td>
-            <td style="padding:10px;color:#555">搭上瀑布流週末高峰</td>
-            <td style="padding:10px;color:#555">編輯排程</td>
-          </tr>
-          <tr style="border-bottom:1px solid #f6f6f6">
-            <td style="padding:10px"><span style="background:#fdcb6e;color:#7d5a00;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P2</span></td>
-            <td style="padding:10px;font-weight:600">瀑布流固定廣編文頻率</td>
-            <td style="padding:10px;color:#fdcb6e;font-weight:600">中</td>
-            <td style="padding:10px;color:#555">確保每次開 App 都有曝光</td>
-            <td style="padding:10px;color:#555">IT 調整排序邏輯</td>
-          </tr>
-          <tr style="border-bottom:1px solid #f6f6f6">
             <td style="padding:10px"><span style="background:#fdcb6e;color:#7d5a00;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P2</span></td>
             <td style="padding:10px;font-weight:600">個人化推薦納入廣編文</td>
             <td style="padding:10px;color:#fdcb6e;font-weight:600">中</td>
-            <td style="padding:10px;color:#555">高曝光位新增廣編文入口</td>
+            <td style="padding:10px;color:#555">首頁黃金位新增入口</td>
             <td style="padding:10px;color:#555">IT + 產品</td>
           </tr>
-          <tr>
+          <tr style="border-bottom:1px solid #f6f6f6">
+            <td style="padding:10px"><span style="background:#fdcb6e;color:#7d5a00;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P2</span></td>
+            <td style="padding:10px;font-weight:600">文章頁段落內 Native 推薦（3-C）</td>
+            <td style="padding:10px;color:#fdcb6e;font-weight:600">中</td>
+            <td style="padding:10px;color:#555">最早觸及，幾乎所有讀者都看到</td>
+            <td style="padding:10px;color:#555">IT（WebView 注入）</td>
+          </tr>
+          <tr style="border-bottom:1px solid #f6f6f6">
+            <td style="padding:10px"><span style="background:#fdcb6e;color:#7d5a00;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P2</span></td>
+            <td style="padding:10px;font-weight:600">捲動 50–70% 觸發推薦卡（3-A）</td>
+            <td style="padding:10px;color:#fdcb6e;font-weight:600">中</td>
+            <td style="padding:10px;color:#555">有興趣用戶才觸發，精準度高</td>
+            <td style="padding:10px;color:#555">IT（捲動事件觸發）</td>
+          </tr>
+          <tr style="border-bottom:1px solid #f6f6f6">
             <td style="padding:10px"><span style="background:#b2bec3;color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P3</span></td>
-            <td style="padding:10px;font-weight:600">文章底部廣編文推薦</td>
+            <td style="padding:10px;font-weight:600">停留 60 秒浮動卡片（3-B）</td>
+            <td style="padding:10px;color:#fdcb6e;font-weight:600">中</td>
+            <td style="padding:10px;color:#555">干擾低，適合長文章場景</td>
+            <td style="padding:10px;color:#555">IT（計時器觸發）</td>
+          </tr>
+          <tr style="border-bottom:1px solid #f6f6f6">
+            <td style="padding:10px"><span style="background:#b2bec3;color:white;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">P3</span></td>
+            <td style="padding:10px;font-weight:600">同主題關聯推薦（3-D）</td>
             <td style="padding:10px;color:#e17055;font-weight:600">高</td>
-            <td style="padding:10px;color:#555">延伸閱讀轉換廣編文</td>
-            <td style="padding:10px;color:#555">IT 開發新功能</td>
+            <td style="padding:10px;color:#555">精準匹配讀者興趣</td>
+            <td style="padding:10px;color:#555">IT + 標籤系統建立</td>
+          </tr>
+          <tr>
+            <td style="padding:10px"><span style="background:#dfe6e9;color:#636e72;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px">參考</span></td>
+            <td style="padding:10px;color:#aaa">週六優先排廣編文上架</td>
+            <td style="padding:10px;color:#aaa">低</td>
+            <td style="padding:10px;color:#aaa">上稿時間受廣告主控制，難執行</td>
+            <td style="padding:10px;color:#aaa">—</td>
           </tr>
         </tbody>
       </table>
